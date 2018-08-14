@@ -1,0 +1,17 @@
+const plugins = [
+  ['babel-plugin-module-resolver', { alias: { '~': './src' } }],
+
+  '@babel/plugin-proposal-class-properties',
+  '@babel/plugin-proposal-object-rest-spread',
+]
+
+const presets = ['@babel/preset-flow']
+
+if (process.env.NODE_ENV === 'production') {
+  presets.push('@babel/preset-env')
+}
+if (process.env.NODE_ENV === 'test') {
+  plugins.push('@babel/plugin-transform-modules-commonjs')
+}
+
+module.exports = { plugins, presets }
