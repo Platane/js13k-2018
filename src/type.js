@@ -1,0 +1,109 @@
+export type ID = string
+
+export type Point = {
+  x: number,
+  y: number,
+}
+
+export type Rotation = 0 | 90 | 180 | 270
+
+export type Cell = Point
+
+export type Token = string
+
+export type CommandIdle = {
+  type: 'idle',
+}
+
+export type CommandActivate = {
+  type: 'activate',
+  targetId: ID,
+}
+
+export type CommandCarry = {
+  type: 'carry',
+  pickUpCell: Cell,
+  dropCell: Cell,
+}
+
+export type Command = CommandIdle | CommandActivate | CommandCarry
+
+export type BotIdle = {
+  id: ID,
+  position: Point,
+  direction: Point,
+
+  command: CommandIdle,
+  activity: null,
+}
+
+export type BotActivate = {
+  id: ID,
+  position: Point,
+  direction: Point,
+
+  command: CommandActivate,
+  activity: {
+    activationCooldown: number,
+  },
+}
+
+export type BotCarry = {
+  id: ID,
+  position: Point,
+  direction: Point,
+
+  command: CommandCarry,
+  activity: {
+    path: Point[],
+    nextStopIndex: number,
+    carrying: Token | null,
+  },
+}
+
+export type Bot = BotIdle | BotActivate | BotCarry
+
+type C = 0 | 1 | 2
+export type Map = C[][]
+
+export type Blueprint = {
+  id: ID,
+
+  ground: Map,
+
+  activationThreshold: number,
+
+  inputs: { cell: Cell, token: Token, n: number }[],
+  outputs: { cell: Cell, token: Token, n: number }[],
+}
+
+export type Machine = {
+  id: ID,
+
+  blueprint: Blueprint,
+
+  rotation: Rotation,
+  positionOrigin: Cell,
+
+  activationCount: number,
+  queue: Token[],
+}
+
+export type Universe = {
+  mouse: {
+    activationCooldown: number,
+  },
+
+  bots: Bot[],
+
+  blueprints: Blueprint[],
+
+  machines: Machine[],
+
+  map: Map,
+}
+
+export type Camera = {
+  a: number,
+  t: Point,
+}
