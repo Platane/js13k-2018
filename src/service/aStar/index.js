@@ -1,4 +1,4 @@
-import { isNavigable, distance, around } from '../map'
+import { isNavigable, distance, around4 as around } from '../map'
 import type { Map, Cell } from '~/type'
 
 const buildChain = a => (!a ? [] : [...buildChain(a.parent), a.c])

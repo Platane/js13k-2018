@@ -1,3 +1,5 @@
+export * from './constant'
+export * from './line'
 import type { Map, Cell } from '~/type'
 
 export const isInside = (map: Map, { x, y }: Cell): boolean =>
@@ -15,10 +17,3 @@ export const getWidth = (map: Map) => map[0].length
 
 export const distance = (a: Cell, b: Cell) =>
   Math.abs(a.x - b.x) + Math.abs(a.y - b.y)
-
-export const around: Cell[] = [
-  { x: 0, y: 1 },
-  { x: 1, y: 0 },
-  { x: 0, y: -1 },
-  { x: -1, y: 0 },
-]
