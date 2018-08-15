@@ -12,7 +12,10 @@ const dom = () => {
   parent.appendChild(canvas)
 
   const update = (universe: Universe) => {
-    const { width, height } = parent.getBoundingClientRect()
+    let { width, height } = parent.getBoundingClientRect()
+
+    width -= 2
+    height -= 6
 
     canvas.height = height
     canvas.width = width

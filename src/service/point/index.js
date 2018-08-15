@@ -19,3 +19,8 @@ export const normalize = (A: Point) => {
     y: A.y / l,
   }
 }
+
+export const distanceSq = (A: Point, B: Point) =>
+  lengthSq({ x: A.x - B.x, y: A.y - B.y })
+
+export const distance = (A: Point, B: Point) => Math.sqrt(distanceSq(A, B))

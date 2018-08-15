@@ -31,7 +31,7 @@ export type Command = CommandIdle | CommandActivate | CommandCarry
 export type BotIdle = {
   id: ID,
   position: Point,
-  direction: Point,
+  velocity: Point,
 
   command: CommandIdle,
   activity: null,
@@ -40,7 +40,7 @@ export type BotIdle = {
 export type BotActivate = {
   id: ID,
   position: Point,
-  direction: Point,
+  velocity: Point,
 
   command: CommandActivate,
   activity: {
@@ -51,12 +51,12 @@ export type BotActivate = {
 export type BotCarry = {
   id: ID,
   position: Point,
-  direction: Point,
+  velocity: Point,
 
   command: CommandCarry,
   activity: {
     path: Point[],
-    nextStopIndex: number,
+    nextCell: Point,
     carrying: Token | null,
   },
 }
@@ -101,6 +101,8 @@ export type Universe = {
   machines: Machine[],
 
   map: Map,
+
+  droppedTokens: { position: Point, token: Token }[],
 }
 
 export type Camera = {
