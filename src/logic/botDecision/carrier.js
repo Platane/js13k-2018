@@ -54,4 +54,7 @@ export const botCarrierDecision = (universe: Universe, bot: BotCarry) => {
 
   bot.activity.nextCell.x = nextCell.x + 0.5
   bot.activity.nextCell.y = nextCell.y + 0.5
+
+  // bot.activity.nextCell.x = 0.5
+  // bot.activity.nextCell.y = 1.99
 }
