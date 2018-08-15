@@ -8,10 +8,6 @@ import test from 'tape'
 import type { Universe } from '~/type'
 
 const universe: Universe = {
-  mouse: {
-    activationCooldown: 0,
-  },
-
   map: [
     [0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0],

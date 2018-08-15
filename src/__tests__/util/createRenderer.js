@@ -9,13 +9,14 @@ const dom = () => {
 
   const canvas = document.createElement('canvas')
 
+  canvas.style.position = 'absolute'
+  canvas.style.left = 0
+  canvas.style.top = 0
+
   parent.appendChild(canvas)
 
   const update = (universe: Universe) => {
     let { width, height } = parent.getBoundingClientRect()
-
-    width -= 2
-    height -= 6
 
     canvas.height = height
     canvas.width = width

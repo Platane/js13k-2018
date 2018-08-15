@@ -14,13 +14,18 @@ export const draw = (
 ) => {
   //
 
-  ctx.clearRect(0, 0, 9999, 9999)
+  ctx.beginPath()
+  ctx.rect(-4999, -4999, 9999, 9999)
+  ctx.fillStyle = '#aaa'
+  ctx.fill()
+
+  ctx.clearRect(0, 0, getHeight(universe.map), getWidth(universe.map))
 
   const p = proj(camera)
 
   // map
   for (let y = getHeight(universe.map); y--; )
-    for (let x = getHeight(universe.map); x--; ) {
+    for (let x = getWidth(universe.map); x--; ) {
       const a = p({ x, y })
 
       ctx.fillStyle = isNavigable(universe.map, { x, y }) ? '#eee' : '#aaa'
@@ -30,10 +35,12 @@ export const draw = (
     }
 
   // grid
-  const l = 20
+  const l = 60
   for (let k = -l; k < l; k++) {
     const a = p({ x: k, y: l })
     const b = p({ x: k, y: -l })
+
+    ctx.lineWidth = 0.6
 
     ctx.beginPath()
     ctx.moveTo(a.x, a.y)
@@ -61,6 +68,8 @@ export const draw = (
       y: a.y + b.velocity.y * 100,
     }
 
+    ctx.lineWidth = 1.2
+
     ctx.beginPath()
     ctx.arc(a.x, a.y, 4, 0, Math.PI * 2)
     ctx.stroke()
@@ -82,7 +91,7 @@ export const draw = (
 
       ctx.beginPath()
       ctx.fillStyle = randomColor(token)
-      ctx.arc(c.x, c.y, 4, 0, Math.PI * 2)
+      ctx.arc(c.x, c.y, 5, 0, Math.PI * 2)
       ctx.fill()
     }
   })

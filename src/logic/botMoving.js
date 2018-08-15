@@ -46,8 +46,8 @@ export const botMoving = ({ map, bots }: Universe) => {
 
         const l = Math.max(length(d), 0.01)
 
-        a.x -= (d.x / l / l) * NEIGHBOR_POWER
-        a.y -= (d.y / l / l) * NEIGHBOR_POWER
+        a.x -= (d.x / l / l / l) * NEIGHBOR_POWER
+        a.y -= (d.y / l / l / l) * NEIGHBOR_POWER
       }
     })
 
@@ -60,27 +60,36 @@ export const botMoving = ({ map, bots }: Universe) => {
         y: cell.y + v.y,
       }
 
-      if (!isNavigable(map, b)) {
-        const c = {
-          x: b.x + 0.5 - v.x * 0.5,
-          y: b.y + 0.5 - v.y * 0.5,
-        }
+      // is not a wall
+      if (isNavigable(map, b)) return
 
-        const d = {
-          x: c.x - position.x,
-          y: c.y - position.y,
-        }
+      // if it's a corner, should be an outside corner
+      if (
+        v.x * v.y !== 0 &&
+        (isNavigable(map, { ...cell, x: cell.x + v.x }) ||
+          isNavigable(map, { ...cell, y: cell.y + v.y }))
+      )
+        return
 
-        let l = v.x * v.y === 0 ? d.x * v.x + d.y * v.y : length(d)
-
-        l = Math.max(l, 0.01)
-
-        // a.x -= (v.x / l) * WALL_PUSH_POWER
-        // a.y -= (v.y / l) * WALL_PUSH_POWER
-
-        a.x -= (d.x / l / l) * WALL_PUSH_POWER
-        a.y -= (d.y / l / l) * WALL_PUSH_POWER
+      const c = {
+        x: b.x + 0.5 - v.x * 0.5,
+        y: b.y + 0.5 - v.y * 0.5,
       }
+
+      const d = {
+        x: c.x - position.x,
+        y: c.y - position.y,
+      }
+
+      let l = v.x * v.y === 0 ? d.x * v.x + d.y * v.y : length(d)
+
+      l = Math.max(l, 0.01)
+
+      // a.x -= (v.x / l) * WALL_PUSH_POWER
+      // a.y -= (v.y / l) * WALL_PUSH_POWER
+
+      a.x -= (d.x / l / l) * WALL_PUSH_POWER
+      a.y -= (d.y / l / l) * WALL_PUSH_POWER
     })
 
     return a

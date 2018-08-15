@@ -8,9 +8,6 @@ export const isInside = (map: Map, { x, y }: Cell): boolean =>
 export const isNavigable = (map: Map, c: Cell): boolean =>
   isInside(map, c) && !map[c.y][c.x]
 
-export const isWall = (map: Map, c: Cell): boolean =>
-  !isInside(map, c) || !map[c.y][c.x]
-
 export const getHeight = (map: Map) => map.length
 
 export const getWidth = (map: Map) => map[0].length

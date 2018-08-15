@@ -90,10 +90,6 @@ export type Machine = {
 }
 
 export type Universe = {
-  mouse: {
-    activationCooldown: number,
-  },
-
   bots: Bot[],
 
   blueprints: Blueprint[],
