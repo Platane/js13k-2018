@@ -44,7 +44,10 @@ const universe: Universe = {
 
   machines: [],
 
-  droppedTokens: [],
+  droppedTokens: [
+    { position: { x: 8.3, y: 3.5 }, token: 'yellow' },
+    { position: { x: 14.3, y: 3.57 }, token: 'blue' },
+  ],
 
   blueprints: [],
 }
@@ -53,9 +56,14 @@ const uistate: UIstate = {
   selectedBotId: null,
 }
 
-createActionLayer(document.body, universe, uistate, renderer.camera)
+createActionLayer(
+  document.getElementById('app'),
+  universe,
+  uistate,
+  renderer.camera
+)
 
-const ui = createUI(document.body)
+const ui = createUI(document.getElementById('app'))
 
 const loop = () => {
   tic(universe)

@@ -108,4 +108,5 @@ export type Camera = {
 
 export type UIstate = {
   selectedBotId: ID | null,
+  pickUpCell: Cell | null,
 }

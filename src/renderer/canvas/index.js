@@ -5,7 +5,7 @@ import { hashCode } from '~/util/hash'
 
 import type { Universe, Camera } from '~/type'
 
-const randomColor = (str: string) => `hsl(${hashCode(str)},80%,60%)`
+const randomColor = (str: string) => `hsl(${hashCode(str)},80%,50%)`
 
 export const draw = (
   ctx: CanvasRenderingContext2D,

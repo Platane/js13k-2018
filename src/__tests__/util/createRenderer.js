@@ -9,7 +9,7 @@ const placeholder = () => ({
 })
 
 const dom = () => {
-  const parent: any = document.body
+  const parent: any = document.getElementById('app') || document.body
 
   const canvas = document.createElement('canvas')
 
