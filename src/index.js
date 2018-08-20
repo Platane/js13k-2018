@@ -1,6 +1,8 @@
 import { createRenderer } from './__tests__/util/createRenderer'
+import { createActionLayer } from '~/logic/actionLayer'
+import { createUI } from '~/renderer/ui'
 import { tic } from './logic'
-import type { Universe } from '~/type'
+import type { Universe, UIstate } from '~/type'
 
 const renderer = createRenderer()
 
@@ -47,10 +49,20 @@ const universe: Universe = {
   blueprints: [],
 }
 
+const uistate: UIstate = {
+  selectedBotId: null,
+}
+
+createActionLayer(document.body, universe, uistate, renderer.camera)
+
+const ui = createUI(document.body)
+
 const loop = () => {
   tic(universe)
 
   renderer.update(universe)
+
+  ui.update(universe, uistate)
 
   requestAnimationFrame(loop)
 }

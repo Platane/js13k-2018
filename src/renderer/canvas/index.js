@@ -1,11 +1,11 @@
 import { proj } from '~/service/camera'
 import { isNavigable, getHeight, getWidth } from '~/service/map'
-import { normalize } from '~/service/point'
+import { normalize, lengthSq } from '~/service/point'
 import { hashCode } from '~/util/hash'
 
 import type { Universe, Camera } from '~/type'
 
-const randomColor = str => `hsl(${hashCode(str)},80%,60%)`
+const randomColor = (str: string) => `hsl(${hashCode(str)},80%,60%)`
 
 export const draw = (
   ctx: CanvasRenderingContext2D,
@@ -63,21 +63,23 @@ export const draw = (
   universe.bots.forEach(b => {
     const a = p(b.position)
 
-    const po = {
-      x: a.x + b.velocity.x * 100,
-      y: a.y + b.velocity.y * 100,
-    }
-
     ctx.lineWidth = 1.2
 
     ctx.beginPath()
     ctx.arc(a.x, a.y, 4, 0, Math.PI * 2)
     ctx.stroke()
 
-    ctx.beginPath()
-    ctx.moveTo(a.x, a.y)
-    ctx.lineTo(po.x, po.y)
-    ctx.stroke()
+    if (lengthSq(b.velocity) > 0.001) {
+      const po = {
+        x: a.x + b.velocity.x * 100,
+        y: a.y + b.velocity.y * 100,
+      }
+
+      ctx.beginPath()
+      ctx.moveTo(a.x, a.y)
+      ctx.lineTo(po.x, po.y)
+      ctx.stroke()
+    }
 
     if (b.command.type === 'carry' && b.activity.carrying) {
       const token = b.activity.carrying

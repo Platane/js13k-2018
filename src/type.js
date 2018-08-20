@@ -105,3 +105,7 @@ export type Camera = {
   a: number,
   t: Point,
 }
+
+export type UIstate = {
+  selectedBotId: ID | null,
+}

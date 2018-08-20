@@ -1,4 +1,4 @@
-export const hashCode = (str: String) => {
+export const hashCode = (str: string) => {
   let hash = 0
   let i
   let chr

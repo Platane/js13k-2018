@@ -1,8 +1,10 @@
 import type { Cell, Point } from '~/type'
+import { pointEqual } from '~/service/point'
 
-const pointToCell = ({ x, y }) => ({ x: Math.floor(x), y: Math.floor(y) })
-
-const pointEqual = (A, B) => A.x === B.x && A.y === B.y
+const pointToCell = ({ x, y }: Point): Cell => ({
+  x: Math.floor(x),
+  y: Math.floor(y),
+})
 
 const EPSYLON = 0.00001
 
