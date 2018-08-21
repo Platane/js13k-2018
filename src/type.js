@@ -63,7 +63,6 @@ export type BotCarry = {
 
   command: CommandCarry,
   activity: {
-    nextCell: Point,
     carrying: Token | null,
   },
 }
@@ -80,8 +79,13 @@ export type Blueprint = {
 
   activationThreshold: number,
 
-  inputs: { cell: Cell, token: Token, n: number }[],
-  outputs: { cell: Cell, token: Token, n: number }[],
+  inputs: { cell: Cell, token: Token }[],
+  outputs: { cell: Cell, token: Token }[],
+
+  recipe: {
+    inputs: { token: Token, n: number }[],
+    outputs: { token: Token, n: number }[],
+  },
 }
 
 export type Machine = {
@@ -92,8 +96,7 @@ export type Machine = {
   rotation: Rotation,
   positionOrigin: Cell,
 
-  activationCount: number,
-  queue: Token[],
+  processing: { k: number, activated: boolean } | null,
 }
 
 export type Universe = {

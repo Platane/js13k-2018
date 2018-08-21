@@ -1,11 +1,15 @@
 import type { Universe } from '~/type'
 import { botMoving } from './botMoving'
-import { botDecision } from './botDecision'
+import { machinceProcessing } from './machinceProcessing'
+import { botDecisionMaking } from './botDecisionMaking'
 
 export const tic = (universe: Universe) => {
   // bot logic
-  botDecision(universe)
+  botDecisionMaking(universe)
 
   // move bots
   botMoving(universe)
+
+  // machines processing
+  machinceProcessing(universe)
 }

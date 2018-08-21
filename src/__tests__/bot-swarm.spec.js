@@ -29,10 +29,10 @@ const universe: Universe = {
     },
 
     activity: {
-      path: [],
-      nextCell: { x: 0, y: 0 },
       carrying: null,
     },
+
+    navigation: null,
   })),
 
   machines: [],
@@ -41,14 +41,6 @@ const universe: Universe = {
 
   blueprints,
 }
-
-universe.bots.forEach(
-  bot =>
-    bot.command.type === 'carry' &&
-    (bot.activity.path =
-      findPath(universe.map, bot.command.dropCell, bot.command.pickUpCell) ||
-      [])
-)
 
 test('bot swarm', async t => {
   const ren = createRenderer()

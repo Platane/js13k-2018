@@ -29,10 +29,10 @@ const universe: Universe = {
       },
 
       activity: {
-        path: [{ x: 0, y: 0 }],
-        nextCell: { x: 0, y: 0 },
         carrying: null,
       },
+
+      navigation: null,
     },
   ],
 

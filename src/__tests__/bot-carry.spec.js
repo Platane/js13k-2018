@@ -29,10 +29,10 @@ const universe: Universe = {
       },
 
       activity: {
-        path: [],
-        nextCell: { x: 0, y: 0 },
         carrying: null,
       },
+
+      navigation: null,
     },
   ],
 
@@ -46,17 +46,6 @@ const universe: Universe = {
 
   blueprints,
 }
-
-universe.bots
-  .filter(bot => bot.command.type === 'carry')
-  .forEach(
-    bot =>
-      (bot.activity.path = findPath(
-        universe.map,
-        bot.command.dropCell,
-        bot.command.pickUpCell
-      ))
-  )
 
 test('bot carry', async t => {
   const ren = createRenderer()
