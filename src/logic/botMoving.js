@@ -7,7 +7,7 @@ import {
   NEIGHBOR_POWER,
   WALL_PUSH_POWER,
 } from '~/config/physic'
-import type { Map, Universe, Navigation, Point } from '~/type'
+import type { Map, Bot, Universe, Navigation, Point } from '~/type'
 
 const EPSYLON = 0.0001
 
@@ -42,12 +42,16 @@ const handleNavigation = (
   const isReachable = cellCenter =>
     rayCastCheck(c => isNavigable(map, c), position, cellCenter)
 
-  while (navigation.pathToTarget[1] && isReachable(navigation.pathToTarget[1]))
+  while (
+    navigation.pathToTarget &&
+    navigation.pathToTarget[1] &&
+    isReachable(navigation.pathToTarget[1])
+  )
     navigation.pathToTarget.shift()
 }
 
 export const botMoving = ({ map, bots }: Universe) => {
-  const acc = bots.map(({ velocity, position, navigation }, i) => {
+  const acc = bots.map(({ velocity, position, navigation }: Bot, i) => {
     // compute the acceleration, as sum of every forces
     const a = { x: 0, y: 0 }
 
@@ -68,9 +72,11 @@ export const botMoving = ({ map, bots }: Universe) => {
 
       const l = length(d)
 
+      const ll = Math.min(WALKING_POWER, l)
+
       if (l > EPSYLON) {
-        a.x += (d.x / l) * WALKING_POWER
-        a.y += (d.y / l) * WALKING_POWER
+        a.x += (d.x / l) * ll
+        a.y += (d.y / l) * ll
       }
     }
 
