@@ -32,7 +32,7 @@ export const createActionLayer = (
     if (e.button === 2 && bot) {
       if (uistate.pickUpCell) {
         // compute path
-        const path = findPath(universe.map, cell, uistate.pickUpCell, cell)
+        const path = findPath(universe.map, uistate.pickUpCell, cell)
 
         if (!path) window.alert('this cell can not be reached')
         else {
@@ -48,8 +48,6 @@ export const createActionLayer = (
 
           bot.activity = {
             carrying: null,
-            path,
-            nextCell: { ...path[0] },
           }
 
           // reset uistate

@@ -46,6 +46,9 @@ const universe: Universe = {
 
   droppedTokens: [
     { position: { x: 8.3, y: 3.5 }, token: 'yellow' },
+    { position: { x: 8.1, y: 3.2 }, token: 'yellow' },
+    { position: { x: 8.6, y: 3.7 }, token: 'yellow' },
+    { position: { x: 8.7, y: 3.2 }, token: 'yellow' },
     { position: { x: 14.3, y: 3.57 }, token: 'blue' },
   ],
 

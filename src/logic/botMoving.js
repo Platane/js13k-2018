@@ -1,19 +1,53 @@
 import { normalize, length, pointToCell } from '~/service/point'
-import { around8, isNavigable } from '~/service/map'
+import { around8, isNavigable, rayCastCheck } from '~/service/map'
+import { findPath } from '~/service/aStar'
 import {
   SOLID_FRICTION,
   WALKING_POWER,
   NEIGHBOR_POWER,
   WALL_PUSH_POWER,
 } from '~/config/physic'
-import type { Universe } from '~/type'
+import type { Map, Universe, Navigation, Point } from '~/type'
 
 const EPSYLON = 0.0001
 
 const round = x => Math.round(x * 10000) / 10000
 
+const handleNavigation = (
+  map: Map,
+  navigation: Navigation,
+  position: Point
+) => {
+  // compute the path if missing
+  if (!navigation.pathToTarget) {
+    const path = findPath(
+      map,
+      pointToCell(position),
+      pointToCell(navigation.target)
+    )
+
+    if (!path) throw new Error('unreachable target')
+
+    navigation.pathToTarget = path.map(({ x, y }) => ({
+      x: x + 0.5,
+      y: y + 0.5,
+    }))
+
+    // replace the last point by the target
+    navigation.pathToTarget[navigation.pathToTarget.length - 1] =
+      navigation.target
+  }
+
+  // return the farest cell reachable
+  const isReachable = cellCenter =>
+    rayCastCheck(c => isNavigable(map, c), position, cellCenter)
+
+  while (navigation.pathToTarget[1] && isReachable(navigation.pathToTarget[1]))
+    navigation.pathToTarget.shift()
+}
+
 export const botMoving = ({ map, bots }: Universe) => {
-  const acc = bots.map(({ velocity, position, command, activity }, i) => {
+  const acc = bots.map(({ velocity, position, navigation }, i) => {
     // compute the acceleration, as sum of every forces
     const a = { x: 0, y: 0 }
 
@@ -22,10 +56,14 @@ export const botMoving = ({ map, bots }: Universe) => {
     a.y += -SOLID_FRICTION * velocity.y
 
     // go to target
-    if (activity && activity.nextCell) {
+    if (navigation) {
+      handleNavigation(map, navigation, position)
+
+      const nextCell = navigation.pathToTarget[0]
+
       const d = {
-        x: activity.nextCell.x - position.x,
-        y: activity.nextCell.y - position.y,
+        x: nextCell.x - position.x,
+        y: nextCell.y - position.y,
       }
 
       const l = length(d)

@@ -28,10 +28,16 @@ export type CommandCarry = {
 
 export type Command = CommandIdle | CommandActivate | CommandCarry
 
+export type Navigation = {
+  target: Point,
+  pathToTarget?: Point[],
+}
+
 export type BotIdle = {
   id: ID,
   position: Point,
   velocity: Point,
+  navigation: Navigation | null,
 
   command: CommandIdle,
   activity: null,
@@ -41,6 +47,7 @@ export type BotActivate = {
   id: ID,
   position: Point,
   velocity: Point,
+  navigation: Navigation | null,
 
   command: CommandActivate,
   activity: {
@@ -52,10 +59,10 @@ export type BotCarry = {
   id: ID,
   position: Point,
   velocity: Point,
+  navigation: Navigation | null,
 
   command: CommandCarry,
   activity: {
-    path: Point[],
     nextCell: Point,
     carrying: Token | null,
   },
