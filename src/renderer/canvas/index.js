@@ -1,6 +1,7 @@
-import { proj } from '~/service/camera'
 import { isNavigable, getHeight, getWidth } from '~/service/map'
 import { normalize, lengthSq } from '~/service/point'
+import { proj as projMachine } from '~/service/machine'
+import { proj } from '~/service/camera'
 import { hashCode } from '~/util/hash'
 
 import type { Universe, Camera } from '~/type'
@@ -57,7 +58,56 @@ export const draw = (
   }
 
   // machines
-  universe.machines.forEach(m => {})
+  universe.machines.forEach(m => {
+    const pm = projMachine(m)
+
+    const { ground, inputs, outputs } = m.blueprint
+
+    for (let y = getHeight(ground); y--; )
+      for (let x = getWidth(ground); x--; ) {
+        const c = { x, y }
+
+        const a = p(pm(c))
+
+        ctx.fillStyle = isNavigable(ground, c) ? 'transparent' : 'blue'
+        ctx.beginPath()
+        ctx.rect(
+          a.x + camera.a * 0.1,
+          a.y + camera.a * 0.1,
+          camera.a * 0.8,
+          camera.a * 0.8
+        )
+        ctx.fill()
+      }
+
+    outputs.forEach(({ cell }) => {
+      const a = p(pm(cell))
+
+      ctx.fillStyle = 'green'
+      ctx.beginPath()
+      ctx.rect(
+        a.x + camera.a * 0.3,
+        a.y + camera.a * 0.3,
+        camera.a * 0.4,
+        camera.a * 0.4
+      )
+      ctx.fill()
+    })
+
+    inputs.forEach(({ cell }) => {
+      const a = p(pm(cell))
+
+      ctx.fillStyle = 'yellow'
+      ctx.beginPath()
+      ctx.rect(
+        a.x + camera.a * 0.3,
+        a.y + camera.a * 0.3,
+        camera.a * 0.4,
+        camera.a * 0.4
+      )
+      ctx.fill()
+    })
+  })
 
   // bots
   universe.bots.forEach(b => {

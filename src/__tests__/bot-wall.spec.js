@@ -46,7 +46,7 @@ const universe: Universe = {
 test('bot wall push', async t => {
   const ren = createRenderer()
 
-  for (let k = 220; k--; ) {
+  for (let k = 100; k--; ) {
     await wait(LOOP_DELAY)
 
     tic(universe)

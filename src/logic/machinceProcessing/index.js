@@ -1,4 +1,5 @@
 import { pointToCell, pointEqual } from '~/service/point'
+import { proj } from '~/service/machine'
 import type { Universe } from '~/type'
 
 const removeInPlace = arr => item => arr.splice(arr.indexOf(item), 1)
@@ -8,11 +9,15 @@ const startProcess = (machine, droppedTokens) => {
   // extract blueprint
   const { recipe, inputs, outputs } = machine.blueprint
 
+  const p = proj(machine)
+
   // list available tokens on the input cells
   const availableTokens = {}
   inputs.forEach(({ cell, token }) => {
+    const c = p(cell)
+
     droppedTokens.forEach(d => {
-      if (token === d.token && pointEqual(cell, pointToCell(d.position))) {
+      if (token === d.token && pointEqual(c, pointToCell(d.position))) {
         ;(availableTokens[d.token] = availableTokens[d.token] || []).push(d)
       }
     })
@@ -20,7 +25,10 @@ const startProcess = (machine, droppedTokens) => {
 
   // does the inputs contains the required tokens ?
   if (
-    recipe.inputs.every(({ token, n }) => availableTokens[token].length >= n)
+    recipe.inputs.every(
+      ({ token, n }) =>
+        availableTokens[token] && availableTokens[token].length >= n
+    )
   ) {
     // remove tokens from ground
     recipe.inputs.forEach(({ token, n }) =>
@@ -43,15 +51,19 @@ const execProcess = (machine, droppedTokens) => {
   if (machine.processing.k > activationThreshold) {
     machine.processing = null
 
+    const p = proj(machine)
+
     recipe.outputs.forEach(({ token, n }) => {
       const { cell } = outputs.find(x => x.token === token)
+
+      const c = p(cell)
 
       while (n--)
         droppedTokens.push({
           token,
           position: {
-            x: cell.x + 0.5 + (Math.random() - 0.5) * 0.3,
-            y: cell.y + 0.5 + (Math.random() - 0.5) * 0.3,
+            x: c.x + 0.5 + (Math.random() - 0.5) * 0.3,
+            y: c.y + 0.5 + (Math.random() - 0.5) * 0.3,
           },
         })
     })

@@ -5,7 +5,7 @@ export type Point = {
   y: number,
 }
 
-export type Rotation = 0 | 90 | 180 | 270
+export type Rotation = 0 | 1 | 2 | 3
 
 export type Cell = Point
 
