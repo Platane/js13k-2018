@@ -1,8 +1,5 @@
 const fs = require('fs')
 const path = require('path')
-const WebpackAssetsManifest = require('webpack-assets-manifest')
-
-const production = process.env.NODE_ENV === 'production'
 
 module.exports = {
   entry: {
@@ -14,7 +11,7 @@ module.exports = {
 
   output: {
     path: path.join(__dirname, '../dist'),
-    filename: production ? '[name]-[hash:8].js' : '[name].js',
+    filename: '[name].js',
     publicPath: '/',
   },
 
@@ -43,11 +40,5 @@ module.exports = {
     ],
   },
 
-  plugins: [
-    new WebpackAssetsManifest({
-      output: path.resolve(__dirname, '../dist', 'assetManifest.json'),
-    }),
-  ],
-
-  devtool: production ? 'source-map' : false,
+  devtool: false,
 }
