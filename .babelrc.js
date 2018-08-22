@@ -1,3 +1,5 @@
+const domprops = require('babel-plugin-minify-mangle-properties/domprops.json')
+
 const plugins = [['babel-plugin-module-resolver', { alias: { '~': './src' } }]]
 
 const presets = ['@babel/preset-flow']
@@ -5,11 +7,20 @@ const presets = ['@babel/preset-flow']
 if (process.env.NODE_ENV === 'production') {
   presets.push('@babel/preset-env')
 }
-if (process.env.NODE_ENV === 'minify') {
+if (process.env.NODE_ENV === 'mangle-properties') {
   presets.length = 0
   plugins.length = 0
 
-  plugins.push('babel-plugin-minify-mangle-properties')
+  const whitelist = ['command', 'navigation', 'target', 'update']
+
+  plugins.push([
+    'babel-plugin-minify-mangle-properties',
+    { reservedNames: domprops.props.filter(x => !whitelist.includes(x)) },
+  ])
+}
+if (process.env.NODE_ENV === 'minify') {
+  presets.length = 0
+  plugins.length = 0
   presets.push([
     'babel-preset-minify',
     {
