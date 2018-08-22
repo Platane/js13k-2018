@@ -14,6 +14,7 @@ if (process.env.NODE_ENV === 'minify') {
   presets.length = 0
   plugins.length = 0
 
+  plugins.push('babel-plugin-minify-mangle-properties')
   presets.push([
     'babel-preset-minify',
     {

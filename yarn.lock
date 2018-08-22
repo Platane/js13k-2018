@@ -1120,6 +1120,10 @@ babel-plugin-minify-mangle-names@^0.4.3:
   dependencies:
     babel-helper-mark-eval-scopes "^0.4.3"
 
+babel-plugin-minify-mangle-properties@AshleyScirra/babel-plugin-minify-mangle-properties:
+  version "0.0.1"
+  resolved "https://codeload.github.com/AshleyScirra/babel-plugin-minify-mangle-properties/tar.gz/2d8b41a14a482074c5ce0d15a821038669f3386e"
+
 babel-plugin-minify-numeric-literals@^0.4.3:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/babel-plugin-minify-numeric-literals/-/babel-plugin-minify-numeric-literals-0.4.3.tgz#8e4fd561c79f7801286ff60e8c5fd9deee93c0bc"
