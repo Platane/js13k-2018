@@ -1,10 +1,5 @@
 import type { Cell, Point } from '~/type'
-import { pointEqual } from '~/service/point'
-
-const pointToCell = ({ x, y }: Point): Cell => ({
-  x: Math.floor(x),
-  y: Math.floor(y),
-})
+import { pointEqual, pointToCell } from '~/service/point'
 
 const EPSYLON = 0.00001
 
