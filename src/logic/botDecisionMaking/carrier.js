@@ -33,7 +33,10 @@ export const botCarrierDecision = (universe: Universe, bot: BotCarry) => {
   ) {
     const token = bot.activity.carrying
 
-    universe.droppedTokens.push({ token, position: { ...bot.position } })
+    universe.droppedTokens.push({
+      token,
+      position: { x: bot.position.x, y: bot.position.y },
+    })
 
     bot.activity.carrying = null
   }

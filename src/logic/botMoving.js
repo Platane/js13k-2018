@@ -110,8 +110,8 @@ export const botMoving = ({ map, bots }: Universe) => {
       // if it's a corner, should be an outside corner
       if (
         v.x * v.y !== 0 &&
-        (isNavigable(map, { ...cell, x: cell.x + v.x }) ||
-          isNavigable(map, { ...cell, y: cell.y + v.y }))
+        (isNavigable(map, { x: cell.x + v.x, y: cell.y }) ||
+          isNavigable(map, { x: cell.x, y: cell.y + v.y }))
       )
         return
 
