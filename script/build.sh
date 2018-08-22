@@ -5,7 +5,7 @@ set -e
 rm -rf dist
 
 # bundle
-yarn rollup -c
+yarn rollup --config ./script/rollup.config.js
 
 # minify
 NODE_ENV=minify yarn babel dist/bundle.js -o dist/index.js
