@@ -36,6 +36,8 @@ jobs:
 
       - run: yarn build
 
+      - run: mv .circleci dist/.circleci
+
       - persist_to_workspace:
           root: *workspace_root
           paths:
