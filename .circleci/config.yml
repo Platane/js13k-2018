@@ -36,6 +36,11 @@ jobs:
 
       - run: yarn build
 
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - dist
+
   deploy:
     <<: *node_config
     steps:
