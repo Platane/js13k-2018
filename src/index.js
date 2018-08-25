@@ -31,7 +31,7 @@ const universe: Universe = {
     .split('\n')
     .map(line => line.split('').map(x => (x === '#' ? 1 : 0))),
 
-  bots: Array.from({ length: 5 }).map((_, i) => ({
+  bots: Array.from({ length: 8 }).map((_, i) => ({
     id: `i${i}`,
 
     position: { x: 3.5 + (i % 2) * 0.03, y: 4.2 + i },
@@ -54,6 +54,31 @@ const universe: Universe = {
 
   blueprints: [],
 }
+
+Object.assign(universe.bots[0], {
+  command: {
+    type: 'carry',
+    pickUpCell: { x: 8, y: 3 },
+    dropCell: { x: 13, y: 13 },
+  },
+  activity: { carrying: null },
+})
+Object.assign(universe.bots[1], {
+  command: {
+    type: 'carry',
+    pickUpCell: { x: 13, y: 13 },
+    dropCell: { x: 18, y: 7 },
+  },
+  activity: { carrying: null },
+})
+Object.assign(universe.bots[2], {
+  command: {
+    type: 'carry',
+    pickUpCell: { x: 18, y: 7 },
+    dropCell: { x: 8, y: 3 },
+  },
+  activity: { carrying: null },
+})
 
 const uistate: UIstate = {
   selectedBotId: null,
