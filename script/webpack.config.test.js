@@ -25,11 +25,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: [
-          {
-            loader: 'babel-loader',
-          },
-        ],
+        use: [{ loader: 'babel-loader' }],
       },
 
       {
@@ -37,11 +33,14 @@ module.exports = {
         use: [
           {
             loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-            },
+            options: { name: '[name].[ext]' },
           },
         ],
+      },
+
+      {
+        test: /\.glsl$/,
+        use: [{ loader: 'raw-loader' }],
       },
     ],
   },

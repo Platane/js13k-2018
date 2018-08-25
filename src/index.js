@@ -1,10 +1,9 @@
 import { createRenderer } from './__tests__/util/createRenderer'
 import { createActionLayer } from '~/logic/actionLayer'
 import { createUI } from '~/renderer/ui'
+import { createWebGL } from '~/renderer/webgl'
 import { tic } from './logic'
 import type { Universe, UIstate } from '~/type'
-
-const renderer = createRenderer()
 
 const universe: Universe = {
   map: `
@@ -39,6 +38,7 @@ const universe: Universe = {
     velocity: { x: 0, y: 0 },
 
     command: { type: 'idle' },
+    navigation: null,
     activity: null,
   })),
 
@@ -57,7 +57,12 @@ const universe: Universe = {
 
 const uistate: UIstate = {
   selectedBotId: null,
+  pickUpCell: null,
 }
+
+const webgl = createWebGL(document.getElementsByTagName('canvas')[0])
+
+const renderer = createRenderer()
 
 createActionLayer(
   document.getElementById('app'),
@@ -72,6 +77,7 @@ const loop = () => {
   tic(universe)
 
   renderer.update(universe)
+  webgl.update(universe, renderer.camera)
 
   ui.update(universe, uistate)
 

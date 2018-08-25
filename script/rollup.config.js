@@ -1,4 +1,5 @@
 import babel from 'rollup-plugin-babel'
+import string from 'rollup-plugin-string'
 import resolve from 'rollup-plugin-node-resolve'
 
 export default {
@@ -9,6 +10,9 @@ export default {
   },
   plugins: [
     //
+    string({
+      include: '**/*.glsl',
+    }),
     resolve(),
     babel(),
   ],
