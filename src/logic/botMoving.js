@@ -129,9 +129,6 @@ export const botMoving = ({ map, bots }: Universe) => {
 
       l = Math.max(l, 0.08)
 
-      // a.x -= (v.x / l) * WALL_PUSH_POWER
-      // a.y -= (v.y / l) * WALL_PUSH_POWER
-
       a.x -= (d.x / l / l) * WALL_PUSH_POWER
       a.y -= (d.y / l / l) * WALL_PUSH_POWER
     })

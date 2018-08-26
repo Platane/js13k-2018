@@ -4,14 +4,15 @@ import { proj as projMachine } from '~/service/machine'
 import { proj } from '~/service/camera'
 import { hashCode } from '~/util/hash'
 
-import type { Universe, Camera } from '~/type'
+import type { Universe, Camera, UIstate } from '~/type'
 
 const randomColor = (str: string) => `hsl(${hashCode(str)},80%,50%)`
 
 export const draw = (
   ctx: CanvasRenderingContext2D,
   camera: Camera,
-  universe: Universe
+  universe: Universe,
+  uistate: UIstate
 ) => {
   //
 
@@ -113,7 +114,17 @@ export const draw = (
   universe.bots.forEach(b => {
     const a = p(b.position)
 
+    if (uistate.selectedBotId === b.id) {
+      ctx.lineWidth = 3
+      ctx.strokeStyle = '#123ab2'
+
+      ctx.beginPath()
+      ctx.arc(a.x, a.y, 4, 0, Math.PI * 2)
+      ctx.stroke()
+    }
+
     ctx.lineWidth = 1.2
+    ctx.strokeStyle = '#000'
 
     ctx.beginPath()
     ctx.arc(a.x, a.y, 4, 0, Math.PI * 2)

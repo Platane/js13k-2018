@@ -1,6 +1,6 @@
 import { proj } from '~/service/machine'
 import { rayCastCheck, isNavigable } from '~/service/map'
-import { pointToCell, pointEqual, distanceSq } from '~/service/point'
+import { pointToCell, pointEqual, distance } from '~/service/point'
 import type { Universe, BotActivate } from '~/type'
 
 export const botActivatorDecision = (
@@ -14,22 +14,26 @@ export const botActivatorDecision = (
 
   const activationCell = proj(machine)(machine.blueprint.outputs[0].cell)
 
+  const activationPoint = {
+    x: activationCell.x + 0.5,
+    y: activationCell.y + 0.5,
+  }
+
+  const d = distance(activationPoint, bot.position)
+
   // approch the machine if it process something, and you can activate it
   if (
-    !bot.navigation &&
-    bot.activity.activationCooldown < 5 &&
-    machine.processing
+    (!bot.navigation &&
+      (bot.activity.activationCooldown < 5 && machine.processing)) ||
+    d > 1.8
   ) {
     bot.navigation = {
-      target: {
-        x: activationCell.x + 0.5,
-        y: activationCell.y + 0.5,
-      },
+      target: activationPoint,
     }
   }
 
   // do not approch the machine if it's not processing
-  if (bot.navigation && !machine.processing) {
+  if (bot.navigation && !machine.processing && d < 1.8) {
     bot.navigation = null
   }
 

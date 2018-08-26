@@ -63,7 +63,7 @@ const wallToMesh = (faces, colors, vertices) => ({ x, y }) => {
   vertices.push(x + 1, y, 0)
 }
 
-const boxToMesh = (faces, colors, vertices) => () =>
+const boxToMesh = (faces, colors, vertices) => c =>
   [[1, 0, 0], [0, 1, 0], [0, 0, 1], [-1, 0, 0], [0, -1, 0], [0, 0, -1]].forEach(
     ([x, y, z], i) => {
       const u = { x: y, y: z, z: x }
@@ -80,7 +80,14 @@ const boxToMesh = (faces, colors, vertices) => () =>
       vertices.push(x + u.x + v.x, y + u.y + v.y, z + u.z + v.z)
       vertices.push(x + u.x - v.x, y + u.y - v.y, z + u.z - v.z)
 
-      // for (let i = 3 * 4; i--; ) vertices[k * 3 + i] = vertices[k * 3 + i] * 0.1
+      for (let i = 4; i--; ) {
+        vertices[k * 3 + i * 3 + 0] =
+          vertices[k * 3 + i * 3 + 0] * 0.5 + 0.5 + c.x
+        vertices[k * 3 + i * 3 + 1] =
+          vertices[k * 3 + i * 3 + 1] * 0.5 + 0.5 + c.y
+        vertices[k * 3 + i * 3 + 2] =
+          vertices[k * 3 + i * 3 + 2] * 0.5 + 0.5 + c.z
+      }
 
       faces.push(k + 0, k + 1, k + 3)
       faces.push(k + 0, k + 3, k + 2)
@@ -112,7 +119,8 @@ export const create = (gl: WebGLRenderingContext) => {
           wallToMesh(faces, colors, vertices)({ x, y })
 
     // gizmo
-    boxToMesh(faces, colors, vertices)()
+    boxToMesh(faces, colors, vertices)({ x: 0, y: 0, z: 0 })
+    boxToMesh(faces, colors, vertices)({ x: 27, y: 18, z: 0 })
 
     // gizmo
     faces.push(

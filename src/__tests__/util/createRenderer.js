@@ -1,11 +1,12 @@
 import { draw } from '~/renderer/canvas'
 import { getWidth, getHeight } from '~/service/map'
-import type { Camera, Universe } from '~/type'
+import type { Camera, Universe, UIstate } from '~/type'
 
 const placeholder = () => ({
   update: (u: Universe) => 0,
   destroy: () => 0,
   camera: { a: 1, t: { x: 0, y: 0 } },
+  uistate: { selectedBotId: null, pickUpCell: null },
 })
 
 const dom = () => {
@@ -20,6 +21,7 @@ const dom = () => {
   parent.appendChild(canvas)
 
   const camera: Camera = { a: 1, t: { x: 0, y: 0 } }
+  const uistate: UIstate = { selectedBotId: null, pickUpCell: null }
 
   const update = (universe: Universe) => {
     let { width, height } = parent.getBoundingClientRect()
@@ -32,13 +34,13 @@ const dom = () => {
       height / getHeight(universe.map)
     )
 
-    draw(canvas.getContext('2d'), camera, universe)
+    draw(canvas.getContext('2d'), camera, universe, uistate)
   }
 
   const destroy = () =>
     canvas.parentNode && canvas.parentNode.removeChild(canvas)
 
-  return { destroy, update, camera }
+  return { destroy, update, camera, uistate }
 }
 
 export const createRenderer =
