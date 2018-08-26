@@ -1,5 +1,6 @@
 import { pointToCell, pointEqual } from '~/service/point'
 import { proj } from '~/service/machine'
+import { DROPPED_DELAY } from '~/config'
 import type { Universe } from '~/type'
 
 const removeInPlace = arr => item => arr.splice(arr.indexOf(item), 1)
@@ -17,7 +18,11 @@ const startProcess = (machine, droppedTokens) => {
     const c = p(cell)
 
     droppedTokens.forEach(d => {
-      if (token === d.token && pointEqual(c, pointToCell(d.position))) {
+      if (
+        d.availableCoolDown === 0 &&
+        token === d.token &&
+        pointEqual(c, pointToCell(d.position))
+      ) {
         ;(availableTokens[d.token] = availableTokens[d.token] || []).push(d)
       }
     })
@@ -65,6 +70,7 @@ const execProcess = (machine, droppedTokens) => {
             x: c.x + 0.5 + (Math.random() - 0.5) * 0.3,
             y: c.y + 0.5 + (Math.random() - 0.5) * 0.3,
           },
+          availableCoolDown: DROPPED_DELAY,
         })
     })
   }

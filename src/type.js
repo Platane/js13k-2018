@@ -108,7 +108,7 @@ export type Universe = {
 
   map: Map,
 
-  droppedTokens: { position: Point, token: Token }[],
+  droppedTokens: { position: Point, token: Token, availableCoolDown: number }[],
 }
 
 export type Camera = {

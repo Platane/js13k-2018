@@ -31,7 +31,7 @@ const universe: Universe = {
     .split('\n')
     .map(line => line.split('').map(x => (x === '#' ? 1 : 0))),
 
-  bots: Array.from({ length: 14 }).map((_, i) => ({
+  bots: Array.from({ length: 9 }).map((_, i) => ({
     id: `i${i}`,
 
     position: { x: 3.5 + (i % 2) * 0.03, y: 4.2 + i * 0.3 },
@@ -86,11 +86,11 @@ const universe: Universe = {
   ],
 
   droppedTokens: [
-    { position: { x: 8.3, y: 3.5 }, token: 'yellow' },
-    { position: { x: 8.1, y: 3.2 }, token: 'yellow' },
-    { position: { x: 8.6, y: 3.7 }, token: 'yellow' },
-    { position: { x: 8.7, y: 3.2 }, token: 'yellow' },
-    { position: { x: 14.3, y: 3.57 }, token: 'blue' },
+    { position: { x: 8.3, y: 3.5 }, token: 'yellow', availableCoolDown: 0 },
+    { position: { x: 8.1, y: 3.2 }, token: 'yellow', availableCoolDown: 0 },
+    { position: { x: 8.6, y: 3.7 }, token: 'yellow', availableCoolDown: 0 },
+    { position: { x: 8.7, y: 3.2 }, token: 'yellow', availableCoolDown: 0 },
+    { position: { x: 14.3, y: 3.57 }, token: 'blue', availableCoolDown: 0 },
   ],
 
   blueprints: [],

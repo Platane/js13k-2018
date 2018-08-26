@@ -1,5 +1,6 @@
 import { rayCastCheck, isNavigable } from '~/service/map'
 import { pointToCell, pointEqual, distanceSq } from '~/service/point'
+import { DROPPED_DELAY } from '~/config'
 import type { Universe, BotCarry } from '~/type'
 
 export const botCarrierDecision = (universe: Universe, bot: BotCarry) => {
@@ -11,8 +12,10 @@ export const botCarrierDecision = (universe: Universe, bot: BotCarry) => {
     pointEqual(bot.command.pickUpCell, pointToCell(bot.position))
   ) {
     // check the list of dropped tokens
-    const i = universe.droppedTokens.findIndex(x =>
-      pointEqual(pointToCell(x.position), pointToCell(bot.position))
+    const i = universe.droppedTokens.findIndex(
+      x =>
+        x.availableCoolDown === 0 &&
+        pointEqual(pointToCell(x.position), pointToCell(bot.position))
     )
 
     if (i >= 0) {
@@ -36,6 +39,7 @@ export const botCarrierDecision = (universe: Universe, bot: BotCarry) => {
     universe.droppedTokens.push({
       token,
       position: { x: bot.position.x, y: bot.position.y },
+      availableCoolDown: DROPPED_DELAY,
     })
 
     bot.activity.carrying = null
