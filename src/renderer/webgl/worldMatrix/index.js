@@ -26,9 +26,9 @@ const rot = mat4.create()
 
 // frustrumMatrix
 const near = 0.01
-const far = 150
+const far = 100
 
-let fovx = Math.PI / 2.2
+let fovx = Math.PI / 2.4
 let aspect = window.innerWidth / window.innerHeight
 
 const frustrumMatrix = mat4.create()
@@ -55,7 +55,7 @@ export const buildWorldMatrix = ({ phy, rho, r, center }: Camera) => {
   mat4.set(
       rot,
       u[0]    , u[1]    , u[2]    , 0,
-      v[0]    , v[1]    , v[2]    , 0,
+      -v[0]   , -v[1]   , -v[2]   , 0,
       -w[0]   , -w[1]   , -w[2]   , 0,
       0       , 0       , 0       , 1,
   )
@@ -78,7 +78,7 @@ export const buildWorldMatrix = ({ phy, rho, r, center }: Camera) => {
 
 export const camera = {
   rho: 0,
-  phy: 0.4,
+  phy: -0.6,
   r: 28,
   center: { x: 27 / 2, y: 18 / 2 },
 }
@@ -87,5 +87,5 @@ document.body.addEventListener('mousemove', event => {
   const { width, height } = event.currentTarget.getBoundingClientRect()
 
   camera.rho = (event.clientX / width) * Math.PI * 2
-  camera.phy = 0.4 - (event.clientY / height - 0.5) * 0.4
+  // camera.phy = -0.5 + (event.clientY / height - 0.5) * 0.4
 })
