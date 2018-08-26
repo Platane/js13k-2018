@@ -40,8 +40,8 @@ const universe: Universe = {
 
   droppedTokens: [
     //
-    { position: { x: 1.5, y: 2.5 }, token: 'citron' },
-    { position: { x: 1.3, y: 2.4 }, token: 'citron' },
+    { position: { x: 1.5, y: 2.5 }, token: 'citron', availableCoolDown: 0 },
+    { position: { x: 1.3, y: 2.4 }, token: 'citron', availableCoolDown: 0 },
   ],
 
   blueprints,
