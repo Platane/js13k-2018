@@ -1,4 +1,5 @@
 import { mat4, vec3 } from 'gl-matrix'
+import { create as createSky } from './sky'
 import { create as createMesh } from './mesh'
 import { buildWorldMatrix, camera as camera3d } from './worldMatrix'
 import type { Universe, Camera } from '~/type'
@@ -42,16 +43,19 @@ const initGL = (canvas: HTMLCanvasElement) => {
 export const createWebGL = (canvas: HTMLCanvasElement) => {
   const gl = initGL(canvas)
 
+  const skyDrawCall = createSky(gl)
   const meshDrawCall = createMesh(gl)
 
   const update = (universe: Universe, camera: Camera) => {
     const m = buildWorldMatrix(camera3d)
 
+    skyDrawCall.update(universe)
     meshDrawCall.update(universe)
 
     // render
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
+    skyDrawCall.draw(m)
     meshDrawCall.draw(m)
   }
 

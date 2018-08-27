@@ -25,8 +25,8 @@ const tmp = mat4.create()
 const rot = mat4.create()
 
 // frustrumMatrix
-const near = 0.01
-const far = 100
+const near = 12
+const far = 45
 
 let fovx = Math.PI / 2.4
 let aspect = window.innerWidth / window.innerHeight
