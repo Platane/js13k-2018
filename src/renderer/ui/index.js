@@ -1,39 +1,13 @@
+import { create as createBotStatus } from './botStatus'
+import { create as createShop } from './shop'
 import type { Universe, UIstate } from '~/type'
 
 export const createUI = (domParent: Element) => {
-  const container = document.createElement('div')
+  const updateBot = createBotStatus((domParent: Element))
+  const updateShop = createShop((domParent: Element))
 
-  container.style.position = 'fixed'
-  container.style.bottom = '0px'
-  container.style.right = '0px'
-  container.style.left = '0px'
-  container.style.backgroundColor = '#ddd'
-  container.style.padding = '10px'
-  container.style.fontSize = '16px'
-  container.style.minHeight = '40px'
-  container.style.zIndex = '2'
-
-  domParent.appendChild(container)
-
-  const update = (universe: Universe, uistate: UIstate) => {
-    const bot = universe.bots.find(({ id }) => id === uistate.selectedBotId)
-
-    const p = ({ x, y }) => `${x}:${y}`
-
-    let text = ''
-    if (bot) {
-      text = [
-        bot.id,
-        bot.command.type,
-        bot.command.type === 'carry' &&
-          `from ${p(bot.command.pickUpCell)} to ${p(bot.command.dropCell)}`,
-      ]
-        .filter(Boolean)
-        .join('<br>')
-    }
-
-    container.innerHTML = text
+  return (universe: Universe, uistate: UIstate) => {
+    updateBot(universe, uistate)
+    updateShop(universe, uistate)
   }
-
-  return { update }
 }

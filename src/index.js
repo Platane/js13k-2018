@@ -176,15 +176,15 @@ createActionLayer(
   renderer.camera
 )
 
-const ui = createUI(document.getElementById('app'))
+const uiUpdate = createUI(document.getElementById('app'))
 
 const loop = () => {
   tic(universe)
 
   renderer.update(universe)
-  webgl.update(universe, renderer.camera)
+  // webgl.update(universe, renderer.camera)
 
-  ui.update(universe, renderer.uistate)
+  uiUpdate(universe, renderer.uistate)
 
   requestAnimationFrame(loop)
 }

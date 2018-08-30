@@ -119,4 +119,7 @@ export type Camera = {
 export type UIstate = {
   selectedBotId: ID | null,
   pickUpCell: Cell | null,
+  shopOpened: boolean,
+  selectedBlueprintId: string | null,
+  selectedBlueprintRotation: Rotation,
 }

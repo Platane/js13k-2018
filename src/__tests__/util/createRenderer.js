@@ -21,7 +21,13 @@ const dom = () => {
   parent.appendChild(canvas)
 
   const camera: Camera = { a: 1, t: { x: 0, y: 0 } }
-  const uistate: UIstate = { selectedBotId: null, pickUpCell: null }
+  const uistate: UIstate = {
+    selectedBotId: null,
+    pickUpCell: null,
+    selectedBlueprintRotation: 0,
+    selectedBlueprintId: null,
+    shopOpened: false,
+  }
 
   const update = (universe: Universe) => {
     let { width, height } = parent.getBoundingClientRect()

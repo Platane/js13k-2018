@@ -4,9 +4,65 @@ import { proj as projMachine } from '~/service/machine'
 import { proj } from '~/service/camera'
 import { hashCode } from '~/util/hash'
 
-import type { Universe, Camera, UIstate } from '~/type'
+import type { Universe, Machine, Camera, UIstate } from '~/type'
 
 const randomColor = (str: string) => `hsl(${hashCode(str)},80%,50%)`
+
+export const drawMachine = (
+  ctx: CanvasRenderingContext2D,
+  camera: Camera,
+  machine: Machine
+) => {
+  const p = proj(camera)
+  const pm = projMachine(machine)
+
+  const { ground, inputs, outputs } = machine.blueprint
+
+  for (let y = getHeight(ground); y--; )
+    for (let x = getWidth(ground); x--; ) {
+      const c = { x, y }
+
+      const a = p(pm(c))
+
+      ctx.fillStyle = isNavigable(ground, c) ? 'transparent' : 'blue'
+      ctx.beginPath()
+      ctx.rect(
+        a.x + camera.a * 0.1,
+        a.y + camera.a * 0.1,
+        camera.a * 0.8,
+        camera.a * 0.8
+      )
+      ctx.fill()
+    }
+
+  outputs.forEach(({ cell }) => {
+    const a = p(pm(cell))
+
+    ctx.fillStyle = 'green'
+    ctx.beginPath()
+    ctx.rect(
+      a.x + camera.a * 0.3,
+      a.y + camera.a * 0.3,
+      camera.a * 0.4,
+      camera.a * 0.4
+    )
+    ctx.fill()
+  })
+
+  inputs.forEach(({ cell }) => {
+    const a = p(pm(cell))
+
+    ctx.fillStyle = 'yellow'
+    ctx.beginPath()
+    ctx.rect(
+      a.x + camera.a * 0.3,
+      a.y + camera.a * 0.3,
+      camera.a * 0.4,
+      camera.a * 0.4
+    )
+    ctx.fill()
+  })
+}
 
 export const draw = (
   ctx: CanvasRenderingContext2D,
@@ -37,8 +93,8 @@ export const draw = (
     }
 
   // grid
-  const l = 60
-  for (let k = -l; k < l; k++) {
+  const l = 30
+  for (let k = 0; k < l; k++) {
     const a = p({ x: k, y: l })
     const b = p({ x: k, y: -l })
 
@@ -59,56 +115,7 @@ export const draw = (
   }
 
   // machines
-  universe.machines.forEach(m => {
-    const pm = projMachine(m)
-
-    const { ground, inputs, outputs } = m.blueprint
-
-    for (let y = getHeight(ground); y--; )
-      for (let x = getWidth(ground); x--; ) {
-        const c = { x, y }
-
-        const a = p(pm(c))
-
-        ctx.fillStyle = isNavigable(ground, c) ? 'transparent' : 'blue'
-        ctx.beginPath()
-        ctx.rect(
-          a.x + camera.a * 0.1,
-          a.y + camera.a * 0.1,
-          camera.a * 0.8,
-          camera.a * 0.8
-        )
-        ctx.fill()
-      }
-
-    outputs.forEach(({ cell }) => {
-      const a = p(pm(cell))
-
-      ctx.fillStyle = 'green'
-      ctx.beginPath()
-      ctx.rect(
-        a.x + camera.a * 0.3,
-        a.y + camera.a * 0.3,
-        camera.a * 0.4,
-        camera.a * 0.4
-      )
-      ctx.fill()
-    })
-
-    inputs.forEach(({ cell }) => {
-      const a = p(pm(cell))
-
-      ctx.fillStyle = 'yellow'
-      ctx.beginPath()
-      ctx.rect(
-        a.x + camera.a * 0.3,
-        a.y + camera.a * 0.3,
-        camera.a * 0.4,
-        camera.a * 0.4
-      )
-      ctx.fill()
-    })
-  })
+  universe.machines.forEach(m => drawMachine(ctx, camera, m))
 
   // bots
   universe.bots.forEach(b => {

@@ -26,11 +26,6 @@ export const createActionLayer = (
   camera: Camera
 ) => {
   const onclick = (e: MouseEvent) => {
-    if (e.button === 2) {
-      e.stopPropagation()
-      e.preventDefault()
-    }
-
     const pointer = unproj(camera)({ x: e.clientX, y: e.clientY })
 
     const cell = pointToCell(pointer)
@@ -96,7 +91,16 @@ export const createActionLayer = (
     }
   }
 
+  const onmove = (e: MouseEvent) => {
+    const pointer = unproj(camera)({ x: e.clientX, y: e.clientY })
+
+    const cell = pointToCell(pointer)
+  }
+
   element.addEventListener('mousedown', onclick)
+  element.addEventListener('mousemove', onmove)
+
+  // disable context menu
   element.addEventListener('contextmenu', e => {
     e.preventDefault()
     e.stopPropagation()
