@@ -20,8 +20,12 @@ export const createActionLayer = (
 ) => {
   const handler = handlers => (event: MouseEvent | TouchEvent) => {
     const p = {
-      x: event.targetTouches ? event.targetTouches[0].clientX : event.clientX,
-      y: event.targetTouches ? event.targetTouches[0].clientY : event.clientY,
+      x: event.targetTouches
+        ? (event.targetTouches[0] && event.targetTouches[0].clientX) || 0
+        : event.clientX,
+      y: event.targetTouches
+        ? (event.targetTouches[0] && event.targetTouches[0].clientY) || 0
+        : event.clientY,
     }
 
     const pointer = unproj(camera)(p)
@@ -39,13 +43,13 @@ export const createActionLayer = (
     const cell = pointToCell(pointer)
   }
 
-  element.onmousedown = element.ontouchdown = handler(
+  element.onmousedown = element.ontouchstart = handler(
     handlers.map(x => x.onpointerdown)
   )
   element.onmousemove = element.ontouchmove = handler(
     handlers.map(x => x.onpointermove)
   )
-  element.onmouseup = element.ontouchup = handler(
+  element.onmouseup = element.ontouchend = handler(
     handlers.map(x => x.onpointerup)
   )
 
