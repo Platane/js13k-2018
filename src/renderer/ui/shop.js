@@ -153,7 +153,7 @@ export const create = (domParent: Element) => {
     if ((!uistate.dragMachine && uistate.shopOpened) !== shopOpened) {
       shopOpened = !uistate.dragMachine && uistate.shopOpened
 
-      if (!shopOpened) uistate.selectedBlueprintId = null
+      // if (!shopOpened) uistate.selectedBlueprintId = null
 
       shopPanel.style.transform = shopOpened ? null : 'scale(0,0)'
     }

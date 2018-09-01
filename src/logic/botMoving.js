@@ -16,7 +16,8 @@ const round = x => Math.round(x * 10000) / 10000
 const handleNavigation = (
   map: Map,
   navigation: Navigation,
-  position: Point
+  position: Point,
+  bot: Bot
 ) => {
   // compute the path if missing
   if (!navigation.pathToTarget) {
@@ -26,7 +27,12 @@ const handleNavigation = (
       pointToCell(navigation.target)
     )
 
-    if (!path) throw new Error('unreachable target')
+    if (!path) {
+      bot.command = { type: 'idle' }
+      bot.navigation = null
+      bot.activity = null
+      return
+    }
 
     navigation.pathToTarget = path.map(({ x, y }) => ({
       x: x + 0.5,
@@ -51,7 +57,11 @@ const handleNavigation = (
 }
 
 export const botMoving = ({ map, bots }: Universe) => {
-  const acc = bots.map(({ velocity, position, navigation }: Bot, i) => {
+  const acc = bots.map((bot: Bot, i) => {
+    const { velocity, position, navigation } = bot
+
+    const cell = pointToCell(position)
+
     // compute the acceleration, as sum of every forces
     const a = { x: 0, y: 0 }
 
@@ -60,9 +70,18 @@ export const botMoving = ({ map, bots }: Universe) => {
     a.y += -SOLID_FRICTION * velocity.y
 
     // go to target
-    if (navigation) {
-      handleNavigation(map, navigation, position)
+    if (navigation) handleNavigation(map, navigation, position, bot)
 
+    // if the bot is stuck in a wall
+    if (!isNavigable(map, cell)) {
+      a.x = position.x > 10 ? WALKING_POWER / 2 : -WALKING_POWER / 2
+      a.y = position.y > 10 ? WALKING_POWER / 2 : -WALKING_POWER / 2
+
+      return a
+    }
+
+    // if the navigation stil exists
+    if (bot.navigation && navigation.pathToTarget) {
       const nextCell = navigation.pathToTarget[0]
 
       const d = {
@@ -94,8 +113,6 @@ export const botMoving = ({ map, bots }: Universe) => {
         a.y -= (d.y / l / l / l) * NEIGHBOR_POWER
       }
     })
-
-    const cell = pointToCell(position)
 
     // pushed by walls
     around8.forEach(v => {

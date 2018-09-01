@@ -49,24 +49,26 @@ export const botCarrierDecision = (universe: Universe, bot: BotCarry) => {
   if (
     bot.activity.carrying &&
     (!bot.navigation ||
-      !pointEqual(bot.navigation.target, bot.command.dropCell))
-  )
+      !pointEqual(pointToCell(bot.navigation.target), bot.command.dropCell))
+  ) {
     bot.navigation = {
       target: {
         x: bot.command.dropCell.x + 0.5,
         y: bot.command.dropCell.y + 0.5,
       },
     }
+  }
 
   if (
     !bot.activity.carrying &&
     (!bot.navigation ||
-      !pointEqual(bot.navigation.target, bot.command.pickUpCell))
-  )
+      !pointEqual(pointToCell(bot.navigation.target), bot.command.pickUpCell))
+  ) {
     bot.navigation = {
       target: {
         x: bot.command.pickUpCell.x + 0.5,
         y: bot.command.pickUpCell.y + 0.5,
       },
     }
+  }
 }
