@@ -32,7 +32,7 @@ const createMachineList = onselect => {
   return container
 }
 
-const createMachineDecription = (onrotate, onstartdrag) => {
+const createMachineDecription = (onrotate, ondragstart) => {
   const container = document.createElement('div')
   container.style.cssText = 'padding:10px;background-color:#f3f3f3;flex-grow:1'
 
@@ -47,6 +47,7 @@ const createMachineDecription = (onrotate, onstartdrag) => {
   const canvas = document.createElement('canvas')
   const l = (canvas.width = canvas.height = 100)
   canvas.style.cssText = `width:${l}px;height:${l}px`
+  canvas.ontouchstart = canvas.onmousedown = ondragstart
   container.appendChild(canvas)
 
   const rotateButton = document.createElement('button')
@@ -101,7 +102,7 @@ export const create = (domParent: Element) => {
 
   const shopPanel = document.createElement('div')
   shopPanel.style.cssText =
-    'position:absolute;min-width:300px;width:90%;right:10px;min-height:300px;background-color:#ddd;bottom:80px;border-radius:4px;transition:transform 200ms;transform-origin:2% 110%;transform:scale(0,0);display:flex;flex-direction:row;'
+    'position:absolute;min-width:300px;width:90%;right:10px;height:250px;background-color:#ddd;bottom:70px;border-radius:4px;transition:transform 200ms;transform-origin:2% 110%;transform:scale(0,0);display:flex;flex-direction:row;'
 
   container.appendChild(shopPanel)
 
@@ -128,15 +129,29 @@ export const create = (domParent: Element) => {
         (uistate.selectedBlueprintRotation =
           (uistate.selectedBlueprintRotation + 3) % 4)
 
+      const ondragstart = m => {
+        const blueprint = blueprints.find(x => x.id === selectedBlueprintId)
+
+        const machine: Machine | void = blueprint && {
+          id: Math.random().toString(),
+          rotation: uistate.selectedBlueprintRotation,
+          positionOrigin: { x: -999, y: -999 },
+          blueprint,
+          processing: null,
+        }
+
+        uistate.dragMachine = machine
+      }
+
       shopPanel.appendChild(
-        (machineDecription = createMachineDecription(onrotate))
+        (machineDecription = createMachineDecription(onrotate, ondragstart))
       )
     }
 
     // update ui
     //
-    if (uistate.shopOpened !== shopOpened) {
-      shopOpened = uistate.shopOpened
+    if ((!uistate.dragMachine && uistate.shopOpened) !== shopOpened) {
+      shopOpened = !uistate.dragMachine && uistate.shopOpened
 
       if (!shopOpened) uistate.selectedBlueprintId = null
 

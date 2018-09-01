@@ -6,6 +6,8 @@ import { tic } from './logic'
 import type { Universe, UIstate } from '~/type'
 
 const universe: Universe = {
+  bank: 0,
+
   map: `
 ############################
 #...................#......#

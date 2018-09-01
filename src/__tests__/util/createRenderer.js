@@ -25,8 +25,8 @@ const dom = () => {
     selectedBotId: null,
     pickUpCell: null,
     selectedBlueprintRotation: 0,
-    selectedBlueprintId: null,
-    shopOpened: false,
+    selectedBlueprintId: 'rice-cooker',
+    shopOpened: true,
   }
 
   const update = (universe: Universe) => {

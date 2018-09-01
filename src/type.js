@@ -30,7 +30,7 @@ export type Command = CommandIdle | CommandActivate | CommandCarry
 
 export type Navigation = {
   target: Point,
-  pathToTarget?: Point[],
+  pathToTarget?: Point[] | null,
 }
 
 export type BotIdle = {
@@ -69,13 +69,18 @@ export type BotCarry = {
 
 export type Bot = BotIdle | BotActivate | BotCarry
 
-type C = 0 | 1 | 2
-export type Map = C[][]
+// 0 empty
+// 1 wall
+// 2 trigger
+export type CellType = 0 | 1 | 2
+export type Map = CellType[][]
 
 export type Blueprint = {
   id: ID,
 
   ground: Map,
+
+  buildingCost: number,
 
   activationThreshold: number,
 
@@ -109,6 +114,8 @@ export type Universe = {
   map: Map,
 
   droppedTokens: { position: Point, token: Token, availableCoolDown: number }[],
+
+  bank: number,
 }
 
 export type Camera = {
@@ -122,4 +129,6 @@ export type UIstate = {
   shopOpened: boolean,
   selectedBlueprintId: string | null,
   selectedBlueprintRotation: Rotation,
+  dragMachine: Machine | null,
+  dragMachineDroppable: boolean,
 }

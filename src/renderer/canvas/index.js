@@ -117,6 +117,14 @@ export const draw = (
   // machines
   universe.machines.forEach(m => drawMachine(ctx, camera, m))
 
+  if (uistate.dragMachine) {
+    ctx.save()
+    ctx.globalAlpha = uistate.dragMachineDroppable ? 0.3 : 0.1
+    drawMachine(ctx, camera, uistate.dragMachine)
+
+    ctx.restore()
+  }
+
   // bots
   universe.bots.forEach(b => {
     const a = p(b.position)

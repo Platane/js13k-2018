@@ -5,19 +5,12 @@ import { isNavigable, getWidth, getHeight } from '~/service/map'
 import { proj as projMachine } from '~/service/machine'
 import type { ID, UIstate, Camera, Universe, Machine, Cell } from '~/type'
 
-const isMachineHit = (m: Machine, cell: Cell) => {
-  const blueprint = m.blueprint
-
-  for (let x = getWidth(blueprint.ground); x--; )
-    for (let y = getHeight(blueprint.ground); y--; )
-      if (
-        !isNavigable(blueprint.ground, { x, y }) &&
-        pointEqual(cell, projMachine(m)({ x, y }))
-      )
-        return true
-
-  return false
-}
+const handlers = [
+  //
+  // require('./command'),
+  require('./select'),
+  require('./placeMachine'),
+]
 
 export const createActionLayer = (
   element: Element,
@@ -25,70 +18,19 @@ export const createActionLayer = (
   uistate: UIstate,
   camera: Camera
 ) => {
-  const onclick = (e: MouseEvent) => {
-    const pointer = unproj(camera)({ x: e.clientX, y: e.clientY })
+  const handler = handlers => (event: MouseEvent | TouchEvent) => {
+    const p = {
+      x: event.targetTouches ? event.targetTouches[0].clientX : event.clientX,
+      y: event.targetTouches ? event.targetTouches[0].clientY : event.clientY,
+    }
+
+    const pointer = unproj(camera)(p)
 
     const cell = pointToCell(pointer)
 
-    if (e.button === 0) {
-      const bot = universe.bots.find(
-        ({ position }) => distanceSq(position, pointer) < 0.5 * 0.5
-      )
-
-      const botId = bot ? bot.id : null
-
-      if (uistate.selectedBotId !== botId) {
-        uistate.selectedBotId = botId
-        uistate.pickUpCell = null
-      }
-    }
-
-    const bot = universe.bots.find(({ id }) => id === uistate.selectedBotId)
-
-    if (e.button === 2 && bot) {
-      if (uistate.pickUpCell) {
-        // compute path
-        const path = findPath(universe.map, uistate.pickUpCell, cell)
-
-        if (!path) window.alert('this cell can not be reached')
-        else {
-          if (bot.activity && bot.activity.carrying) {
-            // drop to the ground
-          }
-
-          bot.command = {
-            type: 'carry',
-            dropCell: cell,
-            pickUpCell: uistate.pickUpCell,
-          }
-
-          bot.activity = {
-            carrying: null,
-          }
-
-          // reset uistate
-          uistate.pickUpCell = null
-        }
-
-        return
-      }
-
-      // click on a machine
-      if (!isNavigable(universe.map, cell)) {
-        const machine = universe.machines.find(m => isMachineHit(m, cell))
-
-        if (machine) {
-          bot.command = {
-            type: 'activate',
-            targetId: machine.id,
-          }
-          bot.activity = { activationCooldown: 0 }
-        }
-      }
-
-      uistate.pickUpCell = cell
-      //
-    }
+    handlers
+      .filter(Boolean)
+      .forEach(h => h(universe, uistate, camera)(pointer, cell, event))
   }
 
   const onmove = (e: MouseEvent) => {
@@ -97,12 +39,19 @@ export const createActionLayer = (
     const cell = pointToCell(pointer)
   }
 
-  element.addEventListener('mousedown', onclick)
-  element.addEventListener('mousemove', onmove)
+  element.onmousedown = element.ontouchdown = handler(
+    handlers.map(x => x.onpointerdown)
+  )
+  element.onmousemove = element.ontouchmove = handler(
+    handlers.map(x => x.onpointermove)
+  )
+  element.onmouseup = element.ontouchup = handler(
+    handlers.map(x => x.onpointerup)
+  )
 
   // disable context menu
-  element.addEventListener('contextmenu', e => {
-    e.preventDefault()
-    e.stopPropagation()
-  })
+  // element.addEventListener('contextmenu', e => {
+  //   e.preventDefault()
+  //   e.stopPropagation()
+  // })
 }
