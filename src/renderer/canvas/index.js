@@ -1,6 +1,7 @@
 import { isNavigable, getHeight, getWidth } from '~/service/map'
-import { normalize, lengthSq } from '~/service/point'
+import { normalize, lengthSq, cellCenter } from '~/service/point'
 import { proj as projMachine } from '~/service/machine'
+import { findPath, smoothPath } from '~/service/aStar'
 import { proj } from '~/service/camera'
 import { hashCode } from '~/util/hash'
 
@@ -186,23 +187,59 @@ export const draw = (
     ctx.restore()
   }
 
-  if (uistate.command && uistate.command.path) {
-    ctx.save()
-    ctx.globalAlpha = 0.5
-    uistate.command.path.forEach(c => {
-      const a = p(c)
+  if (uistate.selectedBotId) {
+    const bot = universe.bots.find(bot => bot.id === uistate.selectedBotId)
 
-      ctx.fillStyle = 'green'
+    if (bot && bot.command.type === 'carry') {
+      const path = smoothPath(
+        universe.map,
+        findPath(universe.map, bot.command.pickUpCell, bot.command.dropCell) ||
+          []
+      ).map(cellCenter)
+
+      if (path.length) {
+        ctx.save()
+        ctx.globalAlpha = 0.7
+        ctx.beginPath()
+        const a = p(path[0])
+        ctx.moveTo(a.x, a.y)
+
+        path.forEach(c => {
+          const a = p(c)
+          ctx.lineTo(a.x, a.y)
+        })
+        ctx.stroke()
+
+        ctx.restore()
+      }
+    }
+  }
+
+  if (uistate.command && uistate.command.type === 'carry') {
+    const path = smoothPath(
+      universe.map,
+      findPath(
+        universe.map,
+        uistate.command.pickUpCell,
+        uistate.command.dropCell
+      ) || []
+    ).map(cellCenter)
+
+    if (path.length) {
+      ctx.save()
+      ctx.globalAlpha = 0.7
       ctx.beginPath()
-      ctx.rect(
-        a.x + camera.a * 0.3,
-        a.y + camera.a * 0.3,
-        camera.a * 0.4,
-        camera.a * 0.4
-      )
-      ctx.fill()
-    })
-    ctx.restore()
+      const a = p(path[0])
+      ctx.moveTo(a.x, a.y)
+
+      path.forEach(c => {
+        const a = p(c)
+        ctx.lineTo(a.x, a.y)
+      })
+      ctx.stroke()
+
+      ctx.restore()
+    }
   }
 
   // bots

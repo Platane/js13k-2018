@@ -5,6 +5,11 @@ export const pointToCell = ({ x, y }: Point): Cell => ({
   y: Math.floor(y),
 })
 
+export const cellCenter = ({ x, y }: Point): Point => ({
+  x: Math.floor(x) + 0.5,
+  y: Math.floor(y) + 0.5,
+})
+
 export const pointEqual = (A: Point, B: Point) => A.x === B.x && A.y === B.y
 
 export const lengthSq = (A: Point) => A.x * A.x + A.y * A.y

@@ -56,11 +56,6 @@ export const onpointermove = (
   if (!uistate.command || !uistate.command.pickUpCell) return
 
   uistate.command.dropCell = cell
-  uistate.command.path = findPath(
-    universe.map,
-    uistate.command.pickUpCell,
-    uistate.command.dropCell
-  )
 }
 
 export const onpointerup = (
@@ -70,7 +65,13 @@ export const onpointerup = (
 ) => (pointer: Point, cell: Cell) => {
   if (!uistate.command || !uistate.command.type === 'carry') return
 
-  if (uistate.command.path) {
+  const path = findPath(
+    universe.map,
+    uistate.command.pickUpCell,
+    uistate.command.dropCell
+  )
+
+  if (path) {
     const bot = universe.bots.find(bot => bot.id === uistate.selectedBotId)
 
     bot.command = {

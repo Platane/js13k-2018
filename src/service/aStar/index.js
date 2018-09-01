@@ -1,4 +1,5 @@
 import { isNavigable, distance, around4 as around } from '../map'
+export { smoothPath } from './smoothPath'
 import type { Map, Cell } from '~/type'
 
 const buildChain = a => (!a ? [] : [...buildChain(a.parent), a.c])
