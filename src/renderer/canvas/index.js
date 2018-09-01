@@ -8,6 +8,60 @@ import type { Universe, Machine, Camera, UIstate } from '~/type'
 
 const randomColor = (str: string) => `hsl(${hashCode(str)},80%,50%)`
 
+export const drawBot = (
+  ctx: CanvasRenderingContext2D,
+  camera: Camera,
+  bot: Bot,
+  uistate: UIstate
+) => {
+  const p = proj(camera)
+  const a = p(bot.position)
+
+  if (uistate.selectedBotId === bot.id) {
+    ctx.lineWidth = 3
+    ctx.strokeStyle = '#123ab2'
+
+    ctx.beginPath()
+    ctx.arc(a.x, a.y, 4, 0, Math.PI * 2)
+    ctx.stroke()
+  }
+
+  ctx.lineWidth = 1.2
+  ctx.strokeStyle = '#000'
+
+  ctx.beginPath()
+  ctx.arc(a.x, a.y, 4, 0, Math.PI * 2)
+  ctx.stroke()
+
+  if (lengthSq(bot.velocity) > 0.001) {
+    const po = {
+      x: a.x + bot.velocity.x * 100,
+      y: a.y + bot.velocity.y * 100,
+    }
+
+    ctx.beginPath()
+    ctx.moveTo(a.x, a.y)
+    ctx.lineTo(po.x, po.y)
+    ctx.stroke()
+  }
+
+  if (bot.command.type === 'carry' && bot.activity.carrying) {
+    const token = bot.activity.carrying
+
+    const v = normalize(bot.velocity)
+
+    const c = {
+      x: a.x - v.x * 4,
+      y: a.y - v.y * 4,
+    }
+
+    ctx.beginPath()
+    ctx.fillStyle = randomColor(token)
+    ctx.arc(c.x, c.y, 5, 0, Math.PI * 2)
+    ctx.fill()
+  }
+}
+
 export const drawMachine = (
   ctx: CanvasRenderingContext2D,
   camera: Camera,
@@ -125,6 +179,13 @@ export const draw = (
     ctx.restore()
   }
 
+  if (uistate.dragBot) {
+    ctx.save()
+    ctx.globalAlpha = uistate.dragMachineDroppable ? 0.3 : 0.1
+    drawBot(ctx, camera, uistate.dragBot, { selectedBotId: uistate.dragBot.id })
+    ctx.restore()
+  }
+
   if (uistate.command && uistate.command.path) {
     ctx.save()
     ctx.globalAlpha = 0.5
@@ -145,53 +206,7 @@ export const draw = (
   }
 
   // bots
-  universe.bots.forEach(b => {
-    const a = p(b.position)
-
-    if (uistate.selectedBotId === b.id) {
-      ctx.lineWidth = 3
-      ctx.strokeStyle = '#123ab2'
-
-      ctx.beginPath()
-      ctx.arc(a.x, a.y, 4, 0, Math.PI * 2)
-      ctx.stroke()
-    }
-
-    ctx.lineWidth = 1.2
-    ctx.strokeStyle = '#000'
-
-    ctx.beginPath()
-    ctx.arc(a.x, a.y, 4, 0, Math.PI * 2)
-    ctx.stroke()
-
-    if (lengthSq(b.velocity) > 0.001) {
-      const po = {
-        x: a.x + b.velocity.x * 100,
-        y: a.y + b.velocity.y * 100,
-      }
-
-      ctx.beginPath()
-      ctx.moveTo(a.x, a.y)
-      ctx.lineTo(po.x, po.y)
-      ctx.stroke()
-    }
-
-    if (b.command.type === 'carry' && b.activity.carrying) {
-      const token = b.activity.carrying
-
-      const v = normalize(b.velocity)
-
-      const c = {
-        x: a.x - v.x * 4,
-        y: a.y - v.y * 4,
-      }
-
-      ctx.beginPath()
-      ctx.fillStyle = randomColor(token)
-      ctx.arc(c.x, c.y, 5, 0, Math.PI * 2)
-      ctx.fill()
-    }
-  })
+  universe.bots.forEach(b => drawBot(ctx, camera, b, uistate))
 
   // dropped tokens
   universe.droppedTokens.forEach(({ position, token }) => {
@@ -203,7 +218,7 @@ export const draw = (
     ctx.fill()
   })
 
-  if (uistate.command) {
+  if (uistate.command || uistate.dragMachine || uistate.dragBot) {
     ctx.fillStyle = '#0004'
     ctx.fillRect(0, 0, 9999, 9999)
   }

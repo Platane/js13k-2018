@@ -8,6 +8,7 @@ import type { ID, UIstate, Camera, Universe, Machine, Cell } from '~/type'
 const handlers = [
   //
   require('./select'),
+  require('./placeBot'),
   require('./placeMachine'),
   require('./command'),
 ]

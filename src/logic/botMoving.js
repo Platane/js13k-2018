@@ -72,14 +72,6 @@ export const botMoving = ({ map, bots }: Universe) => {
     // go to target
     if (navigation) handleNavigation(map, navigation, position, bot)
 
-    // if the bot is stuck in a wall
-    // if (!isNavigable(map, cell)) {
-    //   a.x = position.x > 10 ? -WALKING_POWER / 2 : WALKING_POWER / 2
-    //   a.y = position.y > 10 ? -WALKING_POWER / 2 : WALKING_POWER / 2
-    //
-    //   return a
-    // }
-
     // if the navigation stil exists
     if (bot.navigation && navigation.pathToTarget) {
       const nextCell = navigation.pathToTarget[0]
@@ -115,40 +107,42 @@ export const botMoving = ({ map, bots }: Universe) => {
     })
 
     // pushed by walls
-    around8.forEach(v => {
-      const b = {
-        x: cell.x + v.x,
-        y: cell.y + v.y,
-      }
+    if (isNavigable(map, cell))
+      // no clip mode if in the wall
+      around8.forEach(v => {
+        const b = {
+          x: cell.x + v.x,
+          y: cell.y + v.y,
+        }
 
-      // is not a wall
-      if (isNavigable(map, b)) return
+        // is not a wall
+        if (isNavigable(map, b)) return
 
-      // if it's a corner, should be an outside corner
-      if (
-        v.x * v.y !== 0 &&
-        (!isNavigable(map, { x: cell.x + v.x, y: cell.y }) ||
-          !isNavigable(map, { x: cell.x, y: cell.y + v.y }))
-      )
-        return
+        // if it's a corner, should be an outside corner
+        if (
+          v.x * v.y !== 0 &&
+          (!isNavigable(map, { x: cell.x + v.x, y: cell.y }) ||
+            !isNavigable(map, { x: cell.x, y: cell.y + v.y }))
+        )
+          return
 
-      const c = {
-        x: b.x + 0.5 - v.x * 0.5,
-        y: b.y + 0.5 - v.y * 0.5,
-      }
+        const c = {
+          x: b.x + 0.5 - v.x * 0.5,
+          y: b.y + 0.5 - v.y * 0.5,
+        }
 
-      const d = {
-        x: c.x - position.x,
-        y: c.y - position.y,
-      }
+        const d = {
+          x: c.x - position.x,
+          y: c.y - position.y,
+        }
 
-      let l = v.x * v.y === 0 ? d.x * v.x + d.y * v.y : length(d)
+        let l = v.x * v.y === 0 ? d.x * v.x + d.y * v.y : length(d)
 
-      l = Math.max(l, 0.08)
+        l = Math.max(l, 0.08)
 
-      a.x -= (d.x / l / l) * WALL_PUSH_POWER
-      a.y -= (d.y / l / l) * WALL_PUSH_POWER
-    })
+        a.x -= (d.x / l / l) * WALL_PUSH_POWER
+        a.y -= (d.y / l / l) * WALL_PUSH_POWER
+      })
 
     return a
   })

@@ -130,5 +130,7 @@ export type UIstate = {
   selectedBlueprintId: string | null,
   selectedBlueprintRotation: Rotation,
   dragMachine: Machine | null,
+  dragBot: Bot | null,
   dragMachineDroppable: boolean,
+  dragBotDroppable: boolean,
 }
