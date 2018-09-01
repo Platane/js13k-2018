@@ -2,37 +2,39 @@ import type { Universe, UIstate } from '~/type'
 
 export const create = (domParent: Element) => {
   const container = document.createElement('div')
-
-  container.style.position = 'fixed'
-  container.style.bottom = '0px'
-  container.style.left = '0px'
-  container.style.width = '45%'
-  container.style.backgroundColor = '#ddd'
-  container.style.padding = '10px'
-  container.style.fontSize = '16px'
-  container.style.minHeight = '40px'
-  container.style.zIndex = '2'
-
+  container.style.cssText =
+    'height:60px;position:fixed;padding:10px;background-color:#ddd;bottom:0;left:0;width:45%;font-size:16px;z-index:2;display:flex;flex-direction:row;transition:transform 180ms;transform:translate3d(0,60px,0)'
+  container.onmousedown = e => e.stopPropagation()
   domParent.appendChild(container)
 
+  const name = document.createElement('div')
+  name.style.cssText = ''
+  container.appendChild(name)
+
+  const button = document.createElement('button')
+  button.style.cssText =
+    'padding:10px;border-radius:50%;width:40px;height:40px;border:none;background-color:blue;margin-left:auto'
+  container.appendChild(button)
+
+  let selectedBotId = -1
+
   const update = (universe: Universe, uistate: UIstate) => {
-    const bot = universe.bots.find(({ id }) => id === uistate.selectedBotId)
+    //
+    if (!button.onclick)
+      button.onclick = e => (uistate.command = uistate.command ? null : {})
 
-    const p = ({ x, y }) => `${x}:${y}`
+    //
+    if (selectedBotId !== uistate.selectedBotId) {
+      selectedBotId = uistate.selectedBotId
 
-    let text = ''
-    if (bot) {
-      text = [
-        bot.id,
-        bot.command.type,
-        bot.command.type === 'carry' &&
-          `from ${p(bot.command.pickUpCell)} to ${p(bot.command.dropCell)}`,
-      ]
-        .filter(Boolean)
-        .join('<br>')
+      const bot = universe.bots.find(({ id }) => id === uistate.selectedBotId)
+
+      if (bot) {
+        name.innerHTML = bot.id + '  ' + bot.command.type
+      }
+
+      container.style.transform = bot ? null : 'translate3d(0,60px,0)'
     }
-
-    container.innerHTML = text
   }
 
   return update

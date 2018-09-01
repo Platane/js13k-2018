@@ -73,12 +73,12 @@ export const botMoving = ({ map, bots }: Universe) => {
     if (navigation) handleNavigation(map, navigation, position, bot)
 
     // if the bot is stuck in a wall
-    if (!isNavigable(map, cell)) {
-      a.x = position.x > 10 ? WALKING_POWER / 2 : -WALKING_POWER / 2
-      a.y = position.y > 10 ? WALKING_POWER / 2 : -WALKING_POWER / 2
-
-      return a
-    }
+    // if (!isNavigable(map, cell)) {
+    //   a.x = position.x > 10 ? -WALKING_POWER / 2 : WALKING_POWER / 2
+    //   a.y = position.y > 10 ? -WALKING_POWER / 2 : WALKING_POWER / 2
+    //
+    //   return a
+    // }
 
     // if the navigation stil exists
     if (bot.navigation && navigation.pathToTarget) {

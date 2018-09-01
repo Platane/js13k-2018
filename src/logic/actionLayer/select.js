@@ -18,6 +18,8 @@ export const onpointerdown = (
   uistate: UIstate,
   camera: Camera
 ) => (pointer: Point, cell: Cell) => {
+  if (uistate.command) return
+
   const bot = universe.bots.find(
     ({ position }) => distanceSq(position, pointer) < 0.5 * 0.5
   )

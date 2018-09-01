@@ -2,6 +2,8 @@ import { blueprints } from '~/config/blueprints'
 import { drawMachine } from '~/renderer/canvas'
 import { getWidth, getHeight } from '~/service/map'
 import { proj as projMachine } from '~/service/machine'
+import { distance } from '~/service/point'
+import { getPointer } from '~/util/pointer'
 import type { Universe, Blueprint, Machine, UIstate } from '~/type'
 
 const names = {
@@ -32,9 +34,30 @@ const createMachineList = onselect => {
   return container
 }
 
+const startdrag = (element, callback) => {
+  let timestamp = 0
+  let pointer = null
+  element.ontouchstart = element.onmousedown = e => {
+    timestamp = e.timeStamp
+    pointer = getPointer(e)
+  }
+  window.document.ontouchend = window.document.onmouseup = () => (timestamp = 0)
+  window.document.ontouchmove = window.document.onmousemove = e => {
+    if (!timestamp) return
+
+    const l = distance(getPointer(e), pointer)
+
+    if (l > 10) {
+      timestamp = 0
+      callback()
+    }
+  }
+}
+
 const createMachineDecription = (onrotate, ondragstart) => {
   const container = document.createElement('div')
   container.style.cssText = 'padding:10px;background-color:#f3f3f3;flex-grow:1'
+  container.onmousedown = e => e.stopPropagation()
 
   const name = document.createElement('div')
   name.style.cssText = 'margin-bottom:20px'
@@ -46,8 +69,8 @@ const createMachineDecription = (onrotate, ondragstart) => {
 
   const canvas = document.createElement('canvas')
   const l = (canvas.width = canvas.height = 100)
-  canvas.style.cssText = `width:${l}px;height:${l}px`
-  canvas.ontouchstart = canvas.onmousedown = ondragstart
+  canvas.style.cssText = `width:${l}px;height:${l}px;cursor:pointer`
+  startdrag(canvas, ondragstart)
   container.appendChild(canvas)
 
   const rotateButton = document.createElement('button')
@@ -97,13 +120,11 @@ export const create = (domParent: Element) => {
   const button = document.createElement('button')
   button.style.cssText =
     'padding:10px;border-radius:50%;width:40px;height:40px;border:none;background-color:blue'
-
   container.appendChild(button)
 
   const shopPanel = document.createElement('div')
   shopPanel.style.cssText =
-    'position:absolute;min-width:300px;width:90%;right:10px;height:250px;background-color:#ddd;bottom:70px;border-radius:4px;transition:transform 200ms;transform-origin:2% 110%;transform:scale(0,0);display:flex;flex-direction:row;'
-
+    'position:absolute;min-width:300px;width:90%;right:10px;height:250px;background-color:#ddd;bottom:70px;border-radius:4px;transition:transform 180ms;transform-origin:2% 110%;transform:scale(0,0);display:flex;flex-direction:row;'
   container.appendChild(shopPanel)
 
   let machineList
@@ -150,8 +171,12 @@ export const create = (domParent: Element) => {
 
     // update ui
     //
-    if ((!uistate.dragMachine && uistate.shopOpened) !== shopOpened) {
-      shopOpened = !uistate.dragMachine && uistate.shopOpened
+    if (
+      (!uistate.dragMachine && !uistate.command && uistate.shopOpened) !==
+      shopOpened
+    ) {
+      shopOpened =
+        !uistate.dragMachine && !uistate.command && uistate.shopOpened
 
       // if (!shopOpened) uistate.selectedBlueprintId = null
 

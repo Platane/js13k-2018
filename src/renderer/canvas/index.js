@@ -117,11 +117,30 @@ export const draw = (
   // machines
   universe.machines.forEach(m => drawMachine(ctx, camera, m))
 
+  // ui
   if (uistate.dragMachine) {
     ctx.save()
     ctx.globalAlpha = uistate.dragMachineDroppable ? 0.3 : 0.1
     drawMachine(ctx, camera, uistate.dragMachine)
+    ctx.restore()
+  }
 
+  if (uistate.command && uistate.command.path) {
+    ctx.save()
+    ctx.globalAlpha = 0.5
+    uistate.command.path.forEach(c => {
+      const a = p(c)
+
+      ctx.fillStyle = 'green'
+      ctx.beginPath()
+      ctx.rect(
+        a.x + camera.a * 0.3,
+        a.y + camera.a * 0.3,
+        camera.a * 0.4,
+        camera.a * 0.4
+      )
+      ctx.fill()
+    })
     ctx.restore()
   }
 
@@ -183,4 +202,9 @@ export const draw = (
     ctx.arc(a.x, a.y, 4, 0, Math.PI * 2)
     ctx.fill()
   })
+
+  if (uistate.command) {
+    ctx.fillStyle = '#0004'
+    ctx.fillRect(0, 0, 9999, 9999)
+  }
 }

@@ -77,7 +77,10 @@ export const onpointerup = (
 ) => (pointer: Point, cell: Cell) => {
   if (!uistate.dragMachine) return
 
-  if (!uistate.dragMachineDroppable) return
+  if (!uistate.dragMachineDroppable) {
+    uistate.dragMachine = null
+    return
+  }
 
   const m = uistate.dragMachine
 

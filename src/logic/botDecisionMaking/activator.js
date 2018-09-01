@@ -1,6 +1,7 @@
 import { proj } from '~/service/machine'
 import { rayCastCheck, isNavigable } from '~/service/map'
 import { pointToCell, pointEqual, distance } from '~/service/point'
+import { BOT_ACTIVATION_DELAY } from '~/config'
 import type { Universe, BotActivate } from '~/type'
 
 export const botActivatorDecision = (
@@ -46,7 +47,7 @@ export const botActivatorDecision = (
   ) {
     bot.navigation = null
     machine.processing.activated = true
-    bot.activity.activationCooldown = 50
+    bot.activity.activationCooldown = BOT_ACTIVATION_DELAY
   } else {
     bot.activity.activationCooldown--
   }
