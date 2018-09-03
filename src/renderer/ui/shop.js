@@ -135,7 +135,7 @@ const createMachineDecription = (onrotate, ondragstart) => {
 export const create = (domParent: Element) => {
   const container = document.createElement('div')
   container.style.cssText =
-    'position:fixed;padding:10px;background-color:#ddd;bottom:0;right:0;width:45%;font-size:16px;z-index:2;border-radius:20px 0 0 0'
+    'position:fixed;padding:10px;background-color:#ddd;bottom:0;right:0;width:45%;font-size:16px;z-index:2;border-radius:20px 0 0 0;display:flex;flex-direction:row'
   container.ontouchstart = container.onmousedown = e => e.stopPropagation()
   domParent.appendChild(container)
 
@@ -143,6 +143,10 @@ export const create = (domParent: Element) => {
   button.style.cssText =
     'padding:10px;border-radius:50%;width:40px;height:40px;border:none;background-color:blue'
   container.appendChild(button)
+
+  const bankAccount = document.createElement('div')
+  bankAccount.style.cssText = 'padding:10px;margin-left:auto;'
+  container.appendChild(bankAccount)
 
   const shopPanel = document.createElement('div')
   shopPanel.style.cssText =
@@ -163,6 +167,7 @@ export const create = (domParent: Element) => {
   let selectedBlueprintRotation = null
   let selectedBlueprintId = null
   let shopOpened = false
+  let bank = -1
 
   const update = (universe: Universe, uistate: UIstate) => {
     // bind action
@@ -232,6 +237,11 @@ export const create = (domParent: Element) => {
       // if (!shopOpened) uistate.selectedBlueprintId = null
 
       shopPanel.style.transform = shopOpened ? null : 'scale(0,0)'
+    }
+
+    if (bank !== universe.bank) {
+      bank = universe.bank
+      bankAccount.innerText = universe.bank
     }
 
     if (

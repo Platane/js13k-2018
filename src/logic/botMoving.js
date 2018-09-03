@@ -99,7 +99,7 @@ export const botMoving = ({ map, bots }: Universe) => {
           y: b.position.y - position.y,
         }
 
-        const l = Math.max(length(d), 0.08)
+        const l = Math.max(length(d), 0.16)
 
         a.x -= (d.x / l / l / l) * NEIGHBOR_POWER
         a.y -= (d.y / l / l / l) * NEIGHBOR_POWER
@@ -138,10 +138,12 @@ export const botMoving = ({ map, bots }: Universe) => {
 
         let l = v.x * v.y === 0 ? d.x * v.x + d.y * v.y : length(d)
 
-        l = Math.max(l, 0.08)
+        l = Math.max(l, 0.1)
 
-        a.x -= (d.x / l / l) * WALL_PUSH_POWER
-        a.y -= (d.y / l / l) * WALL_PUSH_POWER
+        if (l > 0.5) l = 10
+
+        a.x -= (d.x / l / l / l) * WALL_PUSH_POWER
+        a.y -= (d.y / l / l / l) * WALL_PUSH_POWER
       })
 
     return a

@@ -18,6 +18,7 @@ export type CommandIdle = {
 export type CommandActivate = {
   type: 'activate',
   targetId: ID,
+  targetCooldown: number,
 }
 
 export type CommandCarry = {

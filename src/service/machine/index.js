@@ -41,13 +41,14 @@ export const getClosestPointToMachine = (
 
             const c = closestPointOnSegment(A, N, point)
 
+            c.x += v.x * 0.22
+            c.y += v.y * 0.22
+
             const d = distanceSq(c, point)
 
             if (d < min_d) {
               min_d = d
               closestPoint = c
-              closestPoint.x += v.x * 0.22
-              closestPoint.y += v.y * 0.22
             }
           }
         }

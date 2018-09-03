@@ -7,12 +7,12 @@ export const blueprints: Blueprint[] = [
     ground: [[1]],
 
     buildingCost: 2000,
-    activationThreshold: 20,
+    activationThreshold: 100,
 
     recipe: {
       cost: 0,
       inputs: [],
-      outputs: [{ token: 'rice-grain', n: 1 }],
+      outputs: [],
     },
 
     inputs: [],
@@ -70,7 +70,7 @@ export const blueprints: Blueprint[] = [
     },
 
     inputs: [],
-    outputs: [{ cell: { x: 0, y: 1 }, token: 'tuna-bit' }],
+    outputs: [{ cell: { x: 0, y: 1 }, token: 'raw-tuna' }],
   },
   {
     id: 'tuna-skin-workshop',
@@ -89,38 +89,4 @@ export const blueprints: Blueprint[] = [
     inputs: [{ cell: { x: 2, y: 2 }, token: 'raw-tuna' }],
     outputs: [{ cell: { x: 0, y: 1 }, token: 'tuna-bit' }],
   },
-  // {
-  //   id: 'gold-mineral',
-  //
-  //   ground: [[true]],
-  //
-  //   activationThreshold: 100,
-  //
-  //   inputs: [],
-  //   outputs: [{ cell: { x: 0, y: 1 }, token: 'gold', n: 1 }],
-  // },
-  // {
-  //   id: 'iron-mineral',
-  //
-  //   ground: [[true]],
-  //
-  //   activationThreshold: 100,
-  //
-  //   inputs: [],
-  //   outputs: [{ cell: { x: 0, y: 1 }, token: 'iron', n: 1 }],
-  // },
-  //
-  // {
-  //   id: 'bronze-melter',
-  //
-  //   ground: [[true], [true]],
-  //
-  //   activationThreshold: 50,
-  //
-  //   inputs: [
-  //     { cell: { x: -1, y: 0 }, token: 'iron', n: 2 },
-  //     { cell: { x: 1, y: 0 }, token: 'copper', n: 1 },
-  //   ],
-  //   outputs: [{ cell: { x: 0, y: 2 }, token: 'bronze', n: 1 }],
-  // },
 ]

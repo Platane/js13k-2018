@@ -1,7 +1,7 @@
 import { proj, getClosestPointToMachine } from '~/service/machine'
 import { pointToCell, pointEqual, distance } from '~/service/point'
 import { rayCastCheck, isNavigable } from '~/service/map'
-import { BOT_ACTIVATION_DELAY } from '~/config'
+import { BOT_ACTIVATION_DELAY, BOT_ACTIVATION_TOUCH } from '~/config'
 import type { Universe, BotActivate } from '~/type'
 
 export const botActivatorDecision = (
@@ -21,7 +21,8 @@ export const botActivatorDecision = (
 
   //
   // touch the machine, or not
-  const shoulTouchMachine = bot.activity.activationCooldown < 5
+  const shoulTouchMachine =
+    bot.activity.activationCooldown < BOT_ACTIVATION_TOUCH
 
   if (shoulTouchMachine && !bot.navigation) {
     const activationPoint = getClosestPointToMachine(map, machine, bot.position)

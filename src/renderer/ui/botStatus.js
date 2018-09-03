@@ -30,7 +30,7 @@ export const create = (domParent: Element) => {
       const bot = universe.bots.find(({ id }) => id === uistate.selectedBotId)
 
       if (bot) {
-        name.innerHTML = bot.id + '  ' + bot.command.type
+        name.innerHTML = bot.command.type
       }
 
       container.style.transform = bot ? null : 'translate3d(0,60px,0)'

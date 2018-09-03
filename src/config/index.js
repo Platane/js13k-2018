@@ -5,4 +5,5 @@ export const LOOP_DELAY = typeof document === 'undefined' ? 0 : 30
 
 export const DROPPED_DELAY = 26
 export const BOT_ACTIVATION_DELAY = 60
+export const BOT_ACTIVATION_TOUCH = 10
 export const BOT_COST = 2000
