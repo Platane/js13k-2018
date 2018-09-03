@@ -142,8 +142,8 @@ export const botMoving = ({ map, bots }: Universe) => {
 
         if (l > 0.5) l = 10
 
-        a.x -= (d.x / l / l / l) * WALL_PUSH_POWER
-        a.y -= (d.y / l / l / l) * WALL_PUSH_POWER
+        a.x -= v.x * v.x * (d.x / l / l / l) * WALL_PUSH_POWER
+        a.y -= v.y * v.y * (d.y / l / l / l) * WALL_PUSH_POWER
       })
 
     return a

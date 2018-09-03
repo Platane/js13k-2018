@@ -1,7 +1,7 @@
 import type { Universe, UIstate } from '~/type'
 
 export const universe: Universe = {
-  bank: 10,
+  bank: 100000,
 
   map: `
 ####################

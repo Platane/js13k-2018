@@ -52,6 +52,9 @@ export const onpointerup = (
 
   const bot = uistate.dragBot
 
+  bot.position.x += (Math.random() - 0.5) * 0.3
+  bot.position.y += (Math.random() - 0.5) * 0.3
+
   universe.bank -= BOT_COST
 
   // push new machine
