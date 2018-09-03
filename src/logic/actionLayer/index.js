@@ -4,13 +4,19 @@ import { findPath } from '~/service/aStar'
 import { isNavigable, getWidth, getHeight } from '~/service/map'
 import { proj as projMachine } from '~/service/machine'
 import { getPointer } from '~/util/pointer'
+
+import * as select from './select'
+import * as command from './command'
+import * as placeBot from './placeBot'
+import * as placeMachine from './placeMachine'
+
 import type { ID, UIstate, Camera, Universe, Machine, Cell } from '~/type'
 const handlers = [
   //
-  require('./select'),
-  require('./placeBot'),
-  require('./placeMachine'),
-  require('./command'),
+  select,
+  command,
+  placeBot,
+  placeMachine,
 ]
 
 export const createActionLayer = (

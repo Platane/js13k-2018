@@ -11,7 +11,14 @@ if (process.env.NODE_ENV === 'mangle-properties') {
   presets.length = 0
   plugins.length = 0
 
-  const whitelist = ['command', 'navigation', 'target', 'update']
+  const whitelist = [
+    //
+    'navigation',
+    'rotation',
+    'command',
+    'target',
+    'update',
+  ]
 
   plugins.push([
     'babel-plugin-minify-mangle-properties',
