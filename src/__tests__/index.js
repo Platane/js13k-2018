@@ -1,3 +1,5 @@
+import '~/service/machine/__tests__/getClosestPointToMachine.spec.js'
+import '~/service/point/__tests__/closestPointOnSegment.spec.js'
 import '~/service/camera/__tests__/camera.spec.js'
 import '~/service/aStar/__tests__/findPath.spec.js'
 import '~/service/map/__tests__/rayCastCheck.spec.js'

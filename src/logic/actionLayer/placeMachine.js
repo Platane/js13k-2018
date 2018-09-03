@@ -109,6 +109,7 @@ export const onpointerup = (
 
   // reset bots path
   universe.bots.forEach(
-    bot => bot.navigation && (bot.navigation.pathToTarget = null)
+    // bot => bot.navigation && (bot.navigation.pathToTarget = null)
+    bot => (bot.navigation = null)
   )
 }

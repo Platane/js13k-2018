@@ -29,7 +29,7 @@ const createMachineList = (onselect, ondragstart) => {
     const item = document.createElement('div')
     item.style.cssText = 'padding:10px;cursor:pointer;font-size:12px;'
 
-    item.innerText = names[blueprint.id][0]
+    item.innerText = (names[blueprint.id] || blueprint.id)[0]
 
     item.onclick = () => onselect(blueprint)
     startdrag(item, () => ondragstart(blueprint.id))
@@ -90,7 +90,7 @@ const createMachineDecription = (onrotate, ondragstart) => {
   rotateButton.onclick = onrotate
 
   container.update = (blueprintId, machineRotation) => {
-    const [n, d] = names[blueprintId] || '  '
+    const [n, d] = names[blueprintId] || blueprintId
 
     name.innerText = n
     description.innerText = d

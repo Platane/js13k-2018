@@ -29,3 +29,20 @@ export const distanceSq = (A: Point, B: Point) =>
   lengthSq({ x: A.x - B.x, y: A.y - B.y })
 
 export const distance = (A: Point, B: Point) => Math.sqrt(distanceSq(A, B))
+
+// A is one extremum of the segment
+// A + V is the other
+// P is the point to be close
+export const closestPointOnSegment = (A: Point, V: Point, P: Point): Point => {
+  const APx = P.x - A.x
+  const APy = P.y - A.y
+
+  const l = APx * V.x + APy * V.y
+
+  const k = Math.min(1, Math.max(0, l))
+
+  return {
+    x: A.x + V.x * k,
+    y: A.y + V.y * k,
+  }
+}

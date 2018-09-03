@@ -190,6 +190,12 @@ export const draw = (
   if (uistate.selectedBotId) {
     const bot = universe.bots.find(bot => bot.id === uistate.selectedBotId)
 
+    if (bot && bot.navigation && bot.navigation.target) {
+      const a = p(bot.navigation.target)
+
+      ctx.fillRect(a.x - 2, a.y - 2, 4, 4)
+    }
+
     if (bot && bot.command.type === 'carry') {
       const path = smoothPath(
         universe.map,

@@ -37,7 +37,7 @@ export const onpointerdown = (
       type: 'activate',
       targetId: machine.id,
     }
-    bot.activity = { activationCooldown: BOT_ACTIVATION_DELAY }
+    bot.activity = { activationCooldown: 0 }
 
     uistate.command = null
   } else if (isNavigable(universe.map, cell)) {

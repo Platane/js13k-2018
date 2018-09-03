@@ -50,7 +50,7 @@ const universe: Universe = {
 test('bot carry', async t => {
   const ren = createRenderer()
 
-  for (let k = 220; k--; ) {
+  for (let k = 420; k--; ) {
     await wait(LOOP_DELAY)
 
     tic(universe)
