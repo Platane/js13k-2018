@@ -52,6 +52,8 @@ const universe: Universe = {
     },
   ],
 
+  customers: [],
+
   droppedTokens: [
     //
     { position: { x: 1.2, y: 1.6 }, token: 'citron' },

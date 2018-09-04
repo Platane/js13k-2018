@@ -38,6 +38,8 @@ const universe: Universe = {
 
   machines: [],
 
+  customers: [],
+
   droppedTokens: [],
 
   blueprints,

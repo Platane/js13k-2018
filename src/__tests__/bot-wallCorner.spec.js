@@ -52,6 +52,8 @@ const universe: Universe = {
     },
   ],
 
+  customers: [],
+
   droppedTokens: [],
 
   blueprints,

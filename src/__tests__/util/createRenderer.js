@@ -28,6 +28,11 @@ const dom = () => {
     selectedBlueprintId: 'rice-cooker',
     shopOpened: false,
     step: 0,
+    command: null,
+    dragBot: null,
+    dragBotDroppable: false,
+    dragMachine: null,
+    dragMachineDroppable: false,
   }
 
   const update = (universe: Universe) => {

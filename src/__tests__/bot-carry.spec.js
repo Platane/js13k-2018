@@ -38,6 +38,8 @@ const universe: Universe = {
 
   machines: [],
 
+  customers: [],
+
   droppedTokens: [
     //
     { position: { x: 1.5, y: 2.5 }, token: 'citron', availableCoolDown: 0 },
@@ -50,7 +52,7 @@ const universe: Universe = {
 test('bot carry', async t => {
   const ren = createRenderer()
 
-  for (let k = 420; k--; ) {
+  for (let k = 820; k--; ) {
     await wait(LOOP_DELAY)
 
     tic(universe)
