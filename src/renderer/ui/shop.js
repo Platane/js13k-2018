@@ -168,6 +168,7 @@ export const create = (domParent: Element) => {
   let selectedBlueprintId = null
   let shopOpened = false
   let bank = -1
+  let step = -1
 
   const update = (universe: Universe, uistate: UIstate) => {
     // bind action
@@ -255,6 +256,11 @@ export const create = (domParent: Element) => {
         uistate.selectedBlueprintId,
         selectedBlueprintRotation
       )
+    }
+
+    if (uistate.step !== step) {
+      step = uistate.step
+      button.style.display = step < 13 ? 'none' : 'block'
     }
   }
 

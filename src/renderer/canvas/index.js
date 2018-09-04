@@ -79,7 +79,10 @@ export const drawMachine = (
 
       const a = p(pm(c))
 
-      ctx.fillStyle = isNavigable(ground, c) ? 'transparent' : 'blue'
+      ctx.fillStyle = isNavigable(ground, c)
+        ? 'transparent'
+        : randomColor(machine.blueprint.id)
+
       ctx.beginPath()
       ctx.rect(
         a.x + camera.a * 0.1,

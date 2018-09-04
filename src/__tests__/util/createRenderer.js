@@ -26,7 +26,8 @@ const dom = () => {
     pickUpCell: null,
     selectedBlueprintRotation: 0,
     selectedBlueprintId: 'rice-cooker',
-    shopOpened: true,
+    shopOpened: false,
+    step: 0,
   }
 
   const update = (universe: Universe) => {

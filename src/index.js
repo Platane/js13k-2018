@@ -3,7 +3,7 @@ import { createActionLayer } from '~/logic/actionLayer'
 import { createUI } from '~/renderer/ui'
 import { createWebGL } from '~/renderer/webgl'
 import { tic } from './logic'
-import { universe } from '~/__fixtures__/blank'
+import { universe } from '~/__fixtures__/game'
 import type { Universe, UIstate } from '~/type'
 
 const webgl = createWebGL(document.getElementsByTagName('canvas')[0])

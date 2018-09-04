@@ -138,6 +138,7 @@ export type UIstate = {
   dragBot: Bot | null,
   dragMachineDroppable: boolean,
   dragBotDroppable: boolean,
+  command: { pickUpCell?: Cell } | null,
 }
 
 export type Menu = { [Token]: number }
