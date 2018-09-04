@@ -261,6 +261,17 @@ export const draw = (
     ctx.fill()
   })
 
+  // customers
+  universe.customers.forEach(({ cell }) => {
+    const a = p({ x: cell.x + 0.5, y: cell.y + 0.5 })
+
+    ctx.beginPath()
+    ctx.fillStyle = 'orange'
+    ctx.arc(a.x, a.y, 4, 0, Math.PI * 2)
+    ctx.fill()
+  })
+
+  // overlay
   if (uistate.command || uistate.dragMachine || uistate.dragBot) {
     ctx.fillStyle = '#0004'
     ctx.fillRect(0, 0, 9999, 9999)

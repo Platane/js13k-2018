@@ -1,5 +1,6 @@
 export * from './blueprints'
 export * from './physic'
+export * from './menu'
 
 export const LOOP_DELAY = typeof document === 'undefined' ? 0 : 30
 

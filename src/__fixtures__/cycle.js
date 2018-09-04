@@ -1,3 +1,5 @@
+import { blueprints } from '~/config/blueprints'
+import { menu } from '~/config/menu'
 import type { Universe, UIstate } from '~/type'
 
 export const universe: Universe = {
@@ -175,6 +177,10 @@ export const universe: Universe = {
       processing: null,
     },
   ],
+
+  menu,
+
+  customers: [],
 
   droppedTokens: [
     { position: { x: 8.3, y: 3.5 }, token: 'yellow', availableCoolDown: 0 },

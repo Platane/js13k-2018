@@ -110,6 +110,10 @@ export type Universe = {
 
   blueprints: Blueprint[],
 
+  menu: Menu,
+
+  customers: { cell: Point }[],
+
   machines: Machine[],
 
   map: Map,
@@ -135,3 +139,5 @@ export type UIstate = {
   dragMachineDroppable: boolean,
   dragBotDroppable: boolean,
 }
+
+export type Menu = { [Token]: number }

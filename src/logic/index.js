@@ -1,6 +1,7 @@
 import type { Universe } from '~/type'
 import { botMoving } from './botMoving'
-import { machinceProcessing } from './machinceProcessing'
+import { machineProcessing } from './machineProcessing'
+import { customerProcessing } from './customerProcessing'
 import { botDecisionMaking } from './botDecisionMaking'
 import { droppedTokensCoolDown } from './droppedTokensCoolDown'
 
@@ -15,5 +16,8 @@ export const tic = (universe: Universe) => {
   botMoving(universe)
 
   // machines processing
-  machinceProcessing(universe)
+  machineProcessing(universe)
+
+  // customer processing
+  customerProcessing(universe)
 }

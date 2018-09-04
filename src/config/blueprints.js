@@ -10,7 +10,6 @@ export const blueprints: Blueprint[] = [
     activationThreshold: 100,
 
     recipe: {
-      cost: 0,
       inputs: [],
       outputs: [],
     },
@@ -27,7 +26,6 @@ export const blueprints: Blueprint[] = [
     activationThreshold: 20,
 
     recipe: {
-      cost: 0,
       inputs: [],
       outputs: [{ token: 'rice-grain', n: 1 }],
     },
@@ -44,7 +42,6 @@ export const blueprints: Blueprint[] = [
     activationThreshold: 20,
 
     recipe: {
-      cost: 0,
       inputs: [{ token: 'rice-grain', n: 2 }],
       outputs: [{ token: 'rice-ball', n: 1 }],
     },
@@ -64,7 +61,6 @@ export const blueprints: Blueprint[] = [
     activationThreshold: 50,
 
     recipe: {
-      cost: 0,
       inputs: [],
       outputs: [{ token: 'raw-tuna', n: 2 }],
     },
@@ -81,7 +77,6 @@ export const blueprints: Blueprint[] = [
     activationThreshold: 20,
 
     recipe: {
-      cost: 0,
       inputs: [{ token: 'raw-tuna', n: 1 }],
       outputs: [{ token: 'tuna-bit', n: 2 }],
     },

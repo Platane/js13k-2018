@@ -19,7 +19,7 @@ const startProcess = (machine, droppedTokens) => {
 
     droppedTokens.forEach(d => {
       if (
-        d.availableCoolDown === 0 &&
+        d.availableCoolDown <= 0 &&
         token === d.token &&
         pointEqual(c, pointToCell(d.position))
       ) {
@@ -76,7 +76,7 @@ const execProcess = (machine, droppedTokens) => {
   }
 }
 
-export const machinceProcessing = ({ machines, droppedTokens }: Universe) =>
+export const machineProcessing = ({ machines, droppedTokens }: Universe) =>
   machines.forEach(machine => {
     // try to start processing
     if (!machine.processing) startProcess(machine, droppedTokens)

@@ -14,7 +14,7 @@ export const botCarrierDecision = (universe: Universe, bot: BotCarry) => {
     // check the list of dropped tokens
     const i = universe.droppedTokens.findIndex(
       x =>
-        x.availableCoolDown === 0 &&
+        x.availableCoolDown <= 0 &&
         pointEqual(pointToCell(x.position), pointToCell(bot.position))
     )
 
