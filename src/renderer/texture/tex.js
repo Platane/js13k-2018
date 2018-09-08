@@ -7,7 +7,7 @@ import {
 } from '~/config/palette'
 
 export const texture = document.createElement('canvas')
-export const l = (texture.width = texture.height = 512)
+export const l = (texture.width = texture.height = 256)
 export const ctx = texture.getContext('2d')
 
 texture.style.cssText =
@@ -80,21 +80,26 @@ export const drawPaths = (
 
   ctx.translate(boxDestination[0] * l, boxDestination[1] * l)
 
+  const m = outline + 4
+
   ctx.scale(
-    (boxDestination[2] * l) / (box[2] + outline),
-    (boxDestination[3] * l) / (box[3] + outline)
+    (boxDestination[2] * l) / (box[2] + m),
+    (boxDestination[3] * l) / (box[3] + m)
   )
 
-  ctx.translate(outline / 2, outline / 2)
+  ctx.translate(m / 2, m / 2)
 
   ctx.strokeStyle = black
   ctx.lineCap = 'round'
   ctx.lineJoin = 'round'
   ctx.lineWidth = outline
   paths.forEach(p => ctx.stroke(new Path2D(p)))
+
+  ctx.lineWidth = 0.8
   paths.forEach((p, i) => {
-    ctx.fillStyle = colors[i]
+    ctx.strokeStyle = ctx.fillStyle = colors[i]
     ctx.fill(new Path2D(p))
+    ctx.stroke(new Path2D(p))
   })
 
   ctx.restore()

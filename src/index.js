@@ -38,8 +38,8 @@ const uiUpdate = createUI(document.getElementById('app'))
 const loop = () => {
   tic(universe)
 
-  renderer.update(universe, uistate)
-  webgl(universe, renderer.camera)
+  // renderer.update(universe, uistate)
+  webgl(universe)
 
   uiUpdate(universe, uistate)
 

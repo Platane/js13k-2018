@@ -15,6 +15,6 @@ const paths = [
 ]
 
 const dbox = [1 / 4, 0, 1 / 4, 1 / 4]
-drawPaths(paths, [salmon_orange, salmon_pink, plank_light], box, dbox)
+drawPaths(paths, [salmon_orange, salmon_pink, plank_light], box, dbox, 16)
 addBox('rice-ball', dbox)
 addBox('purple', dbox)

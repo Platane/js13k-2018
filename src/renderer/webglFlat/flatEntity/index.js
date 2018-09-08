@@ -8,8 +8,8 @@ import {
 import { vec3 } from 'gl-matrix'
 import type { Universe, Point } from '~/type'
 import type { Mat4 } from 'gl-matrix'
-import { getWidth, getHeight, isNavigable } from '~/service/map'
-import { normalize, lengthSq, cellCenter } from '~/service/point'
+import { getWidth, getHeight, isNavigable, around4 } from '~/service/map'
+import { normalize, length, lengthSq, cellCenter } from '~/service/point'
 import { texture, boxes } from '~/renderer/texture'
 
 //$FlowFixMe
@@ -19,16 +19,18 @@ import vertexShaderSource from './vertex_vs.glsl'
 
 const addEntity = (size, box) => (vertices, uvs, index) => (
   position,
-  direction
+  u = { x: 0, y: 1 }
 ) => {
   const k = vertices.length / 2
 
+  const v = { x: u.y, y: -u.x }
+
   // prettier-ignore
   vertices.push(
-    position.x - size, position.y - size,
-    position.x + size, position.y - size,
-    position.x + size, position.y + size,
-    position.x - size, position.y + size,
+    position.x - v.x * size - u.x * size, position.y - v.y * size - u.y * size,
+    position.x + v.x * size - u.x * size, position.y + v.y * size - u.y * size,
+    position.x + v.x * size + u.x * size, position.y + v.y * size + u.y * size,
+    position.x - v.x * size + u.x * size, position.y - v.y * size + u.y * size,
   )
 
   uvs.push(...box)
@@ -50,25 +52,9 @@ export const create = (gl: WebGLRenderingContext) => {
   const sampler_texture = bindUniformTexture(gl, program, 'uSampler')
   const elementIndex = bindElementIndex(gl, program)
 
-  // prettier-ignore
-  attribute_uv.update([
-     0, 0,
-     1, 0,
-     1, 1,
-     0, 1,
-  ])
-
-  // prettier-ignore
-  elementIndex.update([
-    0, 1, 2,
-    0, 2, 3,
-  ])
-
   sampler_texture.update(texture)
 
-  let n_faces = 6
-
-  return (universe: Universe, matrix) => {
+  return (universe: Universe, matrix: number[]) => {
     gl.useProgram(program)
 
     const vertices = []
@@ -87,17 +73,59 @@ export const create = (gl: WebGLRenderingContext) => {
           })
       }
 
-    universe.bots.forEach(bot => {
-      addEntity(0.3, boxes['bot'])(vertices, uvs, index)(bot.position)
+    const bots = universe.bots
+      .slice()
+      .sort((a, b) => a.position.y - b.position.y)
+
+    const vs = bots.map(({ velocity, position }) => {
+      const l = length(velocity)
+      return l < 0.03
+        ? { x: 0, y: 1 }
+        : { x: velocity.x / l, y: velocity.y / l }
+    })
+
+    bots.forEach((bot, i) => {
+      const { position } = bot
+
+      const v = vs[i]
+
+      addEntity(0.6, boxes.arrow)(vertices, uvs, index)(bot.position, {
+        x: -v.x,
+        y: -v.y,
+      })
+    })
+
+    bots.forEach((bot, i) => {
+      const { velocity, position } = bot
+
+      const v = vs[i]
+
+      let max = -1
+      let k = 0
+      around4.find((p, i) => {
+        const m = p.x * v.x + p.y * v.y
+
+        if (max < m) {
+          max = m
+          k = i
+        }
+      })
+
+      const h = Math.sin(position.x * 10) + Math.sin(position.y * 10)
+
+      addEntity(0.45, boxes['bot' + k])(vertices, uvs, index)({
+        x: position.x,
+        y: position.y - 0.3 + h * 0.1,
+      })
 
       if (bot.activity && bot.activity.carrying) {
         const token = bot.activity.carrying
 
-        const v = normalize(bot.velocity)
+        const v = normalize(velocity)
 
         const c = {
-          x: bot.position.x - v.x * 0.3,
-          y: bot.position.y - v.y * 0.3,
+          x: position.x - v.x * 0.3,
+          y: position.y - v.y * 0.3,
         }
 
         addEntity(0.3, boxes[token])(vertices, uvs, index)(c)

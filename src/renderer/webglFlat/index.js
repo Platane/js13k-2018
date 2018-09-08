@@ -13,9 +13,11 @@ const WEBGL_OPTIONS = {
   stencil: true,
 }
 
+const pixelRatio = window.devicePixelRatio || 1
+
 const initGL = (canvas: HTMLCanvasElement) => {
-  canvas.width = canvas.clientWidth
-  canvas.height = canvas.clientHeight
+  canvas.width = canvas.clientWidth * pixelRatio
+  canvas.height = canvas.clientHeight * pixelRatio
 
   const gl: ?WebGLRenderingContext =
     canvas.getContext('webgl2', WEBGL_OPTIONS) ||
@@ -52,7 +54,7 @@ const computeWorldMatrix = map => {
   const uw = sw / r
   const uh = sh / r
 
-  const a = 0.96
+  const a = 0.99
 
   const mx = -1 + (1 * (uw - mw)) / uw
   const my = -1 + (1 * (uh - mh)) / uh
@@ -77,8 +79,8 @@ export const createWebGL = (canvas: HTMLCanvasElement) => {
   let worldMatrix
 
   window.onresize = () => {
-    canvas.width = canvas.clientWidth
-    canvas.height = canvas.clientHeight
+    canvas.width = canvas.clientWidth * pixelRatio
+    canvas.height = canvas.clientHeight * pixelRatio
     gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight)
     worldMatrix = null
   }
