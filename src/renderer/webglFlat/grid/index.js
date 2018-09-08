@@ -23,15 +23,11 @@ export const create = (gl: WebGLRenderingContext) => {
   const uniform_worldMatrix = bindUniform(gl, program, 'uWorldMatrix', 'mat4')
   const elementIndex = bindElementIndex(gl, program)
 
-  let init = false
-
   let n_faces = 0
 
-  return (universe: Universe, matrix) => {
-    gl.useProgram(program)
-
-    const w = getWidth(universe.map)
-    const h = getHeight(universe.map)
+  const init = map => {
+    const w = getWidth(map)
+    const h = getHeight(map)
 
     const l = 10
 
@@ -53,13 +49,22 @@ export const create = (gl: WebGLRenderingContext) => {
 
     // prettier-ignore
     attribute_position.update(vertices)
-    uniform_worldMatrix.update(matrix)
     elementIndex.update(index)
+
+    n_faces = index.length
+  }
+
+  return (universe: Universe, matrix) => {
+    gl.useProgram(program)
+
+    if (!n_faces) init(universe.map)
+
+    uniform_worldMatrix.update(matrix)
 
     elementIndex.bind()
     attribute_position.bind()
     uniform_worldMatrix.bind()
 
-    gl.drawElements(gl.LINE_STRIP, vertices.length / 2, gl.UNSIGNED_SHORT, 0)
+    gl.drawElements(gl.LINE_STRIP, n_faces, gl.UNSIGNED_SHORT, 0)
   }
 }

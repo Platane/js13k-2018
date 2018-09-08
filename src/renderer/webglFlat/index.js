@@ -25,10 +25,10 @@ const initGL = (canvas: HTMLCanvasElement) => {
 
   if (!gl) throw 'WebGl not supported'
 
-  gl.clearColor(0.5, 0.5, 0.5, 0.5)
+  gl.clearColor(0.5, 0.5, 0.5, 0.9)
   gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight)
 
-  gl.cullFace(gl.FRONT)
+  gl.cullFace(gl.FRONT_AND_BACK)
 
   gl.enable(gl.BLEND)
   gl.blendEquationSeparate(gl.FUNC_ADD, gl.FUNC_ADD)
@@ -60,9 +60,9 @@ const computeWorldMatrix = map => {
   // prettier-ignore
   const m = [
     a *2 / uw ,0,0,0,
-    0,a *2 / uh ,0,0,
+    0,-a *2 / uh ,0,0,
     0,0,1,0,
-    a *mx,a *my,0,1,
+    a *mx,-a *my,0,1,
   ]
 
   return m

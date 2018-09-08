@@ -3,7 +3,7 @@ import { createActionLayer } from '~/logic/actionLayer'
 import { createUI } from '~/renderer/ui'
 import { createWebGL } from '~/renderer/webglFlat'
 import { tic } from './logic'
-import { universe } from '~/__fixtures__/game'
+import { universe } from '~/__fixtures__/cycle'
 import type { Universe, UIstate } from '~/type'
 
 import '~/renderer/texture'
