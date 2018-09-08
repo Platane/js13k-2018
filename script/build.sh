@@ -11,9 +11,9 @@ sed -i 's|lib/index.js|src/index.js|' ./node_modules/babel-plugin-minify-mangle-
 yarn rollup --config ./script/rollup.config.js
 
 # replace constant
-sed -i "s|'idle'|4|g" dist/bundle.js
-sed -i "s|'carry'|2|g" dist/bundle.js
-sed -i "s|'activate'|3|g" dist/bundle.js
+# sed -i "s|'idle'|4|g" dist/bundle.js
+# sed -i "s|'carry'|2|g" dist/bundle.js
+# sed -i "s|'activate'|3|g" dist/bundle.js
 
 # minify
 NODE_ENV="mangle-properties" yarn babel dist/bundle.js -o dist/bundle0.js

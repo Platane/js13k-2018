@@ -20,10 +20,13 @@ if (process.env.NODE_ENV === 'mangle-properties') {
     'update',
   ]
 
-  plugins.push([
-    'babel-plugin-minify-mangle-properties',
-    { reservedNames: domprops.props.filter(x => !whitelist.includes(x)) },
-  ])
+  const blacklist = ['arrow']
+
+  const reservedNames = [...blacklist, ...domprops.props].filter(
+    x => !whitelist.includes(x)
+  )
+
+  plugins.push(['babel-plugin-minify-mangle-properties', { reservedNames }])
 }
 if (process.env.NODE_ENV === 'minify') {
   presets.length = 0

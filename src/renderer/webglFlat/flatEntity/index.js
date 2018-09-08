@@ -33,7 +33,7 @@ const addEntity = (size, box) => (vertices, uvs, index) => (
     position.x - v.x * size + u.x * size, position.y - v.y * size + u.y * size,
   )
 
-  uvs.push(...box)
+  uvs.push(...(box || boxes.wall))
 
   // prettier-ignore
   index.push(
@@ -67,7 +67,7 @@ export const create = (gl: WebGLRenderingContext) => {
     for (let x = w; x--; )
       for (let y = h; y--; ) {
         if (isNavigable(universe.map, { x, y }))
-          addEntity(0.5, boxes['wall'])(vertices, uvs, index)({
+          addEntity(0.5, boxes.wall)(vertices, uvs, index)({
             x: x + 0.5,
             y: y + 0.5,
           })
