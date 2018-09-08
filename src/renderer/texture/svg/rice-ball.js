@@ -1,4 +1,4 @@
-import { texture, addBox, drawPaths } from '../tex'
+import { texture, addBox, drawPaths, getNextBox } from '../tex'
 import {
   black,
   plank_light,
@@ -14,7 +14,7 @@ const paths = [
   'M61 2l-4-1C44-1 33 3 23 12c-8 7-12 17-10 29 2 14 6 28 12 41 6 12 15 17 27 15h5c5 0 9-2 13-5l1-1c-9-5-17-12-25-20l-3-3c3-12 8-23 16-33 5-7 11-7 17 0 8 7 14 15 20 25 8-14 6-27-3-40C84 8 74 2 61 2zm0 0',
 ]
 
-const dbox = [1 / 4, 0, 1 / 4, 1 / 4]
+const dbox = getNextBox(1, 1)
 drawPaths(paths, [salmon_orange, salmon_pink, plank_light], box, dbox, 16)
 addBox('rice-ball', dbox)
 addBox('purple', dbox)

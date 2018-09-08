@@ -1,4 +1,4 @@
-import { texture, ctx, l, drawPaths, addBox } from '../tex'
+import { texture, ctx, l, drawPaths, addBox, getNextBox, offset } from '../tex'
 import {
   black,
   plank_light,
@@ -7,32 +7,70 @@ import {
   salmon_pink,
   blue_true,
   blue_light,
+  blue_dark,
 } from '~/config/palette'
 
+const smoothArrow = () => {
+  ctx.beginPath()
+  ctx.arc(50, 50, 28, 0, Math.PI * 2)
+  ctx.moveTo(22.5, 42)
+  ctx.lineTo(50, 5)
+  ctx.lineTo(77.5, 42)
+  ctx.fill()
+}
+
+const rectArrow = () => {
+  ctx.beginPath()
+  ctx.fillRect(27, 27, 46, 46)
+  ctx.moveTo(5, 45)
+  ctx.lineTo(50, 3)
+  ctx.lineTo(95, 45)
+  ctx.fill()
+}
+
+let box
+
+box = getNextBox(1, 1)
 ctx.save()
-
-ctx.translate(0, l / 2)
-ctx.scale(l / 400, l / 400)
-
-ctx.beginPath()
-ctx.arc(50, 50, 28, 0, Math.PI * 2)
+ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
+ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
+addBox('arrow', box)
 ctx.fillStyle = blue_true
-ctx.moveTo(22.5, 42)
-ctx.lineTo(50, 5)
-ctx.lineTo(77.5, 42)
-ctx.fill()
-
-ctx.translate(100, 0)
-
-ctx.beginPath()
-ctx.arc(50, 50, 28, 0, Math.PI * 2)
-ctx.fillStyle = salmon_pink
-ctx.moveTo(22.5, 42)
-ctx.lineTo(50, 5)
-ctx.lineTo(77.5, 42)
-ctx.fill()
-
+smoothArrow()
 ctx.restore()
 
-addBox('arrow', [0, 2 / 4, 1 / 4, 1 / 4])
-addBox('arrow_selected', [1 / 4, 2 / 4, 1 / 4, 1 / 4])
+box = getNextBox(1, 1)
+ctx.save()
+ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
+ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
+addBox('arrow_selected', box)
+ctx.fillStyle = salmon_pink
+smoothArrow()
+ctx.restore()
+
+box = getNextBox(1, 1)
+ctx.save()
+ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
+ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
+addBox('arrow_input', box)
+ctx.fillStyle = salmon_pink
+rectArrow()
+ctx.restore()
+
+box = getNextBox(1, 1)
+ctx.save()
+ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
+ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
+addBox('arrow_output', box)
+ctx.fillStyle = plank_mid
+rectArrow()
+ctx.restore()
+
+box = getNextBox(1, 1)
+ctx.save()
+ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
+ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
+addBox('arrow_client', box)
+ctx.fillStyle = blue_dark
+rectArrow()
+ctx.restore()

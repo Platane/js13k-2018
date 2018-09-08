@@ -7,64 +7,45 @@ import {
 } from '~/config/palette'
 
 export const texture = document.createElement('canvas')
-export const l = (texture.width = texture.height = 256)
+export const l = (texture.width = texture.height = 512)
 export const ctx = texture.getContext('2d')
 
-texture.style.cssText =
-  'border:solid 1px #000;z-index:10;top:10px;left:10px;position:absolute'
-
-window.document.body.appendChild(texture)
-
-ctx.save()
-
-Array.from({ length: 80 }).forEach(() => {
-  ctx.fillStyle = `hsl(${Math.random() * 40 + 68},60%,80%)`
-  ctx.beginPath()
-  ctx.arc(
-    l * ((Math.random() * 1) / 4 + 3 / 4),
-    l * ((Math.random() * 1) / 4 + 3 / 4),
-    l / 8,
-    0,
-    Math.PI * 2
-  )
-  ctx.fill()
-})
-
-ctx.scale(l / 100 / 4, l / 100 / 4)
-
+// texture.style.cssText =
+//   'border:solid 3px red;z-index:10;top:10px;left:10px;position:absolute'
 //
-ctx.translate(100, 0)
-ctx.translate(100, 0)
+// window.document.body.appendChild(texture)
 
-ctx.translate(100, 0)
-ctx.fillStyle = black
-ctx.beginPath()
-ctx.arc(50, 50, 45, 0, Math.PI * 2)
-ctx.fill()
-ctx.fillStyle = salmon_pink
-ctx.beginPath()
-ctx.arc(50, 50, 40, 0, Math.PI * 2)
-ctx.fill()
+export const offset = { x: 0, y: 0, h: 0, s: 10 }
+export const getNextBox = (w: number, h: number) => {
+  if (offset.x + w > offset.s) {
+    offset.x = 0
+    offset.y += offset.h
+    offset.h = 0
+  }
 
-export const boxes = {
-  // prettier-ignore
-  bot: [
-    0, 0,
-    1 / 4, 0,
-    1 / 4, 1 / 4,
-    0, 1 / 4,
-  ],
-
-  // prettier-ignore
-  wall: [
-    3 / 4, 3 / 4,
-    4 / 4, 3 / 4,
-    4 / 4, 4 / 4,
-    3 / 4, 4 / 4,
+  const box = [
+    offset.x / offset.s,
+    offset.y / offset.s,
+    w / offset.s,
+    h / offset.s,
   ]
+
+  offset.h = Math.max(offset.h, h)
+  offset.x += w
+
+  // ctx.save()
+  // ctx.strokeStyle = 'red'
+  // ctx.lineWidth = 4
+  // ctx.strokeRect(box[0] * l, box[1] * l, box[2] * l, box[3] * l)
+  // ctx.restore()
+
+  return box
 }
 
-ctx.restore()
+type Boxes = {
+  ['bot' | 'wall' | 'sushi' | 'blue' | 'yello' | 'purple' | string]: number[],
+}
+export const boxes: Boxes = {}
 
 export const drawPaths = (
   paths: string[],

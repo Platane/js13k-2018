@@ -4,5 +4,7 @@ import './svg/sushi'
 import './svg/arrow'
 import './svg/fish'
 import './svg/chef'
+import './wall'
+import './machine'
 
 export { texture, boxes } from './tex'

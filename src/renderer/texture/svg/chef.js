@@ -1,4 +1,4 @@
-import { texture, drawPaths, addBox } from '../tex'
+import { texture, drawPaths, addBox, getNextBox } from '../tex'
 import {
   white,
   black,
@@ -7,6 +7,8 @@ import {
   salmon_orange,
   salmon_pink,
   blue_light,
+  blue_true,
+  blue_dark,
 } from '~/config/palette'
 
 const box = [0, 0, 100, 100]
@@ -43,8 +45,31 @@ const paths = [
     'M69 13q-7-7-24-7-7 0-14 5-8 5-8 13l1 5 2 2 1 3v4q0 10 3 16l2 3 1 1q6 6 15 7h4l7-1 7-7q6-7 8-20V27q0-9-5-14z',
   ],
 ]
+
+let dbox
 ;[0, 1, 2, 3].forEach(k => {
-  const dbox = [k / 4, 1 / 4, 1 / 4, 1 / 4]
+  // chief
+  dbox = getNextBox(1, 1)
+  drawPaths(
+    paths[k],
+    [
+      // body
+      blue_true,
+      // shirt
+      white,
+      // face
+      blue_light,
+      // hat
+      plank_light,
+    ],
+    box,
+    dbox,
+    10
+  )
+  addBox('bot' + k, dbox)
+
+  // client
+  dbox = getNextBox(1, 1)
   drawPaths(
     paths[k],
     [
@@ -61,5 +86,25 @@ const paths = [
     dbox,
     10
   )
-  addBox('bot' + k, dbox)
+  addBox('clientA' + k, dbox)
+
+  // client
+  dbox = getNextBox(1, 1)
+  drawPaths(
+    paths[k],
+    [
+      // body
+      blue_dark,
+      // shirt
+      white,
+      // face
+      blue_light,
+      // hat
+      plank_light,
+    ],
+    box,
+    dbox,
+    10
+  )
+  addBox('clientB' + k, dbox)
 })

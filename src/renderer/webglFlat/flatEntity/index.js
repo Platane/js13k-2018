@@ -6,39 +6,15 @@ import {
   bindUniform,
 } from '../util/shader'
 import { getWidth, getHeight, isNavigable, around4 } from '~/service/map'
-import { normalize, length, lengthSq, cellCenter } from '~/service/point'
 import { texture, boxes } from '~/renderer/texture'
+import { renderBots } from './entities/bots'
+import { addEntity } from './entities/util'
 import type { Universe, Point, UIstate } from '~/type'
 
 //$FlowFixMe
 import fragmentShaderSource from './fragment_fs.glsl'
 //$FlowFixMe
 import vertexShaderSource from './vertex_vs.glsl'
-
-const addEntity = (size, box) => (vertices, uvs, index) => (
-  position,
-  u = { x: 0, y: 1 }
-) => {
-  const k = vertices.length / 2
-
-  const v = { x: u.y, y: -u.x }
-
-  // prettier-ignore
-  vertices.push(
-    position.x - v.x * size - u.x * size, position.y - v.y * size - u.y * size,
-    position.x + v.x * size - u.x * size, position.y + v.y * size - u.y * size,
-    position.x + v.x * size + u.x * size, position.y + v.y * size + u.y * size,
-    position.x - v.x * size + u.x * size, position.y - v.y * size + u.y * size,
-  )
-
-  uvs.push(...(box || boxes.wall))
-
-  // prettier-ignore
-  index.push(
-    k+0, k+1, k+2,
-    k+0,  k+2, k+3,
-  )
-}
 
 export const create = (gl: WebGLRenderingContext) => {
   const program = createProgram(gl, vertexShaderSource, fragmentShaderSource)
@@ -59,6 +35,7 @@ export const create = (gl: WebGLRenderingContext) => {
     const uvs = []
     const index = []
 
+    // render navigable tiles
     const w = getWidth(universe.map)
     const h = getHeight(universe.map)
 
@@ -71,70 +48,10 @@ export const create = (gl: WebGLRenderingContext) => {
           })
       }
 
-    const bots = universe.bots
-      .slice()
-      .sort((a, b) => a.position.y - b.position.y)
+    // render bots
+    renderBots(universe, uistate)(vertices, uvs, index)
 
-    const vs = bots.map(({ velocity, position }) => {
-      const l = length(velocity)
-      return l < 0.03
-        ? { x: 0, y: 1 }
-        : { x: velocity.x / l, y: velocity.y / l }
-    })
-
-    bots.forEach((bot, i) => {
-      const { position } = bot
-
-      const v = vs[i]
-
-      const selected = bot.id === uistate.selectedBotId
-
-      addEntity(
-        selected ? 0.9 : 0.6,
-        selected ? boxes.arrow_selected : boxes.arrow
-      )(vertices, uvs, index)(bot.position, {
-        x: -v.x,
-        y: -v.y,
-      })
-    })
-
-    bots.forEach((bot, i) => {
-      const { velocity, position } = bot
-
-      const v = vs[i]
-
-      let max = -1
-      let k = 0
-      around4.find((p, i) => {
-        const m = p.x * v.x + p.y * v.y
-
-        if (max < m) {
-          max = m
-          k = i
-        }
-      })
-
-      const h = Math.sin(position.x * 10) + Math.sin(position.y * 10)
-
-      addEntity(0.45, boxes['bot' + k])(vertices, uvs, index)({
-        x: position.x,
-        y: position.y - 0.3 + h * 0.1,
-      })
-
-      if (bot.activity && bot.activity.carrying) {
-        const token = bot.activity.carrying
-
-        const v = normalize(velocity)
-
-        const c = {
-          x: position.x - v.x * 0.3,
-          y: position.y - v.y * 0.3,
-        }
-
-        addEntity(0.3, boxes[token])(vertices, uvs, index)(c)
-      }
-    })
-
+    //render dropped tokens
     universe.droppedTokens.forEach(({ token, position }) =>
       addEntity(0.3, boxes[token])(vertices, uvs, index)(position)
     )
