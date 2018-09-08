@@ -5,12 +5,10 @@ import {
   bindUniformTexture,
   bindUniform,
 } from '../util/shader'
-import { vec3 } from 'gl-matrix'
-import type { Universe, Point } from '~/type'
-import type { Mat4 } from 'gl-matrix'
 import { getWidth, getHeight, isNavigable, around4 } from '~/service/map'
 import { normalize, length, lengthSq, cellCenter } from '~/service/point'
 import { texture, boxes } from '~/renderer/texture'
+import type { Universe, Point, UIstate } from '~/type'
 
 //$FlowFixMe
 import fragmentShaderSource from './fragment_fs.glsl'
@@ -54,7 +52,7 @@ export const create = (gl: WebGLRenderingContext) => {
 
   sampler_texture.update(texture)
 
-  return (universe: Universe, matrix: number[]) => {
+  return (universe: Universe, uistate: UIstate, matrix: number[]) => {
     gl.useProgram(program)
 
     const vertices = []
@@ -89,7 +87,12 @@ export const create = (gl: WebGLRenderingContext) => {
 
       const v = vs[i]
 
-      addEntity(0.6, boxes.arrow)(vertices, uvs, index)(bot.position, {
+      const selected = bot.id === uistate.selectedBotId
+
+      addEntity(
+        selected ? 0.9 : 0.6,
+        selected ? boxes.arrow_selected : boxes.arrow
+      )(vertices, uvs, index)(bot.position, {
         x: -v.x,
         y: -v.y,
       })

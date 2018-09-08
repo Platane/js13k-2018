@@ -6,9 +6,8 @@ import {
   salmon_orange,
   salmon_pink,
   blue_true,
+  blue_light,
 } from '~/config/palette'
-
-const dbox = [0, 2 / 4, 1 / 4, 1 / 4]
 
 ctx.save()
 
@@ -18,16 +17,22 @@ ctx.scale(l / 400, l / 400)
 ctx.beginPath()
 ctx.arc(50, 50, 28, 0, Math.PI * 2)
 ctx.fillStyle = blue_true
-
-ctx.fill()
-
-ctx.beginPath()
 ctx.moveTo(22.5, 42)
 ctx.lineTo(50, 5)
 ctx.lineTo(77.5, 42)
+ctx.fill()
 
+ctx.translate(100, 0)
+
+ctx.beginPath()
+ctx.arc(50, 50, 28, 0, Math.PI * 2)
+ctx.fillStyle = salmon_pink
+ctx.moveTo(22.5, 42)
+ctx.lineTo(50, 5)
+ctx.lineTo(77.5, 42)
 ctx.fill()
 
 ctx.restore()
 
-addBox('arrow', dbox)
+addBox('arrow', [0, 2 / 4, 1 / 4, 1 / 4])
+addBox('arrow_selected', [1 / 4, 2 / 4, 1 / 4, 1 / 4])

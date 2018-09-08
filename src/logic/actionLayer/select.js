@@ -1,23 +1,13 @@
-import { unproj } from '~/service/camera'
 import { distanceSq, pointToCell, pointEqual } from '~/service/point'
 import { findPath } from '~/service/aStar'
 import { isNavigable, getWidth, getHeight } from '~/service/map'
 import { proj as projMachine } from '~/service/machine'
-import type {
-  ID,
-  UIstate,
-  Camera,
-  Universe,
-  Machine,
-  Cell,
-  Point,
-} from '~/type'
+import type { ID, UIstate, Universe, Machine, Cell, Point } from '~/type'
 
-export const onpointerdown = (
-  universe: Universe,
-  uistate: UIstate,
-  camera: Camera
-) => (pointer: Point, cell: Cell) => {
+export const onpointerdown = (universe: Universe, uistate: UIstate) => (
+  pointer: Point,
+  cell: Cell
+) => {
   if (uistate.command) return
 
   const bot = universe.bots.find(

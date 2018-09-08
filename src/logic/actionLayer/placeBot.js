@@ -1,4 +1,3 @@
-import { unproj } from '~/service/camera'
 import { distanceSq, pointToCell, pointEqual } from '~/service/point'
 import { findPath } from '~/service/aStar'
 import {
@@ -11,21 +10,12 @@ import {
 } from '~/service/map'
 import { proj as projMachine } from '~/service/machine'
 import { BOT_COST } from '~/config'
-import type {
-  ID,
-  UIstate,
-  Camera,
-  Universe,
-  Machine,
-  Cell,
-  Point,
-} from '~/type'
+import type { ID, UIstate, Universe, Machine, Cell, Point } from '~/type'
 
-export const onpointermove = (
-  universe: Universe,
-  uistate: UIstate,
-  camera: Camera
-) => (pointer: Point, cell: Cell) => {
+export const onpointermove = (universe: Universe, uistate: UIstate) => (
+  pointer: Point,
+  cell: Cell
+) => {
   const bot = uistate.dragBot
 
   if (!bot) return
@@ -38,11 +28,10 @@ export const onpointermove = (
   uistate.dragBotDroppable = isNavigable(universe.map, cell)
 }
 
-export const onpointerup = (
-  universe: Universe,
-  uistate: UIstate,
-  camera: Camera
-) => (pointer: Point, cell: Cell) => {
+export const onpointerup = (universe: Universe, uistate: UIstate) => (
+  pointer: Point,
+  cell: Cell
+) => {
   if (!uistate.dragBot) return
 
   if (!uistate.dragBotDroppable) {

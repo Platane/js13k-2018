@@ -1,4 +1,3 @@
-import { unproj } from '~/service/camera'
 import { distanceSq, pointToCell, pointEqual } from '~/service/point'
 import { findPath } from '~/service/aStar'
 import {
@@ -10,21 +9,12 @@ import {
   setCell,
 } from '~/service/map'
 import { proj as projMachine } from '~/service/machine'
-import type {
-  ID,
-  UIstate,
-  Camera,
-  Universe,
-  Machine,
-  Cell,
-  Point,
-} from '~/type'
+import type { ID, UIstate, Universe, Machine, Cell, Point } from '~/type'
 
-export const onpointermove = (
-  universe: Universe,
-  uistate: UIstate,
-  camera: Camera
-) => (pointer: Point, cell: Cell) => {
+export const onpointermove = (universe: Universe, uistate: UIstate) => (
+  pointer: Point,
+  cell: Cell
+) => {
   const m = uistate.dragMachine
 
   if (!m) return
@@ -70,11 +60,10 @@ export const onpointermove = (
     )
 }
 
-export const onpointerup = (
-  universe: Universe,
-  uistate: UIstate,
-  camera: Camera
-) => (pointer: Point, cell: Cell) => {
+export const onpointerup = (universe: Universe, uistate: UIstate) => (
+  pointer: Point,
+  cell: Cell
+) => {
   if (!uistate.dragMachine) return
 
   if (!uistate.dragMachineDroppable) {

@@ -1,8 +1,7 @@
-import { mat4, vec3 } from 'gl-matrix'
 import { create as createFlatEntity } from './flatEntity'
 import { create as createGrid } from './grid'
 import { getWidth, getHeight } from '~/service/map'
-import type { Universe, Camera } from '~/type'
+import type { Universe, Point, UIstate } from '~/type'
 
 const WEBGL_OPTIONS = {
   alpha: true,
@@ -54,7 +53,7 @@ const computeWorldMatrix = map => {
   const uw = sw / r
   const uh = sh / r
 
-  const a = 0.99
+  const a = 1
 
   const mx = -1 + (1 * (uw - mw)) / uw
   const my = -1 + (1 * (uh - mh)) / uh
@@ -78,19 +77,19 @@ export const createWebGL = (canvas: HTMLCanvasElement) => {
 
   let worldMatrix
 
-  window.onresize = () => {
+  window.addEventListener('resize', () => {
     canvas.width = canvas.clientWidth * pixelRatio
     canvas.height = canvas.clientHeight * pixelRatio
     gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight)
     worldMatrix = null
-  }
+  })
 
-  return (universe: Universe) => {
+  return (universe: Universe, uistate: UIstate) => {
     worldMatrix = worldMatrix || computeWorldMatrix(universe.map)
 
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
-    flatEntityDrawCall(universe, worldMatrix)
-    gridDrawCall(universe, worldMatrix)
+    flatEntityDrawCall(universe, uistate, worldMatrix)
+    gridDrawCall(universe, uistate, worldMatrix)
   }
 }

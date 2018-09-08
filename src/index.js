@@ -1,4 +1,3 @@
-import { createRenderer } from './__tests__/util/createRenderer'
 import { createActionLayer } from '~/logic/actionLayer'
 import { createUI } from '~/renderer/ui'
 import { createWebGL } from '~/renderer/webglFlat'
@@ -14,7 +13,7 @@ const uistate: UIstate = {
   selectedBlueprintRotation: 0,
   selectedBlueprintId: 'rice-cooker',
   shopOpened: false,
-  step: 0,
+  step: 20,
   command: null,
   dragBot: null,
   dragBotDroppable: false,
@@ -22,24 +21,18 @@ const uistate: UIstate = {
   dragMachineDroppable: false,
 }
 
-const webgl = createWebGL(document.getElementsByTagName('canvas')[0])
+const canvas = document.getElementsByTagName('canvas')[0]
 
-const renderer = createRenderer()
+const webgl = createWebGL(canvas)
 
-createActionLayer(
-  document.getElementById('app'),
-  universe,
-  uistate,
-  renderer.camera
-)
+createActionLayer(canvas, universe, uistate)
 
-const uiUpdate = createUI(document.getElementById('app'))
+const uiUpdate = createUI(document.body)
 
 const loop = () => {
   tic(universe)
 
-  // renderer.update(universe, uistate)
-  webgl(universe)
+  webgl(universe, uistate)
 
   uiUpdate(universe, uistate)
 

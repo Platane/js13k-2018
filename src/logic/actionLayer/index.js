@@ -1,4 +1,3 @@
-import { unproj } from '~/service/camera'
 import { distanceSq, pointToCell, pointEqual } from '~/service/point'
 import { findPath } from '~/service/aStar'
 import { isNavigable, getWidth, getHeight } from '~/service/map'
@@ -10,7 +9,7 @@ import * as command from './command'
 import * as placeBot from './placeBot'
 import * as placeMachine from './placeMachine'
 
-import type { ID, UIstate, Camera, Universe, Machine, Cell } from '~/type'
+import type { ID, UIstate, Universe, Machine, Cell } from '~/type'
 const handlers = [
   //
   select,
@@ -22,24 +21,45 @@ const handlers = [
 export const createActionLayer = (
   element: Element,
   universe: Universe,
-  uistate: UIstate,
-  camera: Camera
+  uistate: UIstate
 ) => {
+  let unproj
+
   const handler = handlers => (event: MouseEvent | TouchEvent) => {
-    const pointer = unproj(camera)(getPointer(event))
+    const pointer = unproj(getPointer(event))
 
     const cell = pointToCell(pointer)
 
     handlers
       .filter(Boolean)
-      .forEach(h => h(universe, uistate, camera)(pointer, cell, event))
+      .forEach(h => h(universe, uistate)(pointer, cell, event))
   }
 
-  const onmove = (e: MouseEvent) => {
-    const pointer = unproj(camera)({ x: e.clientX, y: e.clientY })
+  const resize = () => {
+    // map
+    const mw = getWidth(universe.map)
+    const mh = getHeight(universe.map)
 
-    const cell = pointToCell(pointer)
+    // screen
+    const sw = window.innerWidth
+    const sh = window.innerHeight
+
+    const r = Math.min(sw / mw, sh / mh)
+
+    // screen in map coord
+    const uw = sw / r
+    const uh = sh / r
+
+    unproj = ({ x, y }) => ({
+      x: (x / sw) * uw - (uw - mw) / 2,
+      y: (y / sh) * uh - (uh - mh) / 2,
+    })
   }
+  window.addEventListener('resize', resize)
+
+  resize()
+
+  //
 
   const onpointerdown = handler(handlers.map(x => x.onpointerdown))
   element.onmousedown = element.ontouchstart = e => {

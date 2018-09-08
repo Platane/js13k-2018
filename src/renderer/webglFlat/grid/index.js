@@ -5,11 +5,9 @@ import {
   bindUniformTexture,
   bindUniform,
 } from '../util/shader'
-import { vec3 } from 'gl-matrix'
-import type { Universe, Point } from '~/type'
-import type { Mat4 } from 'gl-matrix'
 import { getWidth, getHeight } from '~/service/map'
 import { texture } from '~/renderer/texture'
+import type { Universe, Point, UIstate } from '~/type'
 
 //$FlowFixMe
 import fragmentShaderSource from './fragment_fs.glsl'
@@ -54,7 +52,7 @@ export const create = (gl: WebGLRenderingContext) => {
     n_faces = index.length
   }
 
-  return (universe: Universe, matrix) => {
+  return (universe: Universe, _, matrix) => {
     gl.useProgram(program)
 
     if (!n_faces) init(universe.map)
