@@ -7,14 +7,14 @@ import {
 } from '~/config/palette'
 
 export const texture = document.createElement('canvas')
-export const l = (texture.width = texture.height = 512)
+export const l = (texture.width = texture.height = 1024)
 export const ctx = texture.getContext('2d')
 
 // window.document.body.appendChild(texture)
 // texture.style.cssText =
 //   'border:solid 3px red;z-index:10;top:10px;left:10px;position:absolute'
 
-export const offset = { x: 0, y: 0, h: 0, s: 10 }
+export const offset = { x: 0, y: 0, h: 0, s: 11 }
 export const getNextBox = (w: number, h: number) => {
   if (offset.x + w > offset.s) {
     offset.x = 0
@@ -43,6 +43,10 @@ export const getNextBox = (w: number, h: number) => {
 
 type Boxes = {
   ['bot' | 'wall' | 'sushi' | 'blue' | 'yello' | 'purple' | string]: [
+    number,
+    number,
+    number,
+    number,
     number,
     number,
     number,
@@ -92,14 +96,14 @@ export const drawPaths = (
   ctx.restore()
 }
 
-export const addBox = (
-  label: string,
-  [x, y, w, h]: [number, number, number, number]
-) =>
+export const boxToBox = ([x, y, w, h]: [number, number, number, number]) =>
   // prettier-ignore
-  boxes[label] = [
+  [
     x,y,
     x+w,y,
     x+w,y+h,
     x,y+h
   ]
+
+export const addBox = (label: string, x: [number, number, number, number]) =>
+  (boxes[label] = boxToBox(x))

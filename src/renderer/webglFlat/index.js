@@ -90,6 +90,6 @@ export const createWebGL = (canvas: HTMLCanvasElement) => {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
     flatEntityDrawCall(universe, uistate, worldMatrix)
-    gridDrawCall(universe, uistate, worldMatrix)
+    // gridDrawCall(universe, uistate, worldMatrix)
   }
 }

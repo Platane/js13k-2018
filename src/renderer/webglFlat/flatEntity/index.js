@@ -8,6 +8,7 @@ import {
 import { getWidth, getHeight, isNavigable, around4 } from '~/service/map'
 import { texture, boxes } from '~/renderer/texture'
 import { renderMachines } from './entities/machines'
+import { renderFloor } from './entities/floor'
 import { renderBots } from './entities/bots'
 import { addEntity } from './entities/util'
 import type { Universe, Point, UIstate } from '~/type'
@@ -39,17 +40,7 @@ export const create = (gl: WebGLRenderingContext) => {
     const index = []
 
     // render navigable tiles
-    const w = getWidth(universe.map)
-    const h = getHeight(universe.map)
-
-    for (let x = w; x--; )
-      for (let y = h; y--; ) {
-        if (isNavigable(universe.map, { x, y }))
-          addEntity(0.5, 0.5, boxes.wall)(vertices, uvs, index)({
-            x: x + 0.5,
-            y: y + 0.5,
-          })
-      }
+    renderFloor(universe, uistate)(vertices, uvs, index)
 
     // render bots
     renderMachines(universe, uistate)(vertices, uvs, index)
