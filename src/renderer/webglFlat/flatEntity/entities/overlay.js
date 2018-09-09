@@ -1,9 +1,11 @@
 import { getWidth, getHeight, isNavigable, around4 } from '~/service/map'
 import { normalize, length, lengthSq, cellCenter } from '~/service/point'
 import { boxes } from '~/renderer/texture'
-import { addEntity } from './util'
+import { addEntity, renderPath } from './util'
 import { renderBot, renderArrow } from './bots'
+import { findPath, smoothPath } from '~/service/aStar'
 import { renderMachine } from './machines'
+
 import type { Universe, Point, UIstate } from '~/type'
 
 const EPSYLON = 0.014
@@ -50,7 +52,31 @@ export const renderOverlay = (universe: Universe, uistate: UIstate) => (
     universe.bots.find(x => x.id === uistate.selectedBotId)
 
   if (selectedBot) {
+    // arrow
     renderArrow(selectedBot, true)(vertices, uvs, opacity, index)
+
+    // path
+    let A, B
+    if (uistate.command) {
+      A = uistate.command.pickUpCell
+      B = uistate.command.dropCell
+    } else if (selectedBot.command.type === 'carry') {
+      A = selectedBot.command.pickUpCell
+      B = selectedBot.command.dropCell
+    }
+
+    console.log(A, B)
+
+    if (A) {
+      const path = smoothPath(
+        universe.map,
+        findPath(universe.map, A, B || A) || []
+      ).map(cellCenter)
+
+      renderPath(path, boxes.red, 1)(vertices, uvs, opacity, index)
+    }
+
+    // bot
     renderBot(selectedBot)(vertices, uvs, opacity, index)
   }
 

@@ -99,6 +99,16 @@ ctx.fillStyle = black
 ctx.fillRect(0, 0, 100, 100)
 ctx.restore()
 
+box = getNextBox(0.3, 0.3)
+ctx.save()
+ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
+ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
+ctx.scale(0.3, 0.3)
+addBox('red', box)
+ctx.fillStyle = salmon_pink
+ctx.fillRect(0, 0, 100, 100)
+ctx.restore()
+
 box = getNextBox(1.4, 1.4)
 ctx.save()
 ctx.scale(l / (100 * offset.s), l / (100 * offset.s))

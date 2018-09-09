@@ -26,7 +26,7 @@ const initGL = (canvas: HTMLCanvasElement) => {
 
   if (!gl) throw 'WebGl not supported'
 
-  gl.clearColor(0.5, 0.5, 0.5, 0.9)
+  gl.clearColor(0.5, 0.6, 0.8, 1)
   gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight)
 
   gl.cullFace(gl.FRONT_AND_BACK)

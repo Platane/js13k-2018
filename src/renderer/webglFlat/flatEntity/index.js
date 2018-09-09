@@ -54,6 +54,7 @@ export const create = (gl: WebGLRenderingContext) => {
       addEntity(0.3, 0.3, boxes[token])(vertices, uvs, opacity, index)(position)
     )
 
+    // overlay
     renderOverlay(universe, uistate)(vertices, uvs, opacity, index)
 
     attribute_uv.update(uvs)

@@ -35,3 +35,39 @@ export const addEntity = (
     k+0,  k+2, k+3,
   )
 }
+
+export const renderLine = (A: Point, B: Point, box, alpha) => (
+  vertices: number[],
+  uvs: number[],
+  opacity: number[],
+  index: number[]
+) => {
+  const BA = { x: B.x - A.x, y: B.y - A.y }
+  const l = length(BA)
+  const c = { x: (B.x + A.x) * 0.5, y: (B.y + A.y) * 0.5 }
+  const v = { x: BA.y / l, y: -BA.x / l }
+
+  addEntity(l / 2 + 0.02, 0.05, box, alpha)(vertices, uvs, opacity, index)(c, v)
+
+  // addEntity(0.1, 0.1, boxes.black)(vertices, uvs, opacity, index)(A)
+  // addEntity(0.1, 0.1, boxes.black)(vertices, uvs, opacity, index)(B)
+}
+
+export const renderPath = (path: Point[], box, alpha) => (
+  vertices: number[],
+  uvs: number[],
+  opacity: number[],
+  index: number[]
+) =>
+  path.length == 1
+    ? renderLine(path[0], { x: path[0].x + 0.05, y: path[0].y }, box, alpha)(
+        vertices,
+        uvs,
+        opacity,
+        index
+      )
+    : path.forEach(
+        (B, i) =>
+          i > 0 &&
+          renderLine(path[i - 1], B, box, alpha)(vertices, uvs, opacity, index)
+      )
