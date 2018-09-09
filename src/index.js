@@ -36,11 +36,13 @@ const loop = () => {
 
   uiUpdate(universe, uistate)
 
-  if (uistate.command || uistate.dragMachine || uistate.dragBot) {
-    setTimeout(loop, 60)
-  } else {
-    requestAnimationFrame(loop)
-  }
+  // if (uistate.command || uistate.dragMachine || uistate.dragBot) {
+  //   setTimeout(loop, 30)
+  // } else {
+  //   requestAnimationFrame(loop)
+  // }
+
+  requestAnimationFrame(loop)
 }
 
 loop()

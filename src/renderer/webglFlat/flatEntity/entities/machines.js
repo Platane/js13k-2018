@@ -11,7 +11,7 @@ import { boxes } from '~/renderer/texture'
 import { addEntity } from './util'
 import type { Universe, Point, Machine, UIstate } from '~/type'
 
-const drawMachine = (m: Machine, alpha: number = 1) => (
+export const renderMachine = (m: Machine, alpha: number = 1) => (
   vertices: number[],
   uvs: number[],
   opacity: number[],
@@ -101,15 +101,7 @@ export const renderMachines = (universe: Universe, uistate: UIstate) => (
   uvs: number[],
   opacity: number[],
   index: number[]
-) => {
-  universe.machines.forEach(m => drawMachine(m)(vertices, uvs, opacity, index))
-
-  if (uistate.dragMachine) {
-    drawMachine(uistate.dragMachine, uistate.dragMachineDroppable ? 0.8 : 0.2)(
-      vertices,
-      uvs,
-      opacity,
-      index
-    )
-  }
-}
+) =>
+  universe.machines.forEach(m =>
+    renderMachine(m)(vertices, uvs, opacity, index)
+  )

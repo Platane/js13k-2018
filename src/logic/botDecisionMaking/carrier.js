@@ -36,9 +36,14 @@ export const botCarrierDecision = (universe: Universe, bot: BotCarry) => {
   ) {
     const token = bot.activity.carrying
 
+    const position = {
+      x: 0.3 + Math.random() * 0.4 + bot.command.dropCell.x,
+      y: 0.3 + Math.random() * 0.4 + bot.command.dropCell.y,
+    }
+
     universe.droppedTokens.push({
       token,
-      position: { x: bot.position.x, y: bot.position.y },
+      position,
       availableCoolDown: DROPPED_DELAY,
     })
 

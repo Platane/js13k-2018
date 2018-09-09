@@ -66,15 +66,6 @@ box = getNextBox(1, 1)
 ctx.save()
 ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
 ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
-addBox('arrow_selected', box)
-ctx.fillStyle = salmon_pink
-smoothArrow()
-ctx.restore()
-
-box = getNextBox(1, 1)
-ctx.save()
-ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
-ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
 addBox('arrow_input', box)
 ctx.fillStyle = salmon_pink
 rectArrow()
@@ -96,4 +87,24 @@ ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
 addBox('arrow_client', box)
 ctx.fillStyle = blue_dark
 rectArrow()
+ctx.restore()
+
+box = getNextBox(0.3, 0.3)
+ctx.save()
+ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
+ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
+ctx.scale(0.3, 0.3)
+addBox('black', box)
+ctx.fillStyle = black
+ctx.fillRect(0, 0, 100, 100)
+ctx.restore()
+
+box = getNextBox(1.4, 1.4)
+ctx.save()
+ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
+ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
+ctx.scale(1.4, 1.4)
+addBox('arrow_selected', box)
+ctx.fillStyle = salmon_pink
+smoothArrow()
 ctx.restore()

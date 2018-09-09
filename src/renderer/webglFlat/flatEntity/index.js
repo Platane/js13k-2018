@@ -8,6 +8,7 @@ import {
 import { getWidth, getHeight, isNavigable, around4 } from '~/service/map'
 import { texture, boxes } from '~/renderer/texture'
 import { renderMachines } from './entities/machines'
+import { renderOverlay } from './entities/overlay'
 import { renderFloor } from './entities/floor'
 import { renderBots } from './entities/bots'
 import { addEntity } from './entities/util'
@@ -52,6 +53,8 @@ export const create = (gl: WebGLRenderingContext) => {
     universe.droppedTokens.forEach(({ token, position }) =>
       addEntity(0.3, 0.3, boxes[token])(vertices, uvs, opacity, index)(position)
     )
+
+    renderOverlay(universe, uistate)(vertices, uvs, opacity, index)
 
     attribute_uv.update(uvs)
     elementIndex.update(index)
