@@ -16,7 +16,8 @@ yarn rollup --config ./script/rollup.config.js
 # sed -i "s|'activate'|3|g" dist/bundle.js
 
 # minify
-NODE_ENV="mangle-properties" yarn babel dist/bundle.js -o dist/bundle0.js
+# NODE_ENV="mangle-properties" yarn babel dist/bundle.js -o dist/bundle0.js
+cp dist/bundle.js dist/bundle0.js
 NODE_ENV="minify" yarn babel dist/bundle0.js -o dist/index.js
 
 
