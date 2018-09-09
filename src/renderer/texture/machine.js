@@ -10,6 +10,72 @@ import {
 import { l, offset, ctx, getNextBox, addBox } from './tex'
 import { blueprints } from '~/config/blueprints'
 import { proj } from '~/service/machine'
+import type { Map } from '~/type'
+
+const buffer = document.createElement('canvas')
+buffer.height = buffer.width = 600
+
+// window.document.body.appendChild(buffer)
+// buffer.style.cssText =
+//   'border:solid 3px red;z-index:10;top:10px;left:560px;width:200px;height:200px;position:absolute;background-color:yellow'
+
+const ctxbuffer = buffer.getContext('2d')
+ctxbuffer.scale(100, 100)
+
+const isBlock = (map, c) => isInside(map, c) && isNavigable(map, c)
+
+const drawMachineHull = (ground: Map) => {
+  const w = getWidth(ground)
+  const h = getHeight(ground)
+
+  ctxbuffer.clearRect(0, 0, 9, 9)
+
+  for (let x = w; x--; )
+    for (let y = h; y--; ) {
+      ctxbuffer.fillStyle = !isNavigable(ground, { x, y })
+        ? '#000'
+        : 'transparent'
+
+      const m = 0.12
+
+      ctxbuffer.fillRect(
+        //
+        y + m,
+        x + m,
+        1 - m * 2,
+        1 - m * 2
+      )
+
+      for (let k = 8; k--; ) {
+        const v = around8[k]
+
+        const c = { x: v.x + x, y: v.y + y }
+
+        if (!isNavigable(ground, c) && isInside(ground, c)) {
+          if (v.x * v.y === 0)
+            ctxbuffer.fillRect(
+              //
+              y + m + v.y * 0.5,
+              x + m + v.x * 0.5,
+              1 - m * 2,
+              1 - m * 2
+            )
+          else if (
+            !isNavigable(ground, { x, y: y + v.y }) &&
+            !isNavigable(ground, { x: x + v.x, y }) &&
+            !false
+          ) {
+            ctxbuffer.fillRect(
+              y + m + v.y * 0.5,
+              x + m + v.x * 0.5,
+              1 - m * 2,
+              1 - m * 2
+            )
+          }
+        }
+      }
+    }
+}
 
 ctx.save()
 
@@ -25,56 +91,31 @@ blueprints.forEach(blueprint => {
 
   ctx.save()
   ctx.translate(box[0] * l, box[1] * l)
-  ctx.scale(l / 100 / offset.s, l / 100 / offset.s)
+  ctx.scale(l / offset.s, l / offset.s)
 
-  for (let x = w; x--; )
-    for (let y = h; y--; ) {
-      ctx.fillStyle = '#0000'
+  ctx.beginPath()
+  ctx.rect(0, 0, h, w)
+  ctx.clip()
 
-      if (!isNavigable(blueprint.ground, { x, y })) ctx.fillStyle = '#134'
+  drawMachineHull(blueprint.ground)
 
-      const m = 10
+  ctx.fillStyle = `hsl(40,80%,${20 + Math.random() * 30}%)`
+  ctx.beginPath()
+  ctx.fillRect(0, 0, 9, 9)
 
-      ctx.fillRect(
-        //
-        y * 100 + m,
-        x * 100 + m,
-        100 - m * 2,
-        100 - m * 2
-      )
+  for (let k = 100; k--; ) {
+    ctx.fillStyle = `hsl(40,80%,${20 + Math.random() * 30}%)`
 
-      for (let k = 8; k--; ) {
-        const v = around8[k]
+    const size = k > 50 ? 1 : 1 / 4
+    const x = Math.round((Math.random() * (h + size) - size) * 4) / 4
+    const y = Math.round((Math.random() * (w + size) - size) * 4) / 4
 
-        const c = { x: v.x + x, y: v.y + y }
+    ctx.beginPath()
+    ctx.fillRect(x, y, size, size)
+  }
 
-        if (
-          !isNavigable(blueprint.ground, c) &&
-          isInside(blueprint.ground, c)
-        ) {
-          if (v.x * v.y === 0)
-            ctx.fillRect(
-              //
-              y * 100 + m + v.y * 50,
-              x * 100 + m + v.x * 50,
-              100 - m * 2,
-              100 - m * 2
-            )
-          else if (
-            !isNavigable(blueprint.ground, { x, y: y + v.y }) &&
-            !isNavigable(blueprint.ground, { x: x + v.x, y }) &&
-            !false
-          ) {
-            ctx.fillRect(
-              y * 100 + m + v.y * 50,
-              x * 100 + m + v.x * 50,
-              100 - m * 2,
-              100 - m * 2
-            )
-          }
-        }
-      }
-    }
+  ctx.globalCompositeOperation = 'destination-in'
+  ctx.drawImage(buffer, 0, 0, h * 100, w * 100, 0, 0, h, w)
 
   //
   ctx.restore()

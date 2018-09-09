@@ -36,7 +36,7 @@ export const create = (domParent: Element) => {
 
   const hint = document.createElement('div')
   hint.style.cssText =
-    'position:fixed;right:10px;bottom:60px;color:#000;font-size:24px;line-height:40px;letter-spacing:1.4px'
+    'position:fixed;right:10px;bottom:60px;color:#000;font-size:24px;line-height:40px;letter-spacing:1.4px;z-index:3'
   domParent.appendChild(hint)
 
   let step = -1

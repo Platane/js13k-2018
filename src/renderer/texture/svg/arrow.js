@@ -1,6 +1,7 @@
 import { texture, ctx, l, drawPaths, addBox, getNextBox, offset } from '../tex'
 import {
   black,
+  white,
   plank_light,
   plank_mid,
   salmon_orange,
@@ -38,6 +39,17 @@ addBox('arrow_idle', box)
 ctx.fillStyle = blue_true
 ctx.beginPath()
 ctx.arc(50, 50, 28, 0, Math.PI * 2)
+ctx.fill()
+ctx.restore()
+
+box = getNextBox(1, 1)
+ctx.save()
+ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
+ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
+addBox('circle', box)
+ctx.fillStyle = white
+ctx.beginPath()
+ctx.arc(50, 50, 30, 0, Math.PI * 2)
 ctx.fill()
 ctx.restore()
 

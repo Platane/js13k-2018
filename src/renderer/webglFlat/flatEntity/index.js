@@ -29,6 +29,8 @@ export const create = (gl: WebGLRenderingContext) => {
 
   sampler_texture.update(texture)
 
+  let firstpass = true
+
   return (universe: Universe, uistate: UIstate, matrix: number[]) => {
     gl.useProgram(program)
 
@@ -50,10 +52,10 @@ export const create = (gl: WebGLRenderingContext) => {
       }
 
     // render bots
-    renderBots(universe, uistate)(vertices, uvs, index)
+    renderMachines(universe, uistate)(vertices, uvs, index)
 
     // render bots
-    renderMachines(universe, uistate)(vertices, uvs, index)
+    renderBots(universe, uistate)(vertices, uvs, index)
 
     //render dropped tokens
     universe.droppedTokens.forEach(({ token, position }) =>
@@ -68,10 +70,12 @@ export const create = (gl: WebGLRenderingContext) => {
 
     elementIndex.bind()
     attribute_position.bind()
-    sampler_texture.bind()
     attribute_uv.bind()
     uniform_worldMatrix.bind()
+    sampler_texture.bind()
 
     gl.drawElements(gl.TRIANGLES, index.length, gl.UNSIGNED_SHORT, 0)
+
+    firstpass = false
   }
 }

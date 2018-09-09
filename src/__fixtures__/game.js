@@ -7,7 +7,8 @@ const h = 14
 
 const map = Array.from({ length: h }).map((_, y) =>
   Array.from({ length: w }).map(
-    (_, x) => (!(x * y) || x == w - 1 || y == h - 1 ? 1 : 0)
+    (_, x) => 0
+    // (_, x) => (!(x * y) || x == w - 1 || y == h - 1 ? 1 : 0)
   )
 )
 
@@ -50,9 +51,9 @@ export const universe: Universe = {
       id: '1',
       positionOrigin: { x: 8, y: 1 },
       rotation: 0,
-      blueprint: blueprints[1],
+      blueprint: blueprints[0],
       processing: {
-        k: blueprints[1].activationThreshold - 2,
+        k: blueprints[0].activationThreshold - 2,
         activated: false,
       },
     },

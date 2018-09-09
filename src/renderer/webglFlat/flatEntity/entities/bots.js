@@ -65,7 +65,7 @@ export const renderBots = (universe: Universe, uistate: UIstate) => (
       }
     })
 
-    const h = Math.sin((position.y + position.x) * 10)
+    const h = Math.sin((position.y * 0.8 + position.x * 1.2) * 10)
 
     addEntity(0.45, 0.45, boxes['bot' + k])(vertices, uvs, index)({
       x: position.x,
@@ -85,4 +85,11 @@ export const renderBots = (universe: Universe, uistate: UIstate) => (
       addEntity(0.3, 0.3, boxes[token])(vertices, uvs, index)(c)
     }
   })
+
+  if (uistate.dragBot) {
+    addEntity(0.45, 0.45, boxes['bot' + 0])(vertices, uvs, index)({
+      x: uistate.dragBot.position.x,
+      y: uistate.dragBot.position.y - 0.3,
+    })
+  }
 }

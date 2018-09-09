@@ -2,7 +2,7 @@ import { createActionLayer } from '~/logic/actionLayer'
 import { createUI } from '~/renderer/ui'
 import { createWebGL } from '~/renderer/webglFlat'
 import { tic } from './logic'
-import { universe } from '~/__fixtures__/blank'
+import { universe } from '~/__fixtures__/game'
 import type { Universe, UIstate } from '~/type'
 
 import '~/renderer/texture'
@@ -13,7 +13,7 @@ const uistate: UIstate = {
   selectedBlueprintRotation: 0,
   selectedBlueprintId: 'rice-cooker',
   shopOpened: false,
-  step: 20,
+  step: 0,
   command: null,
   dragBot: null,
   dragBotDroppable: false,

@@ -10,10 +10,9 @@ export const texture = document.createElement('canvas')
 export const l = (texture.width = texture.height = 512)
 export const ctx = texture.getContext('2d')
 
+// window.document.body.appendChild(texture)
 // texture.style.cssText =
 //   'border:solid 3px red;z-index:10;top:10px;left:10px;position:absolute'
-//
-// window.document.body.appendChild(texture)
 
 export const offset = { x: 0, y: 0, h: 0, s: 10 }
 export const getNextBox = (w: number, h: number) => {
@@ -35,7 +34,7 @@ export const getNextBox = (w: number, h: number) => {
 
   // ctx.save()
   // ctx.strokeStyle = 'red'
-  // ctx.lineWidth = 2
+  // ctx.lineWidth = 5
   // ctx.strokeRect(box[0] * l, box[1] * l, box[2] * l, box[3] * l)
   // ctx.restore()
 

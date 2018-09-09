@@ -16,6 +16,6 @@ const paths = [
 
 const dbox = getNextBox(1, 1)
 drawPaths(paths, [salmon_orange, salmon_pink, plank_light], box, dbox, 16)
-addBox('rice-grain', dbox)
 addBox('sushi', dbox)
+addBox('rice-grain', dbox)
 addBox('blue', dbox)
