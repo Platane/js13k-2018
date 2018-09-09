@@ -99,6 +99,7 @@ export const universe: Universe = {
   map,
 
   bots: [],
+  clients: [],
 
   menu,
 

@@ -56,8 +56,10 @@ const handleNavigation = (
     navigation.pathToTarget.shift()
 }
 
-export const botMoving = ({ map, bots }: Universe) => {
-  const acc = bots.map((bot: Bot, i) => {
+export const botMoving = ({ map, bots, clients }: Universe) => {
+  const people = [...bots, ...clients]
+
+  const acc = people.map((bot: Bot) => {
     const { velocity, position, navigation } = bot
 
     const cell = pointToCell(position)
@@ -92,7 +94,7 @@ export const botMoving = ({ map, bots }: Universe) => {
     }
 
     // pushed from the others
-    bots.forEach(b => {
+    people.forEach(b => {
       if (position !== b.position) {
         const d = {
           x: b.position.x - position.x,
@@ -150,7 +152,7 @@ export const botMoving = ({ map, bots }: Universe) => {
   })
 
   // apply delta t
-  bots.forEach((bot, i) => {
+  people.forEach((bot, i) => {
     bot.velocity.x += acc[i].x
     bot.velocity.y += acc[i].y
 

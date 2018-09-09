@@ -6,7 +6,7 @@ import type { Universe, Point, Bot, UIstate } from '~/type'
 
 const EPSYLON = 0.014
 
-export const renderBot = (bot: Bot) => (
+export const renderBot = (bot: Bot, boxLabel = 'bot') => (
   vertices: number[],
   uvs: number[],
   opacity: number[],
@@ -31,7 +31,7 @@ export const renderBot = (bot: Bot) => (
 
   const h = Math.sin((position.y * 0.8 + position.x * 1.2) * 10)
 
-  addEntity(0.45, 0.45, boxes['bot' + k])(vertices, uvs, opacity, index)({
+  addEntity(0.45, 0.45, boxes[boxLabel + k])(vertices, uvs, opacity, index)({
     x: position.x,
     y: position.y - 0.3 + h * 0.08,
   })
@@ -85,11 +85,20 @@ export const renderBots = (universe: Universe, uistate: UIstate) => (
   index: number[]
 ) => {
   // sort bot by y
-  const bots = universe.bots.slice().sort((a, b) => a.position.y - b.position.y)
+  const people = [...universe.bots, ...universe.clients].sort(
+    (a, b) => a.position.y - b.position.y
+  )
 
   // draw arrows
-  bots.forEach(bot => renderArrow(bot)(vertices, uvs, opacity, index))
+  universe.bots.forEach(bot => renderArrow(bot)(vertices, uvs, opacity, index))
 
   // draw bots
-  bots.forEach(bot => renderBot(bot)(vertices, uvs, opacity, index))
+  people.forEach(bot =>
+    renderBot(bot, bot.client ? 'client' + bot.client : 'bot')(
+      vertices,
+      uvs,
+      opacity,
+      index
+    )
+  )
 }

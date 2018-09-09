@@ -83,7 +83,7 @@ export const onpointerup = (universe: Universe, uistate: UIstate) => (
   for (let x = w; x--; )
     for (let y = h; y--; )
       if (!isNavigable(m.blueprint.ground, { x, y }))
-        setCell(universe.map, p({ x, y }), 1)
+        setCell(universe.map, p({ x, y }), 3)
 
         //
   ;[...m.blueprint.outputs, ...m.blueprint.inputs].every(({ cell }) =>

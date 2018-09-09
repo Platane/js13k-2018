@@ -180,6 +180,7 @@ export const universe: Universe = {
 
   menu,
 
+  clients: [],
   customers: [],
 
   droppedTokens: [

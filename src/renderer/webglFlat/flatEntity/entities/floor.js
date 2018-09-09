@@ -1,4 +1,4 @@
-import { getWidth, getHeight, isNavigable } from '~/service/map'
+import { getWidth, getHeight, isFloor } from '~/service/map'
 import { box as floorBox, fw, fh } from '~/renderer/texture/floor'
 import { boxes } from '~/renderer/texture'
 import { boxToBox } from '~/renderer/texture/tex'
@@ -19,7 +19,7 @@ export const renderFloor = (universe: Universe, uistate: UIstate) => (
 
   for (let x = w; x--; )
     for (let y = h; y--; )
-      if (isNavigable(universe.map, { x, y })) {
+      if (isFloor(universe.map, { x, y })) {
         let tx1 = (x + 3 * y + y * y) % tilex
         let tx2 = (x + 1) % tilex
 

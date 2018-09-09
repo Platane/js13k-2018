@@ -27,6 +27,11 @@ export type CommandCarry = {
   dropCell: Cell,
 }
 
+export type CommandWander = {
+  type: 'wander',
+  target: Point,
+}
+
 export type Command = CommandIdle | CommandActivate | CommandCarry
 
 export type Navigation = {
@@ -68,12 +73,23 @@ export type BotCarry = {
   },
 }
 
+export type BotWander = {
+  id: ID,
+  position: Point,
+  velocity: Point,
+  navigation: Navigation | null,
+
+  command: CommandWander,
+  activity: { cooldown: number },
+}
+
 export type Bot = BotIdle | BotActivate | BotCarry
 
 // 0 empty
 // 1 wall
 // 2 trigger
-export type CellType = 0 | 1 | 2
+// 3 wall but with different look
+export type CellType = 0 | 1 | 2 | 3
 export type Map = CellType[][]
 
 export type Blueprint = {
@@ -113,6 +129,7 @@ export type Universe = {
   menu: Menu,
 
   customers: { cell: Point }[],
+  clients: BotWander[],
 
   machines: Machine[],
 

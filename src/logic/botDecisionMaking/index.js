@@ -1,8 +1,9 @@
 import { botActivatorDecision } from './activator'
+import { botWandererDecision } from './wanderer'
 import { botCarrierDecision } from './carrier'
 import type { Universe } from '~/type'
 
-export const botDecisionMaking = (universe: Universe) =>
+export const botDecisionMaking = (universe: Universe) => {
   universe.bots.forEach(bot => {
     switch (bot.command.type) {
       case 'carry':
@@ -11,3 +12,6 @@ export const botDecisionMaking = (universe: Universe) =>
         return botActivatorDecision(universe, bot)
     }
   })
+
+  universe.clients.forEach(bot => botWandererDecision(universe, bot))
+}

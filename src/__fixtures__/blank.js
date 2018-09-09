@@ -22,6 +22,7 @@ export const universe: Universe = {
     .map(line => line.split('').map(x => (x === '#' ? 1 : 0))),
 
   bots: [],
+  clients: [],
 
   menu,
 

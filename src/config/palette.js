@@ -2,6 +2,8 @@ export const white = '#fff'
 export const black = '#000'
 export const dark = '#333'
 
+export const dirty_shirt = '#d2af80'
+
 export const plank_light = '#b97f36'
 export const plank_mid = '#f1ad48'
 export const plank_dark = '#b76124'

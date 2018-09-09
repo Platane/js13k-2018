@@ -5,7 +5,12 @@ import type { Map, Cell, CellType } from '~/type'
 export const isInside = (map: Map, { x, y }: Cell): boolean =>
   0 <= x && x < getWidth(map) && 0 <= y && y < getHeight(map)
 
-export const isNavigable = (map: Map, c: Cell) => getCell(map, c) !== 1
+export const isNavigable = (map: Map, c: Cell) => {
+  const v = getCell(map, c)
+  return v !== 1 && v !== 3
+}
+
+export const isFloor = (map: Map, c: Cell) => getCell(map, c) !== 1
 
 export const isContructible = (map: Map, c: Cell) => getCell(map, c) === 0
 

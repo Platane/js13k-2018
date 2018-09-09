@@ -1,5 +1,6 @@
 import { texture, drawPaths, addBox, getNextBox } from '../tex'
 import {
+  dirty_shirt,
   white,
   black,
   plank_light,
@@ -56,11 +57,11 @@ let dbox
       // body
       salmon_orange,
       // shirt
-      white,
+      dirty_shirt,
       // face
       blue_light,
       // hat
-      plank_light,
+      dirty_shirt,
     ],
     box,
     dbox,
@@ -76,7 +77,7 @@ let dbox
       // body
       blue_true,
       // shirt
-      white,
+      blue_true,
       // face
       blue_light,
       // hat
@@ -96,7 +97,7 @@ let dbox
       // body
       blue_dark,
       // shirt
-      white,
+      blue_dark,
       // face
       blue_light,
       // hat
