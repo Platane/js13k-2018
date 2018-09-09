@@ -30,10 +30,8 @@ export const create = (gl: WebGLRenderingContext) => {
 
   sampler_texture.update(texture)
 
-  let firstpass = true
-
   return (universe: Universe, uistate: UIstate, matrix: number[]) => {
-    gl.useProgram(program)
+    if (gl.lastprogram !== program) gl.useProgram(program)
 
     const vertices = []
     const uvs = []
@@ -63,10 +61,10 @@ export const create = (gl: WebGLRenderingContext) => {
     attribute_position.bind()
     attribute_uv.bind()
     uniform_worldMatrix.bind()
-    sampler_texture.bind()
+    if (gl.lastprogram !== program) sampler_texture.bind()
 
     gl.drawElements(gl.TRIANGLES, index.length, gl.UNSIGNED_SHORT, 0)
 
-    firstpass = false
+    gl.lastprogram = program
   }
 }

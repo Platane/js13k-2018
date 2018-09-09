@@ -7,7 +7,7 @@ import {
   isNavigable,
   isContructible,
 } from '~/service/map'
-import { l, offset, ctx, getNextBox, addBox } from './tex'
+import { l, texture, boxes, offset, ctx, getNextBox, addBox } from './tex'
 import { blueprints } from '~/config/blueprints'
 import { proj } from '~/service/machine'
 import type { Map } from '~/type'
@@ -116,6 +116,34 @@ blueprints.forEach(blueprint => {
 
   ctx.globalCompositeOperation = 'destination-in'
   ctx.drawImage(buffer, 0, 0, h * 100, w * 100, 0, 0, h, w)
+
+  // draw token
+
+  const c = { x: w / 2, y: h / 2 }
+
+  const b = boxes[blueprint.recipe.outputs[0].token]
+
+  const tl = 0.6
+
+  ctx.globalCompositeOperation = 'source-over'
+  ctx.beginPath()
+  ctx.fillStyle = '#fff6'
+  ctx.arc(c.y, c.x, 0.4, 0, Math.PI * 2)
+  ctx.fill()
+  ctx.filter = 'grayscale(90%)'
+  ctx.drawImage(
+    texture,
+
+    b[0] * l,
+    b[1] * l,
+    (b[2] - b[0]) * l,
+    (b[5] - b[1]) * l,
+
+    c.x - tl / 2,
+    c.x - tl / 2,
+    tl,
+    tl
+  )
 
   //
   ctx.restore()
