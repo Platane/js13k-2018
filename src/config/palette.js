@@ -10,6 +10,8 @@ export const plank_light = '#b97f36'
 export const plank_mid = '#f1ad48'
 export const plank_dark = '#b76124'
 
+export const gold = '#dda821'
+
 export const salmon_orange = '#bd4521'
 export const salmon_pink = '#bd2145'
 

@@ -3,12 +3,14 @@ import {
   black,
   white,
   plank_light,
+  grey_light,
   plank_mid,
   salmon_orange,
   salmon_pink,
   blue_true,
   blue_light,
   blue_dark,
+  gold,
 } from '~/config/palette'
 
 const smoothArrow = () => {
@@ -67,7 +69,7 @@ ctx.save()
 ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
 ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
 addBox('arrow_input', box)
-ctx.fillStyle = salmon_pink
+ctx.fillStyle = grey_light
 rectArrow()
 ctx.restore()
 
@@ -76,7 +78,7 @@ ctx.save()
 ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
 ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
 addBox('arrow_output', box)
-ctx.fillStyle = plank_mid
+ctx.fillStyle = grey_light
 rectArrow()
 ctx.restore()
 
@@ -85,7 +87,7 @@ ctx.save()
 ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
 ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
 addBox('arrow_client', box)
-ctx.fillStyle = blue_dark
+ctx.fillStyle = gold
 rectArrow()
 ctx.restore()
 

@@ -101,7 +101,17 @@ export const renderMachines = (universe: Universe, uistate: UIstate) => (
   uvs: number[],
   opacity: number[],
   index: number[]
-) =>
+) => {
   universe.machines.forEach(m =>
     renderMachine(m)(vertices, uvs, opacity, index)
   )
+
+  // customer zone
+  const s = 0.3
+  universe.customers.forEach(({ cell }) =>
+    addEntity(s, s, boxes.arrow_client)(vertices, uvs, opacity, index)(
+      cellCenter(cell),
+      { x: -1, y: 0 }
+    )
+  )
+}
