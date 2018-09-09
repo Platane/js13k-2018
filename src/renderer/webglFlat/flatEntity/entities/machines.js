@@ -11,7 +11,7 @@ import { boxes } from '~/renderer/texture'
 import { addEntity } from './util'
 import type { Universe, Point, Machine, UIstate } from '~/type'
 
-const drawMachine = (m: Machine) => (
+const drawMachine = (m: Machine, alpha: number = 1) => (
   vertices: number[],
   uvs: number[],
   opacity: number[],
@@ -38,10 +38,12 @@ const drawMachine = (m: Machine) => (
     y: (min.y + max.y) / 2 + (v.x - v.y == 1),
   }
 
-  addEntity(h / 2, w / 2, boxes['machine' + id])(vertices, uvs, opacity, index)(
-    position,
-    v
-  )
+  addEntity(h / 2, w / 2, boxes['machine' + id], alpha)(
+    vertices,
+    uvs,
+    opacity,
+    index
+  )(position, v)
 
   //
 
@@ -64,7 +66,7 @@ const drawMachine = (m: Machine) => (
       y: v.y * -u.x - v.x * -u.y,
     }
 
-    addEntity(s, s, boxes.arrow_input)(vertices, uvs, opacity, index)(
+    addEntity(s, s, boxes.arrow_input, alpha)(vertices, uvs, opacity, index)(
       position,
       d
     )
@@ -87,7 +89,7 @@ const drawMachine = (m: Machine) => (
       y: v.y * u.x - v.x * u.y,
     }
 
-    addEntity(s, s, boxes.arrow_output)(vertices, uvs, opacity, index)(
+    addEntity(s, s, boxes.arrow_output, alpha)(vertices, uvs, opacity, index)(
       position,
       d
     )
@@ -103,9 +105,11 @@ export const renderMachines = (universe: Universe, uistate: UIstate) => (
   universe.machines.forEach(m => drawMachine(m)(vertices, uvs, opacity, index))
 
   if (uistate.dragMachine) {
-    if (uistate.dragMachineDroppable) {
-    }
-
-    drawMachine(uistate.dragMachine)(vertices, uvs, index)
+    drawMachine(uistate.dragMachine, uistate.dragMachineDroppable ? 0.8 : 0.2)(
+      vertices,
+      uvs,
+      opacity,
+      index
+    )
   }
 }

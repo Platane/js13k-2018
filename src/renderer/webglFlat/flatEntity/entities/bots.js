@@ -91,7 +91,12 @@ export const renderBots = (universe: Universe, uistate: UIstate) => (
   })
 
   if (uistate.dragBot) {
-    addEntity(0.45, 0.45, boxes['bot' + 0])(vertices, uvs, opacity, index)({
+    addEntity(
+      0.45,
+      0.45,
+      boxes['bot' + 0],
+      uistate.dragBotDroppable ? 0.8 : 0.1
+    )(vertices, uvs, opacity, index)({
       x: uistate.dragBot.position.x,
       y: uistate.dragBot.position.y - 0.3,
     })
