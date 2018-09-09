@@ -79,20 +79,29 @@ const createMachineDecription = (onrotate, ondragstart) => {
   container.appendChild(description)
 
   const canvas = document.createElement('canvas')
-  const csize = (canvas.width = canvas.height = 100)
-  canvas.style.cssText = `width:${csize}px;height:${csize}px;cursor:pointer`
+  canvas.width = canvas.height = 100
+  canvas.style.cssText = `width:100px;height:100px;cursor:pointer`
   const ctx = canvas.getContext('2d')
-  ctx.scale(csize, csize)
+  ctx.scale(100, 100)
   ctx.translate(0.5, 0.5)
-
   startdrag(canvas, ondragstart)
   container.appendChild(canvas)
 
   const rotateButton = document.createElement('button')
-  rotateButton.style.cssText = 'font-size:14px'
+  rotateButton.style.cssText =
+    'font-size:14px;position:relative;top:-14px;left:-4px'
   container.appendChild(rotateButton)
-  rotateButton.innerText = 'rotate'
+  rotateButton.innerText = '↻'
   rotateButton.onclick = onrotate
+
+  const recipe = document.createElement('canvas')
+  recipe.width = 220
+  recipe.height = 50
+  recipe.style.cssText = `width:220px;height:50px`
+  const rctx = recipe.getContext('2d')
+  rctx.scale(50, 50)
+  rctx.translate(0, 0.5)
+  container.appendChild(recipe)
 
   container.update = (blueprintId, machineRotation) => {
     const [n, d] = names[blueprintId] || blueprintId
@@ -102,12 +111,15 @@ const createMachineDecription = (onrotate, ondragstart) => {
 
     const blueprint = blueprints.find(b => b.id === blueprintId)
 
+    recipe.style.display = 'none'
     canvas.style.display = 'none'
     rotateButton.style.display = 'none'
 
     ctx.clearRect(-1, -1, 2, 2)
+    rctx.clearRect(-1, -1, 10, 10)
 
     if (blueprint) {
+      // ground
       const b = boxes['machine' + blueprint.id]
 
       const w = getWidth(blueprint.ground)
@@ -130,6 +142,67 @@ const createMachineDecription = (onrotate, ondragstart) => {
       )
       ctx.restore()
 
+      // recipe
+
+      const drawToken = arr =>
+        arr.forEach(({ token, n }) => {
+          const b = boxes[token]
+
+          Array.from({ length: n }).map(() => {
+            const s = 0.6
+
+            rctx.translate(0.4, 0)
+            rctx.drawImage(
+              texture,
+              b[0] * texl,
+              b[1] * texl,
+              (b[2] - b[0]) * texl,
+              (b[5] - b[1]) * texl,
+
+              -s / 2,
+              -s / 2,
+              s,
+              s
+            )
+
+            rctx.fillStyle = '#ddd'
+            rctx.beginPath()
+            rctx.arc(0, 0, 0.4, 0, Math.PI * 2)
+            rctx.fill()
+          })
+
+          rctx.translate(0.45, 0)
+        })
+      rctx.save()
+      rctx.globalCompositeOperation = 'destination-over'
+      rctx.translate(0.05, 0)
+      drawToken(blueprint.recipe.inputs)
+      rctx.translate(0.15, 0)
+      {
+        rctx.save()
+        rctx.rotate(Math.PI / 2)
+        const s = 0.4
+        const b = boxes['arrow_input']
+        rctx.drawImage(
+          texture,
+          b[0] * texl,
+          b[1] * texl,
+          (b[2] - b[0]) * texl,
+          (b[5] - b[1]) * texl,
+
+          -s / 2,
+          -s / 2,
+          s,
+          s
+        )
+        rctx.restore()
+      }
+      rctx.translate(0.3, 0)
+      drawToken(blueprint.recipe.outputs)
+      rctx.restore()
+
+      //
+      recipe.style.display = 'block'
       canvas.style.display = 'block'
       rotateButton.style.display = 'block'
     } else if (blueprintId === 'bot') {
@@ -173,7 +246,7 @@ export const create = (domParent: Element) => {
 
   const shopPanel = document.createElement('div')
   shopPanel.style.cssText =
-    'position:absolute;min-width:360px;width:90%;right:10px;height:250px;background-color:#ddd;bottom:70px;border-radius:4px;transition:transform 180ms;transform-origin:2% 110%;transform:scale(0,0);display:flex;flex-direction:row;'
+    'position:absolute;min-width:380px;width:90%;right:10px;height:250px;background-color:#ddd;bottom:70px;border-radius:4px;transition:transform 180ms;transform-origin:2% 110%;transform:scale(0,0);display:flex;flex-direction:row;'
   container.appendChild(shopPanel)
 
   const closeButton = document.createElement('button')

@@ -3,7 +3,7 @@ import { menu } from '~/config/menu'
 import type { Universe, UIstate } from '~/type'
 
 const w = 16
-const h = 14
+const h = 12
 
 const map = Array.from({ length: h }).map((_, y) =>
   Array.from({ length: w }).map(
