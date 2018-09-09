@@ -1,6 +1,7 @@
 precision highp float;
 
 varying highp vec2 vTextureCoord;
+varying highp float vOpacity;
 
 uniform sampler2D uSampler;
 
@@ -8,7 +9,8 @@ void main(void) {
 
   gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
 
-  if( gl_FragColor.a <= 0.0 )
-      discard;
+  gl_FragColor.a = gl_FragColor.a * vOpacity;
 
+  if( gl_FragColor.a <= 0.05 )
+      discard;
 }

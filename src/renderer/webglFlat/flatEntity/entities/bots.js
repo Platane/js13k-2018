@@ -9,6 +9,7 @@ const EPSYLON = 0.014
 export const renderBots = (universe: Universe, uistate: UIstate) => (
   vertices: number[],
   uvs: number[],
+  opacity: number[],
   index: number[]
 ) => {
   // sort bot by y
@@ -45,7 +46,10 @@ export const renderBots = (universe: Universe, uistate: UIstate) => (
         ? boxes.arrow_idle
         : boxes.arrow
 
-    addEntity(size, size, box)(vertices, uvs, index)(bot.position, direction)
+    addEntity(size, size, box)(vertices, uvs, opacity, index)(
+      bot.position,
+      direction
+    )
   })
 
   // draw bots
@@ -67,7 +71,7 @@ export const renderBots = (universe: Universe, uistate: UIstate) => (
 
     const h = Math.sin((position.y * 0.8 + position.x * 1.2) * 10)
 
-    addEntity(0.45, 0.45, boxes['bot' + k])(vertices, uvs, index)({
+    addEntity(0.45, 0.45, boxes['bot' + k])(vertices, uvs, opacity, index)({
       x: position.x,
       y: position.y - 0.3 + h * 0.08,
     })
@@ -82,12 +86,12 @@ export const renderBots = (universe: Universe, uistate: UIstate) => (
         y: position.y - v.y * 0.3,
       }
 
-      addEntity(0.3, 0.3, boxes[token])(vertices, uvs, index)(c)
+      addEntity(0.3, 0.3, boxes[token])(vertices, uvs, opacity, index)(c)
     }
   })
 
   if (uistate.dragBot) {
-    addEntity(0.45, 0.45, boxes['bot' + 0])(vertices, uvs, index)({
+    addEntity(0.45, 0.45, boxes['bot' + 0])(vertices, uvs, opacity, index)({
       x: uistate.dragBot.position.x,
       y: uistate.dragBot.position.y - 0.3,
     })

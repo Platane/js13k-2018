@@ -24,6 +24,7 @@ export const create = (gl: WebGLRenderingContext) => {
   // const texture = bindUniformTexture(gl, program, 'u')
   const attribute_position = bindAttribute(gl, program, 'aVertexPosition', 2)
   const uniform_worldMatrix = bindUniform(gl, program, 'uWorldMatrix', 'mat4')
+  const attribute_opacity = bindAttribute(gl, program, 'aOpacity', 1)
   const attribute_uv = bindAttribute(gl, program, 'aVertexUV', 2)
   const sampler_texture = bindUniformTexture(gl, program, 'uSampler')
   const elementIndex = bindElementIndex(gl, program)
@@ -34,25 +35,27 @@ export const create = (gl: WebGLRenderingContext) => {
     if (gl.lastprogram !== program) gl.useProgram(program)
 
     const vertices = []
+    const opacity = []
     const uvs = []
     const index = []
 
     // render navigable tiles
-    renderFloor(universe, uistate)(vertices, uvs, index)
+    renderFloor(universe, uistate)(vertices, uvs, opacity, index)
 
     // render bots
-    renderMachines(universe, uistate)(vertices, uvs, index)
+    renderMachines(universe, uistate)(vertices, uvs, opacity, index)
 
     // render bots
-    renderBots(universe, uistate)(vertices, uvs, index)
+    renderBots(universe, uistate)(vertices, uvs, opacity, index)
 
     //render dropped tokens
     universe.droppedTokens.forEach(({ token, position }) =>
-      addEntity(0.3, 0.3, boxes[token])(vertices, uvs, index)(position)
+      addEntity(0.3, 0.3, boxes[token])(vertices, uvs, opacity, index)(position)
     )
 
     attribute_uv.update(uvs)
     elementIndex.update(index)
+    attribute_opacity.update(opacity)
     attribute_position.update(vertices)
 
     uniform_worldMatrix.update(matrix)

@@ -11,6 +11,7 @@ const tiley = 4
 export const renderFloor = (universe: Universe, uistate: UIstate) => (
   vertices: number[],
   uvs: number[],
+  opacity: number[],
   index: number[]
 ) => {
   const w = getWidth(universe.map)
@@ -40,7 +41,7 @@ export const renderFloor = (universe: Universe, uistate: UIstate) => (
           floorBox[3] / tiley,
         ]
 
-        addEntity(0.5, 0.5, boxToBox(box))(vertices, uvs, index)({
+        addEntity(0.5, 0.5, boxToBox(box))(vertices, uvs, opacity, index)({
           x: x + 0.5,
           y: y + 0.5,
         })

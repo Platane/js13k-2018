@@ -14,6 +14,7 @@ import type { Universe, Point, Machine, UIstate } from '~/type'
 const drawMachine = (m: Machine) => (
   vertices: number[],
   uvs: number[],
+  opacity: number[],
   index: number[]
 ) => {
   const { id, inputs, outputs, ground } = m.blueprint
@@ -37,7 +38,7 @@ const drawMachine = (m: Machine) => (
     y: (min.y + max.y) / 2 + (v.x - v.y == 1),
   }
 
-  addEntity(h / 2, w / 2, boxes['machine' + id])(vertices, uvs, index)(
+  addEntity(h / 2, w / 2, boxes['machine' + id])(vertices, uvs, opacity, index)(
     position,
     v
   )
@@ -63,7 +64,10 @@ const drawMachine = (m: Machine) => (
       y: v.y * -u.x - v.x * -u.y,
     }
 
-    addEntity(s, s, boxes.arrow_input)(vertices, uvs, index)(position, d)
+    addEntity(s, s, boxes.arrow_input)(vertices, uvs, opacity, index)(
+      position,
+      d
+    )
   })
 
   outputs.forEach(({ cell }) => {
@@ -83,16 +87,20 @@ const drawMachine = (m: Machine) => (
       y: v.y * u.x - v.x * u.y,
     }
 
-    addEntity(s, s, boxes.arrow_output)(vertices, uvs, index)(position, d)
+    addEntity(s, s, boxes.arrow_output)(vertices, uvs, opacity, index)(
+      position,
+      d
+    )
   })
 }
 
 export const renderMachines = (universe: Universe, uistate: UIstate) => (
   vertices: number[],
   uvs: number[],
+  opacity: number[],
   index: number[]
 ) => {
-  universe.machines.forEach(m => drawMachine(m)(vertices, uvs, index))
+  universe.machines.forEach(m => drawMachine(m)(vertices, uvs, opacity, index))
 
   if (uistate.dragMachine) {
     if (uistate.dragMachineDroppable) {
