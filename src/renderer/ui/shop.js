@@ -81,6 +81,10 @@ const createMachineDecription = (onrotate, ondragstart) => {
   const canvas = document.createElement('canvas')
   const csize = (canvas.width = canvas.height = 100)
   canvas.style.cssText = `width:${csize}px;height:${csize}px;cursor:pointer`
+  const ctx = canvas.getContext('2d')
+  ctx.scale(csize, csize)
+  ctx.translate(0.5, 0.5)
+
   startdrag(canvas, ondragstart)
   container.appendChild(canvas)
 
@@ -101,10 +105,9 @@ const createMachineDecription = (onrotate, ondragstart) => {
     canvas.style.display = 'none'
     rotateButton.style.display = 'none'
 
-    if (blueprint) {
-      const ctx = canvas.getContext('2d')
-      ctx.clearRect(0, 0, csize, csize)
+    ctx.clearRect(-1, -1, 2, 2)
 
+    if (blueprint) {
       const b = boxes['machine' + blueprint.id]
 
       const w = getWidth(blueprint.ground)
@@ -112,8 +115,6 @@ const createMachineDecription = (onrotate, ondragstart) => {
       const r = Math.min(w, h)
 
       ctx.save()
-      ctx.scale(csize, csize)
-      ctx.translate(0.5, 0.5)
       ctx.rotate(((machineRotation % 4) * Math.PI) / 2)
       ctx.drawImage(
         texture,
@@ -132,6 +133,22 @@ const createMachineDecription = (onrotate, ondragstart) => {
       canvas.style.display = 'block'
       rotateButton.style.display = 'block'
     } else if (blueprintId === 'bot') {
+      const b = boxes['bot' + 0]
+
+      ctx.drawImage(
+        texture,
+        b[0] * texl,
+        b[1] * texl,
+        (b[2] - b[0]) * texl,
+        (b[5] - b[1]) * texl,
+
+        -0.3,
+        -0.3,
+        0.6,
+        0.6
+      )
+
+      canvas.style.display = 'block'
     }
   }
 
@@ -161,7 +178,7 @@ export const create = (domParent: Element) => {
 
   const closeButton = document.createElement('button')
   closeButton.style.cssText =
-    'padding:4px 10px;position:absolute;top:2px;right:2px;z-index:3;background-color:transparent;border:none'
+    'font-size:30px;padding:4px 10px;position:absolute;top:2px;right:2px;z-index:3;background-color:transparent;border:none'
   closeButton.innerText = '×'
 
   shopPanel.appendChild(closeButton)
