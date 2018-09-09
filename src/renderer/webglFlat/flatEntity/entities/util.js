@@ -1,8 +1,10 @@
 import { normalize, length, lengthSq, cellCenter } from '~/service/point'
 import { boxes } from '~/renderer/texture'
+import type { Point } from '~/type'
 
 export const addEntity = (
-  size: number,
+  w: number,
+  h: number,
   box: [number, number, number, number]
 ) => (vertices: number[], uvs: number[], index: number[]) => (
   position: Point,
@@ -14,10 +16,10 @@ export const addEntity = (
 
   // prettier-ignore
   vertices.push(
-    position.x - v.x * size - u.x * size, position.y - v.y * size - u.y * size,
-    position.x + v.x * size - u.x * size, position.y + v.y * size - u.y * size,
-    position.x + v.x * size + u.x * size, position.y + v.y * size + u.y * size,
-    position.x - v.x * size + u.x * size, position.y - v.y * size + u.y * size,
+    position.x - v.x * w - u.x * h, position.y - v.y * w - u.y * h,
+    position.x + v.x * w - u.x * h, position.y + v.y * w - u.y * h,
+    position.x + v.x * w + u.x * h, position.y + v.y * w + u.y * h,
+    position.x - v.x * w + u.x * h, position.y - v.y * w + u.y * h,
   )
 
   uvs.push(...(box || boxes.defaultBox))

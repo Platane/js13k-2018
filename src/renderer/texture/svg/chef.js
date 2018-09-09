@@ -54,7 +54,7 @@ let dbox
     paths[k],
     [
       // body
-      blue_true,
+      salmon_orange,
       // shirt
       white,
       // face
@@ -74,7 +74,7 @@ let dbox
     paths[k],
     [
       // body
-      salmon_orange,
+      blue_true,
       // shirt
       white,
       // face

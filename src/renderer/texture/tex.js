@@ -35,7 +35,7 @@ export const getNextBox = (w: number, h: number) => {
 
   // ctx.save()
   // ctx.strokeStyle = 'red'
-  // ctx.lineWidth = 4
+  // ctx.lineWidth = 2
   // ctx.strokeRect(box[0] * l, box[1] * l, box[2] * l, box[3] * l)
   // ctx.restore()
 
@@ -43,7 +43,12 @@ export const getNextBox = (w: number, h: number) => {
 }
 
 type Boxes = {
-  ['bot' | 'wall' | 'sushi' | 'blue' | 'yello' | 'purple' | string]: number[],
+  ['bot' | 'wall' | 'sushi' | 'blue' | 'yello' | 'purple' | string]: [
+    number,
+    number,
+    number,
+    number,
+  ],
 }
 export const boxes: Boxes = {
   defaultBox: [0, 0, 1, 1],

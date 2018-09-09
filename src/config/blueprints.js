@@ -1,22 +1,22 @@
 import type { Blueprint } from '~/type'
 
 export const blueprints: Blueprint[] = [
-  {
-    id: 'u',
-
-    ground: [[1]],
-
-    buildingCost: 2000,
-    activationThreshold: 100,
-
-    recipe: {
-      inputs: [],
-      outputs: [],
-    },
-
-    inputs: [],
-    outputs: [],
-  },
+  // {
+  //   id: 'u',
+  //
+  //   ground: [[1]],
+  //
+  //   buildingCost: 2000,
+  //   activationThreshold: 100,
+  //
+  //   recipe: {
+  //     inputs: [],
+  //     outputs: [],
+  //   },
+  //
+  //   inputs: [],
+  //   outputs: [],
+  // },
   {
     id: 'rice-grain-harvester',
 

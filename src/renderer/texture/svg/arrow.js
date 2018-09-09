@@ -34,6 +34,17 @@ box = getNextBox(1, 1)
 ctx.save()
 ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
 ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
+addBox('arrow_idle', box)
+ctx.fillStyle = blue_true
+ctx.beginPath()
+ctx.arc(50, 50, 28, 0, Math.PI * 2)
+ctx.fill()
+ctx.restore()
+
+box = getNextBox(1, 1)
+ctx.save()
+ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
+ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
 addBox('arrow', box)
 ctx.fillStyle = blue_true
 smoothArrow()

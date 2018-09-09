@@ -7,6 +7,7 @@ import {
 } from '../util/shader'
 import { getWidth, getHeight, isNavigable, around4 } from '~/service/map'
 import { texture, boxes } from '~/renderer/texture'
+import { renderMachines } from './entities/machines'
 import { renderBots } from './entities/bots'
 import { addEntity } from './entities/util'
 import type { Universe, Point, UIstate } from '~/type'
@@ -42,7 +43,7 @@ export const create = (gl: WebGLRenderingContext) => {
     for (let x = w; x--; )
       for (let y = h; y--; ) {
         if (isNavigable(universe.map, { x, y }))
-          addEntity(0.5, boxes.wall)(vertices, uvs, index)({
+          addEntity(0.5, 0.5, boxes.wall)(vertices, uvs, index)({
             x: x + 0.5,
             y: y + 0.5,
           })
@@ -51,9 +52,12 @@ export const create = (gl: WebGLRenderingContext) => {
     // render bots
     renderBots(universe, uistate)(vertices, uvs, index)
 
+    // render bots
+    renderMachines(universe, uistate)(vertices, uvs, index)
+
     //render dropped tokens
     universe.droppedTokens.forEach(({ token, position }) =>
-      addEntity(0.3, boxes[token])(vertices, uvs, index)(position)
+      addEntity(0.3, 0.3, boxes[token])(vertices, uvs, index)(position)
     )
 
     attribute_uv.update(uvs)

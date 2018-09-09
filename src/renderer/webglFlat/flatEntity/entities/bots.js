@@ -4,6 +4,8 @@ import { boxes } from '~/renderer/texture'
 import { addEntity } from './util'
 import type { Universe, Point, UIstate } from '~/type'
 
+const EPSYLON = 0.014
+
 export const renderBots = (universe: Universe, uistate: UIstate) => (
   vertices: number[],
   uvs: number[],
@@ -15,31 +17,42 @@ export const renderBots = (universe: Universe, uistate: UIstate) => (
   // compute directions
   const vs = bots.map(({ velocity, position }) => {
     const l = length(velocity)
-    return l < 0.014 ? { x: 0, y: 1 } : { x: velocity.x / l, y: velocity.y / l }
+    return {
+      v:
+        l < EPSYLON ? { x: 0, y: 1 } : { x: velocity.x / l, y: velocity.y / l },
+      vl: l,
+    }
   })
 
   // draw arrows
   bots.forEach((bot, i) => {
     const { position } = bot
 
-    const v = vs[i]
+    const { v, vl } = vs[i]
 
     const selected = bot.id === uistate.selectedBotId
 
-    addEntity(
-      selected ? 0.9 : 0.6,
-      selected ? boxes.arrow_selected : boxes.arrow
-    )(vertices, uvs, index)(bot.position, {
+    const direction = {
       x: -v.x,
       y: -v.y,
-    })
+    }
+
+    const size = selected ? 0.7 : 0.6
+
+    const box = selected
+      ? boxes.arrow_selected
+      : vl < EPSYLON
+        ? boxes.arrow_idle
+        : boxes.arrow
+
+    addEntity(size, size, box)(vertices, uvs, index)(bot.position, direction)
   })
 
   // draw bots
   bots.forEach((bot, i) => {
     const { velocity, position } = bot
 
-    const v = vs[i]
+    const { v } = vs[i]
 
     let max = -1
     let k = 0
@@ -52,11 +65,11 @@ export const renderBots = (universe: Universe, uistate: UIstate) => (
       }
     })
 
-    const h = Math.sin(position.x * 10) + Math.sin(position.y * 10)
+    const h = Math.sin((position.y + position.x) * 10)
 
-    addEntity(0.45, boxes['bot' + k])(vertices, uvs, index)({
+    addEntity(0.45, 0.45, boxes['bot' + k])(vertices, uvs, index)({
       x: position.x,
-      y: position.y - 0.3 + h * 0.1,
+      y: position.y - 0.3 + h * 0.08,
     })
 
     if (bot.activity && bot.activity.carrying) {
@@ -69,7 +82,7 @@ export const renderBots = (universe: Universe, uistate: UIstate) => (
         y: position.y - v.y * 0.3,
       }
 
-      addEntity(0.3, boxes[token])(vertices, uvs, index)(c)
+      addEntity(0.3, 0.3, boxes[token])(vertices, uvs, index)(c)
     }
   })
 }
