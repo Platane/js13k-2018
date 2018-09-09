@@ -20,7 +20,7 @@ export const addEntity = (
     position.x - v.x * size + u.x * size, position.y - v.y * size + u.y * size,
   )
 
-  uvs.push(...(box || boxes.wall))
+  uvs.push(...(box || boxes.defaultBox))
 
   // prettier-ignore
   index.push(

@@ -45,7 +45,9 @@ export const getNextBox = (w: number, h: number) => {
 type Boxes = {
   ['bot' | 'wall' | 'sushi' | 'blue' | 'yello' | 'purple' | string]: number[],
 }
-export const boxes: Boxes = {}
+export const boxes: Boxes = {
+  defaultBox: [0, 0, 1, 1],
+}
 
 export const drawPaths = (
   paths: string[],
