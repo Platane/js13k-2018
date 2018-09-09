@@ -7,4 +7,4 @@ import './svg/arrow'
 import './machine'
 import './floor'
 
-export { texture, boxes } from './tex'
+export { texture, boxes, l } from './tex'

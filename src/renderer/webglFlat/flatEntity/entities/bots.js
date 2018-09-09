@@ -67,7 +67,7 @@ export const renderArrow = (bot: Bot, selected: boolean = false) => (
     y: -v.y,
   }
 
-  const size = selected ? 0.7 : 0.6
+  const size = selected ? 0.7 : 0.48
 
   const box = selected
     ? boxes.arrow_selected

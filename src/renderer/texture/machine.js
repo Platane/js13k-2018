@@ -81,7 +81,7 @@ const drawMachineHull = (ground: Map) => {
 
 ctx.save()
 
-blueprints.forEach(blueprint => {
+blueprints.forEach((blueprint, i) => {
   const w = getWidth(blueprint.ground)
   const h = getHeight(blueprint.ground)
 
@@ -101,12 +101,12 @@ blueprints.forEach(blueprint => {
 
   drawMachineHull(blueprint.ground)
 
-  ctx.fillStyle = `hsl(40,10%,${20 + Math.random() * 30}%)`
+  ctx.fillStyle = `hsl(${20 + i * 18},30%,${20 + Math.random() * 20}%)`
   ctx.beginPath()
   ctx.fillRect(0, 0, 9, 9)
 
   for (let k = 100; k--; ) {
-    ctx.fillStyle = `hsl(40,10%,${20 + Math.random() * 30}%)`
+    ctx.fillStyle = `hsl(${20 + i * 18},30%,${20 + Math.random() * 20}%)`
 
     const size = k > 50 ? 1 : 1 / 4
     const x = Math.round((Math.random() * (h + size) - size) * 4) / 4

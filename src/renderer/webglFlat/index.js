@@ -73,7 +73,7 @@ export const createWebGL = (canvas: HTMLCanvasElement) => {
   const gl = initGL(canvas)
 
   const flatEntityDrawCall = createFlatEntity(gl)
-  const gridDrawCall = createGrid(gl)
+  // const gridDrawCall = createGrid(gl)
 
   let worldMatrix
 

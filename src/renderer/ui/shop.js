@@ -1,9 +1,10 @@
 import { blueprints } from '~/config/blueprints'
-import { drawMachine } from '~/renderer/canvas'
+// import { drawMachine } from '~/renderer/canvas'
 import { getWidth, getHeight } from '~/service/map'
 import { proj as projMachine } from '~/service/machine'
 import { distance } from '~/service/point'
 import { getPointer } from '~/util/pointer'
+import { boxes, texture, l as texl } from '~/renderer/texture'
 import type { Universe, Blueprint, Machine, UIstate } from '~/type'
 
 const names = {
@@ -78,8 +79,8 @@ const createMachineDecription = (onrotate, ondragstart) => {
   container.appendChild(description)
 
   const canvas = document.createElement('canvas')
-  const l = (canvas.width = canvas.height = 100)
-  canvas.style.cssText = `width:${l}px;height:${l}px;cursor:pointer`
+  const csize = (canvas.width = canvas.height = 100)
+  canvas.style.cssText = `width:${csize}px;height:${csize}px;cursor:pointer`
   startdrag(canvas, ondragstart)
   container.appendChild(canvas)
 
@@ -102,26 +103,31 @@ const createMachineDecription = (onrotate, ondragstart) => {
 
     if (blueprint) {
       const ctx = canvas.getContext('2d')
-      ctx.clearRect(0, 0, l, l)
-      const dummyMachine: Machine = {
-        id: 'a',
-        positionOrigin: { x: 0, y: 0 },
-        processing: null,
-        rotation: machineRotation,
-        blueprint,
-      }
+      ctx.clearRect(0, 0, csize, csize)
+
+      const b = boxes['machine' + blueprint.id]
 
       const w = getWidth(blueprint.ground)
       const h = getHeight(blueprint.ground)
-      const u = projMachine(dummyMachine)({ x: 0, y: 0 })
-      const v = projMachine(dummyMachine)({ x: w - 1, y: h - 1 })
-      const a = l / (Math.max(w, h) + 1)
-      const camera = {
-        a,
-        t: { x: -Math.min(u.x, v.x) * a, y: -Math.min(u.y, v.y) * a },
-      }
+      const r = Math.min(w, h)
 
-      drawMachine(ctx, camera, dummyMachine)
+      ctx.save()
+      ctx.scale(csize, csize)
+      ctx.translate(0.5, 0.5)
+      ctx.rotate(((machineRotation % 4) * Math.PI) / 2)
+      ctx.drawImage(
+        texture,
+        b[0] * texl,
+        b[1] * texl,
+        (b[2] - b[0]) * texl,
+        (b[5] - b[1]) * texl,
+
+        -0.5,
+        -0.5,
+        r / w,
+        r / h
+      )
+      ctx.restore()
 
       canvas.style.display = 'block'
       rotateButton.style.display = 'block'
@@ -150,7 +156,7 @@ export const create = (domParent: Element) => {
 
   const shopPanel = document.createElement('div')
   shopPanel.style.cssText =
-    'position:absolute;min-width:300px;width:90%;right:10px;height:250px;background-color:#ddd;bottom:70px;border-radius:4px;transition:transform 180ms;transform-origin:2% 110%;transform:scale(0,0);display:flex;flex-direction:row;'
+    'position:absolute;min-width:360px;width:90%;right:10px;height:250px;background-color:#ddd;bottom:70px;border-radius:4px;transition:transform 180ms;transform-origin:2% 110%;transform:scale(0,0);display:flex;flex-direction:row;'
   container.appendChild(shopPanel)
 
   const closeButton = document.createElement('button')
