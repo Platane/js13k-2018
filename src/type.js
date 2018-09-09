@@ -58,6 +58,7 @@ export type BotActivate = {
   command: CommandActivate,
   activity: {
     activationCooldown: number,
+    navigationCooldown: number,
   },
 }
 

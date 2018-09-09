@@ -18,6 +18,9 @@ export const onpointerdown = (universe: Universe, uistate: UIstate) => (
 
   if (uistate.selectedBotId !== botId) {
     uistate.selectedBotId = botId
-    uistate.pickUpCell = null
+
+    // if ( botId ){
+    //   uistate.command = {}
+    // }
   }
 }

@@ -28,6 +28,7 @@ export const onpointerdown = (universe: Universe, uistate: UIstate) => (
       targetId: machine.id,
     }
     bot.activity = { activationCooldown: 0 }
+    bot.navigation = null
 
     uistate.command = null
   } else if (isNavigable(universe.map, cell)) {
@@ -72,6 +73,8 @@ export const onpointerup = (universe: Universe, uistate: UIstate) => (
     bot.activity = {
       carrying: bot.activity && bot.activity.carrying,
     }
+
+    bot.navigation = null
   }
 
   uistate.command = null

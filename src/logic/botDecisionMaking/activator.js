@@ -15,9 +15,9 @@ export const botActivatorDecision = (
 
   //
   // refresh the navigation
-  if (bot.command.targetCooldown) bot.command.targetCooldown--
+  if (bot.activity.navigationCooldown) bot.activity.navigationCooldown--
 
-  if (bot.command.targetCooldown <= 0) bot.navigation = null
+  if (bot.activity.navigationCooldown <= 0) bot.navigation = null
 
   //
   // touch the machine, or not
@@ -33,7 +33,7 @@ export const botActivatorDecision = (
     }
 
     bot.navigation = { target: activationPoint }
-    bot.command.targetCooldown = 120
+    bot.activity.navigationCooldown = 120
   }
 
   if (!shoulTouchMachine && bot.navigation) bot.navigation = null

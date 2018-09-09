@@ -65,8 +65,6 @@ export const renderOverlay = (universe: Universe, uistate: UIstate) => (
       B = selectedBot.command.dropCell
     }
 
-    console.log(A, B)
-
     if (A) {
       const path = smoothPath(
         universe.map,
