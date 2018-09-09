@@ -1,5 +1,7 @@
 import { plank_light, plank_mid } from '~/config/palette'
+import { cellCenter } from '~/service/point'
 import {
+  around4,
   around8,
   isInside,
   getWidth,
@@ -117,6 +119,81 @@ blueprints.forEach(blueprint => {
   ctx.globalCompositeOperation = 'destination-in'
   ctx.drawImage(buffer, 0, 0, h * 100, w * 100, 0, 0, h, w)
 
+  ctx.globalCompositeOperation = 'source-over'
+
+  // draw inputs / outputs
+
+  const s = 0.45
+  const t = 0.3
+
+  blueprint.outputs.forEach(({ cell }) => {
+    const k =
+      around4.findIndex(v => {
+        const o = { x: v.x + cell.x, y: v.y + cell.y }
+
+        return (
+          isInside(blueprint.ground, o) && !isNavigable(blueprint.ground, o)
+        )
+      }) || 0
+
+    const b = boxes['arrow_output']
+
+    ctx.save()
+    ctx.translate(
+      cell.y + 0.5 + around4[(k + 3) % 4].x * t,
+      cell.x + 0.5 + around4[(k + 3) % 4].y * t
+    )
+    ctx.rotate(((k + 3) * Math.PI) / 2)
+    ctx.drawImage(
+      texture,
+
+      b[0] * l,
+      b[1] * l,
+      (b[2] - b[0]) * l,
+      (b[5] - b[1]) * l,
+
+      -s / 2,
+      -s / 2,
+      s,
+      s
+    )
+    ctx.restore()
+  })
+
+  blueprint.inputs.forEach(({ cell }) => {
+    const k =
+      around4.findIndex(v => {
+        const o = { x: v.x + cell.x, y: v.y + cell.y }
+
+        return (
+          isInside(blueprint.ground, o) && !isNavigable(blueprint.ground, o)
+        )
+      }) || 0
+
+    const b = boxes['arrow_input']
+
+    ctx.save()
+    ctx.translate(
+      cell.y + 0.5 + around4[(k + 1) % 4].x * t,
+      cell.x + 0.5 + around4[(k + 1) % 4].y * t
+    )
+    ctx.rotate(((k + 1) * Math.PI) / 2)
+    ctx.drawImage(
+      texture,
+
+      b[0] * l,
+      b[1] * l,
+      (b[2] - b[0]) * l,
+      (b[5] - b[1]) * l,
+
+      -s / 2,
+      -s / 2,
+      s,
+      s
+    )
+    ctx.restore()
+  })
+
   // draw token
 
   const c = { x: w / 2, y: h / 2 }
@@ -125,7 +202,6 @@ blueprints.forEach(blueprint => {
 
   const tl = 0.6
 
-  ctx.globalCompositeOperation = 'source-over'
   ctx.beginPath()
   ctx.fillStyle = '#fff6'
   ctx.arc(c.y, c.x, 0.4, 0, Math.PI * 2)

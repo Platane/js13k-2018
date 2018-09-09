@@ -3,6 +3,8 @@ import {
   dirty_shirt,
   white,
   black,
+  grey_light,
+  grey_true,
   plank_light,
   plank_mid,
   salmon_orange,
@@ -75,13 +77,13 @@ let dbox
     paths[k],
     [
       // body
-      blue_true,
+      grey_true,
       // shirt
-      blue_true,
+      grey_true,
       // face
       blue_light,
       // hat
-      plank_light,
+      grey_true,
     ],
     box,
     dbox,
@@ -95,13 +97,13 @@ let dbox
     paths[k],
     [
       // body
-      blue_dark,
+      grey_light,
       // shirt
-      blue_dark,
+      grey_light,
       // face
       blue_light,
       // hat
-      plank_light,
+      grey_light,
     ],
     box,
     dbox,

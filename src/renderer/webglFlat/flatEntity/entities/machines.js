@@ -47,53 +47,53 @@ export const renderMachine = (m: Machine, alpha: number = 1) => (
 
   //
 
-  const s = 0.26
-
-  inputs.forEach(({ cell }) => {
-    const a = p(cell)
-
-    const position = { x: a.x + 0.5, y: a.y + 0.5 }
-
-    const u = around4.find(v => {
-      const o = { x: v.x + cell.x, y: v.y + cell.y }
-
-      return isInside(ground, o) && !isNavigable(ground, o)
-    }) || { x: 0, y: 1 }
-
-    const d = {
-      //
-      x: v.x * -u.x + v.y * -u.y,
-      y: v.y * -u.x - v.x * -u.y,
-    }
-
-    addEntity(s, s, boxes.arrow_input, alpha)(vertices, uvs, opacity, index)(
-      position,
-      d
-    )
-  })
-
-  outputs.forEach(({ cell }) => {
-    const a = p(cell)
-
-    const position = { x: a.x + 0.5, y: a.y + 0.5 }
-
-    const u = around4.find(v => {
-      const o = { x: v.x + cell.x, y: v.y + cell.y }
-
-      return isInside(ground, o) && !isNavigable(ground, o)
-    }) || { x: 0, y: 1 }
-
-    const d = {
-      //
-      x: v.x * u.x + v.y * u.y,
-      y: v.y * u.x - v.x * u.y,
-    }
-
-    addEntity(s, s, boxes.arrow_output, alpha)(vertices, uvs, opacity, index)(
-      position,
-      d
-    )
-  })
+  // const s = 0.26
+  //
+  // inputs.forEach(({ cell }) => {
+  //   const a = p(cell)
+  //
+  //   const position = { x: a.x + 0.5, y: a.y + 0.5 }
+  //
+  //   const u = around4.find(v => {
+  //     const o = { x: v.x + cell.x, y: v.y + cell.y }
+  //
+  //     return isInside(ground, o) && !isNavigable(ground, o)
+  //   }) || { x: 0, y: 1 }
+  //
+  //   const d = {
+  //     //
+  //     x: v.x * -u.x + v.y * -u.y,
+  //     y: v.y * -u.x - v.x * -u.y,
+  //   }
+  //
+  //   addEntity(s, s, boxes.arrow_input, alpha)(vertices, uvs, opacity, index)(
+  //     position,
+  //     d
+  //   )
+  // })
+  //
+  // outputs.forEach(({ cell }) => {
+  //   const a = p(cell)
+  //
+  //   const position = { x: a.x + 0.5, y: a.y + 0.5 }
+  //
+  //   const u = around4.find(v => {
+  //     const o = { x: v.x + cell.x, y: v.y + cell.y }
+  //
+  //     return isInside(ground, o) && !isNavigable(ground, o)
+  //   }) || { x: 0, y: 1 }
+  //
+  //   const d = {
+  //     //
+  //     x: v.x * u.x + v.y * u.y,
+  //     y: v.y * u.x - v.x * u.y,
+  //   }
+  //
+  //   addEntity(s, s, boxes.arrow_output, alpha)(vertices, uvs, opacity, index)(
+  //     position,
+  //     d
+  //   )
+  // })
 }
 
 export const renderMachines = (universe: Universe, uistate: UIstate) => (

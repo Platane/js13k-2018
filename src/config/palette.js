@@ -1,6 +1,8 @@
 export const white = '#fff'
 export const black = '#000'
 export const dark = '#333'
+export const grey_true = '#888'
+export const grey_light = '#aaa'
 
 export const dirty_shirt = '#d2af80'
 
