@@ -300,6 +300,7 @@ export const create = (domParent: Element) => {
           id: Math.random().toString(),
           position: { x: -999, y: -999 },
           velocity: { x: 0, y: 0 },
+          l: 0,
           command: { type: 'idle' },
           navigation: null,
           activity: null,

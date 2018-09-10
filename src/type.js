@@ -44,6 +44,7 @@ export type BotIdle = {
   position: Point,
   velocity: Point,
   navigation: Navigation | null,
+  l: number,
 
   command: CommandIdle,
   activity: null,
@@ -54,6 +55,7 @@ export type BotActivate = {
   position: Point,
   velocity: Point,
   navigation: Navigation | null,
+  l: number,
 
   command: CommandActivate,
   activity: {
@@ -67,6 +69,7 @@ export type BotCarry = {
   position: Point,
   velocity: Point,
   navigation: Navigation | null,
+  l: number,
 
   command: CommandCarry,
   activity: {
@@ -79,6 +82,7 @@ export type BotWander = {
   position: Point,
   velocity: Point,
   navigation: Navigation | null,
+  l: number,
 
   command: CommandWander,
   activity: { cooldown: number },

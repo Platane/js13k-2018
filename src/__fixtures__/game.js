@@ -68,6 +68,7 @@ export const universe: Universe = {
       id: '1',
       position: { x: 9.3, y: 6.5 },
       velocity: { x: 0, y: 0 },
+      l: 0,
       command: { type: 'idle' },
       activity: null,
     },

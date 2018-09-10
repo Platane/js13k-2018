@@ -156,6 +156,10 @@ export const botMoving = ({ map, bots, clients }: Universe) => {
     bot.velocity.x += acc[i].x
     bot.velocity.y += acc[i].y
 
+    const l = length(bot.velocity)
+
+    bot.l = l + bot.l
+
     bot.position.x += bot.velocity.x
     bot.position.y += bot.velocity.y
 
