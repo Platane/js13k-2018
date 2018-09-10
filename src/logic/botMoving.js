@@ -21,6 +21,13 @@ const handleNavigation = (
 ) => {
   // compute the path if missing
   if (!navigation.pathToTarget) {
+    console.log(
+      position,
+      navigation.target,
+      pointToCell(position),
+      pointToCell(navigation.target)
+    )
+
     const path = findPath(
       map,
       pointToCell(position),

@@ -54,7 +54,7 @@ export const onpointerup = (universe: Universe, uistate: UIstate) => (
   pointer: Point,
   cell: Cell
 ) => {
-  if (!uistate.command || !uistate.command.type === 'carry') return
+  if (!uistate.command || !uistate.command.dropCell) return
 
   const path = findPath(
     universe.map,

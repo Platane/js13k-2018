@@ -108,14 +108,15 @@ export const universe: Universe = {
   blueprints: [],
 }
 
-universe.clients = Array.from({ length: 3 }).map((_, i) => ({
-  id: '' + i,
-  client: ['A', 'B'][Math.floor(2 * Math.random())],
-  position: {
-    x: universe.customers[0].cell.x + 0.1 + i * 0.05,
-    y: universe.customers[0].cell.y + 0.1 + i * 0.05,
-  },
-  velocity: { x: 0, y: 0 },
-  command: { type: 'wander', target: universe.customers[0].cell },
-  activity: { cooldown: 0 },
-}))
+// universe.clients = Array.from({ length: 3 }).map((_, i) => ({
+//   id: '' + i,
+//   l: 0,
+//   client: ['A', 'B'][Math.floor(2 * Math.random())],
+//   position: {
+//     x: universe.customers[0].cell.x + 0.1 + i * 0.05,
+//     y: universe.customers[0].cell.y + 0.1 + i * 0.05,
+//   },
+//   velocity: { x: 0, y: 0 },
+//   command: { type: 'wander', target: universe.customers[0].cell },
+//   activity: { cooldown: 0 },
+// }))

@@ -114,7 +114,6 @@ export const bindUniform = (
       bind = () => gl.uniform1f(location, value)
       break
     case 'vec3':
-      console.log(value)
       bind = () => gl.uniform3fv(location, value)
       break
     default:

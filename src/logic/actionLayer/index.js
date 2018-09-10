@@ -16,6 +16,12 @@ const handlers = [
   placeBot,
   placeMachine,
   select,
+
+  // {
+  //   onpointermove: () => () => console.log('move'),
+  //   onpointerdown: () => () => console.log('down'),
+  //   onpointerup: () => (_, __, e) => console.log('up', e),
+  // },
 ]
 
 export const createActionLayer = (
@@ -25,7 +31,15 @@ export const createActionLayer = (
 ) => {
   let unproj
 
+  let supportPointerEvent = false
+
   const handler = handlers => (event: MouseEvent | TouchEvent) => {
+    // some devices ( my s4 ) support both mouseevent and pointerevent
+    // de-dup event
+    if (!event.touches) {
+      if (supportPointerEvent) return
+    } else supportPointerEvent = true
+
     const pointer = unproj(getPointer(event))
 
     const cell = pointToCell(pointer)
@@ -65,6 +79,7 @@ export const createActionLayer = (
   element.onmousedown = element.ontouchstart = e => {
     onpointerdown(e)
     element.onmousemove(e)
+    element.ontouchmove(e)
   }
   element.onmousemove = element.ontouchmove = handler(
     handlers.map(x => x.onpointermove)
