@@ -139,7 +139,7 @@ const createMachineDecription = (onrotate, ondragstart) => {
 
     if (blueprint) {
       // ground
-      const b = boxes['machine' + blueprint.id]
+      const b = boxes[blueprint.id]
 
       const w = getWidth(blueprint.ground)
       const h = getHeight(blueprint.ground)

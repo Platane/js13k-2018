@@ -87,7 +87,7 @@ blueprints.forEach((blueprint, i) => {
 
   const box = getNextBox(h, w)
 
-  addBox('machine' + blueprint.id, box)
+  addBox(blueprint.id, box)
 
   //
 

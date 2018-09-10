@@ -38,12 +38,10 @@ export const renderMachine = (m: Machine, alpha: number = 1) => (
     y: (min.y + max.y) / 2 + (v.x - v.y == 1),
   }
 
-  addEntity(h / 2, w / 2, boxes['machine' + id], alpha)(
-    vertices,
-    uvs,
-    opacity,
-    index
-  )(position, v)
+  addEntity(h / 2, w / 2, boxes[id], alpha)(vertices, uvs, opacity, index)(
+    position,
+    v
+  )
 
   //
 
