@@ -151,6 +151,7 @@ export type Camera = {
 }
 
 export type UIstate = {
+  step: number,
   selectedBotId: ID | null,
   pickUpCell: Cell | null,
   shopOpened: boolean,

@@ -2,24 +2,45 @@ import { blueprints } from '~/config/blueprints'
 import { drawMachine } from '~/renderer/canvas'
 import { getWidth, getHeight } from '~/service/map'
 import { proj as projMachine } from '~/service/machine'
-import { distance } from '~/service/point'
+import { distance, pointEqual, pointToCell } from '~/service/point'
 import { getPointer } from '~/util/pointer'
 import type { Universe, Blueprint, Machine, UIstate } from '~/type'
 
 const tutorials = [
+  //0
   "Oh no, your sushi factory went offline!<br>&nbsp; Let's restart over shall we?",
+
+  //1
   'See this guy over here?<br>&nbsp;Put him to work!',
+
+  //2
   'Click on the little guy',
-  'Now click the command button',
+
+  //3
   'And point him the machine on top',
+
+  //4
   0,
+
+  //5
   'Look at that! He got a rice grain!',
-  'Make him carry that to the hungry customer',
-  'Click on the command button again',
+
+  // 6
+  'Make him carry that to the hungry customers<br> on the left',
+
+  // 7
+  'Select him again',
+
+  // 8
   'Drag your mouse<br>from the collect point to the drop point',
+
+  // 9
   0,
-  0,
+
+  // 10
   'Yeah money!',
+
+  // 11
   'Keep going<br>You can recruit crew and build new machines from the shop<br>&nbsp; Look up for new recipes',
 ]
 
@@ -42,34 +63,94 @@ export const create = (domParent: Element) => {
   let step = -1
 
   const update = (universe: Universe, uistate: UIstate) => {
-    container.onclick = container.onclick || (() => uistate.step++)
+    container.onclick =
+      container.onclick ||
+      (e => {
+        uistate.step++
+        e.stopPropagation()
+      })
 
-    if (step == 2 && uistate.selectedBotId) uistate.step++
+    if ((step == 2 || step == 7) && uistate.command) uistate.step++
 
-    if ((step == 3 || step == 8) && uistate.command) uistate.step++
+    if (step == 3 && universe.bots[0].command.type == 'activate') uistate.step++
 
-    if (step == 4 && universe.bots[0].command.type == 'activate') uistate.step++
+    if (
+      step == 3 &&
+      !uistate.command &&
+      universe.bots[0].command.type !== 'activate'
+    )
+      uistate.step--
 
-    if (step == 5 && universe.droppedTokens[0]) {
+    if (step == 4 && universe.droppedTokens[0]) {
       uistate.step++
       universe.bots[0].command.type = 'idle'
     }
 
-    if (step == 9 && universe.bots[0].command.type == 'carry') uistate.step++
+    if (step == 6 && !universe.clients.length) {
+      const w = getWidth(universe.map)
 
-    if (step == 10 && universe.bots[0].activity.carrying) uistate.step++
+      universe.customers = [
+        { cell: { x: w - 1, y: 4 } },
+        { cell: { x: w - 1, y: 5 } },
+        { cell: { x: w - 1, y: 6 } },
+      ]
 
-    if (step == 11 && !universe.bots[0].activity.carrying) uistate.step++
+      universe.clients = Array.from({ length: 3 }).map((_, i) => ({
+        id: '' + i,
+        l: 0,
+        client: ['A', 'B'][Math.floor(2 * Math.random())],
+        position: {
+          x: universe.customers[0].cell.x + 0.2 + i * 0.05 - 2,
+          y: universe.customers[0].cell.y + 0.1 + i * 0.5 + 4,
+        },
+        velocity: { x: 0, y: 0 },
+        command: { type: 'wander', target: universe.customers[0].cell },
+        activity: { cooldown: 0 },
+        navigation: null,
+      }))
+    }
+
+    if (
+      (step == 8 || step == 9) &&
+      !uistate.command &&
+      (universe.bots[0].command.type !== 'carry' ||
+        !universe.customers.some(({ cell }) =>
+          pointEqual(cell, pointToCell(universe.bots[0].command.dropCell))
+        ))
+    ) {
+      if (universe.bots[0].command.type === 'activate')
+        universe.bots[0].command.type = 'idle'
+      uistate.step = 7
+    }
+
+    if (
+      step == 8 &&
+      (universe.bots[0].command.type === 'carry' &&
+        universe.customers.some(({ cell }) =>
+          pointEqual(cell, pointToCell(universe.bots[0].command.dropCell))
+        ))
+    ) {
+      uistate.step++
+    }
+
+    if (
+      step == 9 &&
+      universe.droppedTokens[0] &&
+      universe.customers.some(({ cell }) =>
+        pointEqual(cell, pointToCell(universe.droppedTokens[0].position))
+      )
+    )
+      uistate.step++
 
     if (uistate.step !== step) {
       step = uistate.step
 
-      if ([0, 1, 6, 7, 12, 13].includes(step)) {
+      if ([0, 1, 5, 6, 10, 11].includes(step)) {
         tutorial.innerHTML = tutorials[step]
         container.style.display = 'flex'
       } else container.style.display = 'none'
 
-      if ([2, 3, 4, 8, 9].includes(step)) {
+      if ([2, 3, 7, 8].includes(step)) {
         hint.innerHTML = tutorials[step]
         hint.style.display = 'block'
       } else hint.style.display = 'none'

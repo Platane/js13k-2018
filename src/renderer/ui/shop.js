@@ -376,7 +376,7 @@ export const create = (domParent: Element) => {
 
     if (uistate.step !== step) {
       step = uistate.step
-      button.style.display = step < 13 ? 'none' : 'block'
+      button.style.display = step < 12 ? 'none' : 'block'
     }
   }
 
