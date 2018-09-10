@@ -42,7 +42,7 @@ export const renderOverlay = (universe: Universe, uistate: UIstate) => (
     addEntity(
       0.45,
       0.45,
-      boxes['bot' + 0],
+      boxes['texture_bot' + 0],
       uistate.dragBotDroppable ? 0.8 : 0.1
     )(vertices, uvs, opacity, index)({
       x: uistate.dragBot.position.x,

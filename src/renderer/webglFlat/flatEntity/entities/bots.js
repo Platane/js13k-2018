@@ -6,7 +6,7 @@ import type { Universe, Point, Bot, UIstate } from '~/type'
 
 const EPSYLON = 0.014
 
-export const renderBot = (bot: Bot, boxLabel = 'bot') => (
+export const renderBot = (bot: Bot, boxLabel = 'texture_bot') => (
   vertices: number[],
   uvs: number[],
   opacity: number[],
@@ -94,7 +94,7 @@ export const renderBots = (universe: Universe, uistate: UIstate) => (
 
   // draw bots
   people.forEach(bot =>
-    renderBot(bot, bot.client ? 'client' + bot.client : 'bot')(
+    renderBot(bot, bot.client ? 'texture_client' + bot.client : 'texture_bot')(
       vertices,
       uvs,
       opacity,

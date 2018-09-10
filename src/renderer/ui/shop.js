@@ -225,7 +225,7 @@ const createMachineDecription = (onrotate, ondragstart) => {
       canvas.style.display = 'block'
       rotateButton.style.display = 'block'
     } else if (blueprintId === 'bot') {
-      const b = boxes['bot' + 0]
+      const b = boxes['texture_bot' + 0]
 
       ctx.drawImage(
         texture,

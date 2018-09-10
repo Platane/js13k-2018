@@ -69,7 +69,7 @@ let dbox
     dbox,
     10
   )
-  addBox('bot' + k, dbox)
+  addBox('texture_bot' + k, dbox)
 
   // client
   dbox = getNextBox(1, 1)
@@ -89,7 +89,7 @@ let dbox
     dbox,
     10
   )
-  addBox('clientA' + k, dbox)
+  addBox('texture_clientA' + k, dbox)
 
   // client
   dbox = getNextBox(1, 1)
@@ -109,5 +109,5 @@ let dbox
     dbox,
     10
   )
-  addBox('clientB' + k, dbox)
+  addBox('texture_clientB' + k, dbox)
 })
