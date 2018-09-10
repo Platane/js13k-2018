@@ -51,8 +51,7 @@ export const onpointermove = (universe: Universe, uistate: UIstate) => (
 }
 
 export const onpointerup = (universe: Universe, uistate: UIstate) => (
-  pointer: Point,
-  cell: Cell
+  pointer: Point
 ) => {
   if (!uistate.command || !uistate.command.dropCell) return
 
@@ -62,13 +61,14 @@ export const onpointerup = (universe: Universe, uistate: UIstate) => (
     uistate.command.dropCell
   )
 
+  // if the path is valid, make him carry
   if (path) {
     const bot = universe.bots.find(bot => bot.id === uistate.selectedBotId)
 
     bot.command = {
       type: 'carry',
 
-      dropCell: cell,
+      dropCell: uistate.command.dropCell,
       pickUpCell: uistate.command.pickUpCell,
     }
 

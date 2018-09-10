@@ -61,8 +61,7 @@ export const onpointermove = (universe: Universe, uistate: UIstate) => (
 }
 
 export const onpointerup = (universe: Universe, uistate: UIstate) => (
-  pointer: Point,
-  cell: Cell
+  pointer: Point
 ) => {
   if (!uistate.dragMachine) return
 
