@@ -64,7 +64,7 @@ export const renderMachine = (m: Machine, alpha: number = 1) => (
   //     y: v.y * -u.x - v.x * -u.y,
   //   }
   //
-  //   addEntity(s, s, boxes.arrow_input, alpha)(vertices, uvs, opacity, index)(
+  //   addEntity(s, s, boxes.texture_arrow_input, alpha)(vertices, uvs, opacity, index)(
   //     position,
   //     d
   //   )
@@ -87,7 +87,7 @@ export const renderMachine = (m: Machine, alpha: number = 1) => (
   //     y: v.y * u.x - v.x * u.y,
   //   }
   //
-  //   addEntity(s, s, boxes.arrow_output, alpha)(vertices, uvs, opacity, index)(
+  //   addEntity(s, s, boxes.texture_arrow_ouput, alpha)(vertices, uvs, opacity, index)(
   //     position,
   //     d
   //   )
@@ -107,7 +107,7 @@ export const renderMachines = (universe: Universe, uistate: UIstate) => (
   // customer zone
   const s = 0.3
   universe.customers.forEach(({ cell }) =>
-    addEntity(s, s, boxes.arrow_client)(vertices, uvs, opacity, index)(
+    addEntity(s, s, boxes.texture_arrow_client)(vertices, uvs, opacity, index)(
       cellCenter(cell),
       { x: -1, y: 0 }
     )

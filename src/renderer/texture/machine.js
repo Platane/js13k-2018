@@ -136,7 +136,7 @@ blueprints.forEach((blueprint, i) => {
         )
       }) || 0
 
-    const b = boxes['arrow_output']
+    const b = boxes['texture_arrow_ouput']
 
     ctx.save()
     ctx.translate(
@@ -170,7 +170,7 @@ blueprints.forEach((blueprint, i) => {
         )
       }) || 0
 
-    const b = boxes['arrow_input']
+    const b = boxes['texture_arrow_input']
 
     ctx.save()
     ctx.translate(

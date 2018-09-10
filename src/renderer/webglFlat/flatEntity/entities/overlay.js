@@ -27,7 +27,12 @@ export const renderOverlay = (universe: Universe, uistate: UIstate) => (
   }
 
   // overlay
-  addEntity(100, 100, boxes.black, alpha / 100)(vertices, uvs, opacity, index)({
+  addEntity(100, 100, boxes.texture_black, alpha / 100)(
+    vertices,
+    uvs,
+    opacity,
+    index
+  )({
     x: 0,
     y: 0,
   })
@@ -75,7 +80,7 @@ export const renderOverlay = (universe: Universe, uistate: UIstate) => (
         findPath(universe.map, A, B || A) || []
       ).map(cellCenter)
 
-      renderPath(path, boxes.red, 1)(vertices, uvs, opacity, index)
+      renderPath(path, boxes.texture_red, 1)(vertices, uvs, opacity, index)
     }
 
     // bot

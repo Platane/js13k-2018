@@ -70,9 +70,9 @@ export const renderArrow = (bot: Bot, selected: boolean = false) => (
   const size = selected ? 0.7 : 0.48
 
   const box = selected
-    ? boxes.arrow_selected
+    ? boxes.texture_arrow_selected
     : l < EPSYLON
-      ? boxes.arrow_idle
+      ? boxes.texture_arrow_idle
       : boxes.arrow
 
   addEntity(size, size, box)(vertices, uvs, opacity, index)(position, direction)
