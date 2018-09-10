@@ -25,7 +25,7 @@ const canvas = document.getElementsByTagName('canvas')[0]
 
 const webgl = createWebGL(canvas)
 
-createActionLayer(canvas, universe, uistate)
+createActionLayer(document.body, universe, uistate)
 
 const uiUpdate = createUI(document.body)
 

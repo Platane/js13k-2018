@@ -44,16 +44,35 @@ const createMachineList = (onselect, ondragstart) => {
 const startdrag = (element, callback) => {
   let timestamp = 0
   let pointer = null
+
+  let supportPointerEvent = false
+
   element.ontouchstart = element.onmousedown = e => {
+    // some devices ( my s4 ) support both mouseevent and pointerevent
+    // de-dup event
+    if (!e.touches) {
+      if (supportPointerEvent) return
+    } else supportPointerEvent = true
+
     timestamp = e.timeStamp
     pointer = getPointer(e)
   }
 
-  const up = () => (timestamp = 0)
-  const move = e => {
-    if (!timestamp) return
+  const up = e => {
+    if (!e.touches) {
+      if (supportPointerEvent) return
+    } else supportPointerEvent = true
 
-    const l = distance(getPointer(e), pointer)
+    timestamp = 0
+  }
+  const move = e => {
+    if (!e.touches) {
+      if (supportPointerEvent) return
+    } else supportPointerEvent = true
+
+    if (!timestamp || !pointer) return
+
+    const l = distance(pointer, getPointer(e))
 
     if (l > 10) {
       timestamp = 0

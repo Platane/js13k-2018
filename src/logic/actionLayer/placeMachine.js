@@ -94,6 +94,7 @@ export const onpointerup = (universe: Universe, uistate: UIstate) => (
 
   // reset
   uistate.dragMachine = null
+  uistate.shopOpened = false
 
   // reset bots path
   universe.bots.forEach(

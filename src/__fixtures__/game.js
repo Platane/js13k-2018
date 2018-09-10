@@ -2,7 +2,7 @@ import { blueprints } from '~/config/blueprints'
 import { menu } from '~/config/menu'
 import type { Universe, UIstate } from '~/type'
 
-const w = 16
+const w = 14
 const h = 12
 
 const map = Array.from({ length: h }).map((_, y) =>
@@ -41,14 +41,14 @@ map[5][4] = 1
 map[5][5] = 1
 map[5][6] = 1
 
-map[9][10] = 1
-map[8][10] = 1
-map[7][10] = 1
+map[9][9] = 1
+map[8][9] = 1
+map[7][9] = 1
+map[6][9] = 1
 map[6][10] = 1
-map[6][11] = 1
-map[4][11] = 1
-map[5][11] = 1
-map[7][11] = 1
+map[4][10] = 1
+map[5][10] = 1
+map[7][10] = 1
 
 map[4][w - 2] = 2
 map[5][w - 2] = 2
@@ -66,11 +66,12 @@ export const universe: Universe = {
   bots: [
     {
       id: '1',
-      position: { x: 9.3, y: 6.5 },
+      position: { x: 8.3, y: 6.5 },
       velocity: { x: 0, y: 0 },
       l: 0,
       command: { type: 'idle' },
       activity: null,
+      navigation: null,
     },
   ],
 
@@ -108,15 +109,15 @@ export const universe: Universe = {
   blueprints: [],
 }
 
-// universe.clients = Array.from({ length: 3 }).map((_, i) => ({
-//   id: '' + i,
-//   l: 0,
-//   client: ['A', 'B'][Math.floor(2 * Math.random())],
-//   position: {
-//     x: universe.customers[0].cell.x + 0.1 + i * 0.05,
-//     y: universe.customers[0].cell.y + 0.1 + i * 0.05,
-//   },
-//   velocity: { x: 0, y: 0 },
-//   command: { type: 'wander', target: universe.customers[0].cell },
-//   activity: { cooldown: 0 },
-// }))
+universe.clients = Array.from({ length: 3 }).map((_, i) => ({
+  id: '' + i,
+  l: 0,
+  client: ['A', 'B'][Math.floor(2 * Math.random())],
+  position: {
+    x: universe.customers[0].cell.x + 0.1 + i * 0.05,
+    y: universe.customers[0].cell.y + 0.1 + i * 0.05,
+  },
+  velocity: { x: 0, y: 0 },
+  command: { type: 'wander', target: universe.customers[0].cell },
+  activity: { cooldown: 0 },
+}))
