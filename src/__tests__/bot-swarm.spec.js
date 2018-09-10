@@ -21,7 +21,7 @@ const universe: Universe = {
     id: 'id' + i,
     position: { x: 3.1 + (1.8 * i) / arr.length, y: 4.2 },
     velocity: { x: 0, y: 0 },
-
+    l: 0,
     command: {
       type: 'carry',
       dropCell: { x: 4, y: 2 },
@@ -34,6 +34,8 @@ const universe: Universe = {
 
     navigation: null,
   })),
+
+  clients: [],
 
   machines: [],
 

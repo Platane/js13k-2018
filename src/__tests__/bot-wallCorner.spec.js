@@ -15,7 +15,7 @@ const universe: Universe = {
       id: 'm',
       position: { x: 2.5, y: 1.8 },
       velocity: { x: 0, y: 0 },
-
+      l: 0,
       navigation: null,
 
       command: {
@@ -51,6 +51,8 @@ const universe: Universe = {
       processing: null,
     },
   ],
+
+  clients: [],
 
   customers: [],
 

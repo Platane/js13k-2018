@@ -23,7 +23,7 @@ const universe: Universe = {
       id: 'm',
       position: { x: 3.5, y: 4.8 },
       velocity: { x: 0, y: 0 },
-
+      l: 0,
       navigation: null,
 
       command: {
@@ -39,7 +39,7 @@ const universe: Universe = {
       id: '2m',
       position: { x: 3.1, y: 4.8 },
       velocity: { x: 0, y: 0 },
-
+      l: 0,
       navigation: null,
 
       command: {
@@ -55,7 +55,7 @@ const universe: Universe = {
       id: 'x',
       position: { x: 3.6, y: 4.2 },
       velocity: { x: 0, y: 0 },
-
+      l: 0,
       navigation: null,
 
       command: {
@@ -72,7 +72,7 @@ const universe: Universe = {
       id: 'y',
       position: { x: 3.6, y: 4.5 },
       velocity: { x: 0, y: 0 },
-
+      l: 0,
       navigation: null,
 
       command: {
@@ -86,6 +86,8 @@ const universe: Universe = {
       },
     },
   ],
+
+  clients: [],
 
   machines: [
     {
