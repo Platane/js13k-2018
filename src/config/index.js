@@ -8,3 +8,5 @@ export const DROPPED_DELAY = 26
 export const BOT_ACTIVATION_DELAY = 60
 export const BOT_ACTIVATION_TOUCH = 10
 export const BOT_COST = 2000
+
+export const SELECT_THRESHOLD = 0.6
