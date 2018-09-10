@@ -56,13 +56,17 @@ export const renderOverlay = (universe: Universe, uistate: UIstate) => (
     renderArrow(selectedBot, true)(vertices, uvs, opacity, index)
 
     // path
+
     let A, B
-    if (uistate.command) {
-      A = uistate.command.pickUpCell
-      B = uistate.command.dropCell
-    } else if (selectedBot.command.type === 'carry') {
+
+    if (selectedBot.command.type === 'carry') {
       A = selectedBot.command.pickUpCell
       B = selectedBot.command.dropCell
+    }
+
+    if (uistate.command && uistate.command.dropCell) {
+      A = uistate.command.pickUpCell
+      B = uistate.command.dropCell
     }
 
     if (A) {

@@ -31,11 +31,13 @@ export const onpointerdown = (universe: Universe, uistate: UIstate) => (
     bot.navigation = null
 
     uistate.command = null
+    uistate.selectedBotId = null
   } else if (isNavigable(universe.map, cell)) {
     uistate.command.type = 'carry'
     uistate.command.pickUpCell = cell
   } else {
     uistate.command = null
+    uistate.selectedBotId = null
   }
 }
 
@@ -78,6 +80,7 @@ export const onpointerup = (universe: Universe, uistate: UIstate) => (
   }
 
   uistate.command = null
+  uistate.selectedBotId = null
 }
 
 const isMachineHit = (m: Machine, cell: Cell) => {

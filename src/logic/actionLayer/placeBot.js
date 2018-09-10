@@ -22,8 +22,8 @@ export const onpointermove = (universe: Universe, uistate: UIstate) => (
 
   //
   // place machine
-  bot.position.x = cell.x + 0.5
-  bot.position.y = cell.y + 0.5
+  bot.position.x = pointer.x
+  bot.position.y = pointer.y
 
   uistate.dragBotDroppable = isNavigable(universe.map, cell)
 }
@@ -41,9 +41,6 @@ export const onpointerup = (universe: Universe, uistate: UIstate) => (
 
   const bot = uistate.dragBot
 
-  bot.position.x += (Math.random() - 0.5) * 0.3
-  bot.position.y += (Math.random() - 0.5) * 0.3
-
   universe.bank -= BOT_COST
 
   // push new machine
@@ -51,5 +48,8 @@ export const onpointerup = (universe: Universe, uistate: UIstate) => (
 
   // reset
   uistate.dragBot = null
-  uistate.selectedBotId = bot.id
+
+  // why not
+  uistate.shopOpened = false
+  uistate.selectedBotId = null
 }

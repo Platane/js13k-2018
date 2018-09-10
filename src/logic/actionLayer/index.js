@@ -12,10 +12,10 @@ import * as placeMachine from './placeMachine'
 import type { ID, UIstate, Universe, Machine, Cell } from '~/type'
 const handlers = [
   //
-  select,
   command,
   placeBot,
   placeMachine,
+  select,
 ]
 
 export const createActionLayer = (

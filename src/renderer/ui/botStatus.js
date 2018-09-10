@@ -21,7 +21,10 @@ export const create = (domParent: Element) => {
   const update = (universe: Universe, uistate: UIstate) => {
     //
     if (!button.onclick)
-      button.onclick = e => (uistate.command = uistate.command ? null : {})
+      button.onclick = e => {
+        uistate.selectedBotId = null
+        uistate.command = null
+      }
 
     //
     if (selectedBotId !== uistate.selectedBotId) {

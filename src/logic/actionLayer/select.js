@@ -19,8 +19,8 @@ export const onpointerdown = (universe: Universe, uistate: UIstate) => (
   if (uistate.selectedBotId !== botId) {
     uistate.selectedBotId = botId
 
-    // if ( botId ){
-    //   uistate.command = {}
-    // }
+    if (botId) {
+      uistate.command = {}
+    }
   }
 }
