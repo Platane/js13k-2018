@@ -9,6 +9,13 @@ export const initShader = (
 
   gl.compileShader(shader)
 
+  // See if it compiled successfully
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
+    throw 'An error occurred compiling the shaders: \n' +
+      (gl.getShaderInfoLog(shader) || '') +
+      '\n' +
+      sourceCode
+
   return shader
 }
 
@@ -31,6 +38,9 @@ export const createProgram = (
 
   gl.linkProgram(shaderProgram)
 
+  if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS))
+    throw 'Unable to initialize the shader program.'
+
   return shaderProgram
 }
 
@@ -43,6 +53,9 @@ export const bindAttribute = (
   const buffer = gl.createBuffer()
 
   const location = gl.getAttribLocation(shaderProgram, name)
+
+  if (location == -1)
+    throw Error(`attribute ${name} not found in the shader program`)
 
   gl.enableVertexAttribArray(location)
 
@@ -89,14 +102,22 @@ export const bindUniform = (
   let value
   const location = gl.getUniformLocation(shaderProgram, name)
 
+  if (location == -1)
+    throw Error(`uniform ${name} not found in the shader program`)
+
   let bind
   switch (type) {
     case 'mat4':
       bind = () => gl.uniformMatrix4fv(location, false, new Float32Array(value))
       break
+    case 'float':
+      bind = () => gl.uniform1f(location, value)
+      break
     case 'vec3':
       bind = () => gl.uniform3fv(location, value)
       break
+    default:
+      throw Error(`unknow type ${type}`)
   }
 
   return {
@@ -115,6 +136,9 @@ export const bindUniformTexture = (
   const texture = gl.createTexture()
 
   const location = gl.getUniformLocation(shaderProgram, name)
+
+  if (location == -1)
+    throw Error(`uniform ${name} not found in the shader program`)
 
   return {
     update: (image: HTMLCanvasElement) => {
