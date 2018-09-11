@@ -58,7 +58,7 @@ rm dist/bundle1.js
 cp src/index.html dist/index.html
 
 # zip
-( cd dist && zip -r bundle.zip . )
+( cd dist && zip -r -9 bundle.zip . )
 
 # print size
 stat --printf="%s\n" ./dist/bundle.zip
