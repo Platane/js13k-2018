@@ -11,6 +11,4 @@ void main(void) {
 
   gl_FragColor.a = gl_FragColor.a * vOpacity;
 
-  if( gl_FragColor.a <= 0.05 )
-      discard;
 }

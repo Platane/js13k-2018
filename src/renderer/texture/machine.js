@@ -41,7 +41,7 @@ const drawMachineHull = (ground: Map) => {
     for (let y = h; y--; ) {
       ctxbuffer.fillStyle = !isNavigable(ground, { x, y })
         ? '#000'
-        : 'transparent'
+        : '#0000'
 
       const m = 0.12
 

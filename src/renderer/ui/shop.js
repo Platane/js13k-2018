@@ -296,7 +296,7 @@ export const create = (domParent: Element) => {
 
   const closeButton = document.createElement('button')
   closeButton.style.cssText =
-    'font-size:30px;padding:4px 10px;position:absolute;top:2px;right:2px;z-index:3;background-color:transparent;border:none'
+    'font-size:30px;padding:4px 10px;position:absolute;top:2px;right:2px;z-index:3;background-color:#0000;border:none'
   closeButton.innerText = '×'
 
   shopPanel.appendChild(closeButton)
