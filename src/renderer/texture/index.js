@@ -1,4 +1,5 @@
 import './tex'
+import './svg/rice-grain'
 import './svg/rice-ball'
 import './svg/sushi'
 import './svg/fish'

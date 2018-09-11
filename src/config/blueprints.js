@@ -77,11 +77,14 @@ export const blueprints: Blueprint[] = [
     activationThreshold: 20,
 
     recipe: {
-      inputs: [{ token: 'raw-tuna', n: 1 }],
-      outputs: [{ token: 'tuna-bit', n: 2 }],
+      inputs: [{ token: 'rice-ball', n: 2 },{ token: 'raw-tuna', n: 1 }],
+      outputs: [{ token: 'sushi', n: 1 }],
     },
 
-    inputs: [{ cell: { x: 2, y: 2 }, token: 'raw-tuna' }],
-    outputs: [{ cell: { x: 0, y: 1 }, token: 'tuna-bit' }],
+    inputs: [
+      { cell: { x: 2, y: 2 }, token: 'raw-tuna' },
+      { cell: { x: 2, y: 2 }, token: 'rice-ball' },
+    ],
+    outputs: [{ cell: { x: 0, y: 1 }, token: 'sushi' }],
   },
 ]

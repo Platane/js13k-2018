@@ -14,7 +14,7 @@ export const ctx = texture.getContext('2d')
 // texture.style.cssText =
 //   'border:solid 3px red;z-index:10;top:10px;left:10px;position:absolute'
 
-export const offset = { x: 0, y: 0, h: 0, s: 11 }
+export const offset = { x: 0, y: 0, h: 0, s: 10 }
 export const getNextBox = (w: number, h: number) => {
   if (offset.x + w > offset.s) {
     offset.x = 0
