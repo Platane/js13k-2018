@@ -9,6 +9,8 @@ import { proj } from '~/service/machine'
 import { normalize, length, lengthSq, cellCenter } from '~/service/point'
 import { boxes } from '~/renderer/texture'
 import { addEntity } from './util'
+import { texture_arrow_client_box } from '~/renderer/texture/svg/arrow'
+
 import type { Universe, Point, Machine, UIstate } from '~/type'
 
 export const renderMachine = (m: Machine, alpha: number = 1) => (
@@ -107,7 +109,7 @@ export const renderMachines = (universe: Universe, uistate: UIstate) => (
   // customer zone
   const s = 0.3
   universe.customers.forEach(({ cell }) =>
-    addEntity(s, s, boxes.texture_arrow_client)(vertices, uvs, opacity, index)(
+    addEntity(s, s, texture_arrow_client_box)(vertices, uvs, opacity, index)(
       cellCenter(cell),
       { x: -1, y: 0 }
     )

@@ -1,4 +1,12 @@
-import { texture, ctx, l, drawPaths, addBox, getNextBox, offset } from '../tex'
+import {
+  texture,
+  ctx,
+  l,
+  drawPaths,
+  boxToBox,
+  getNextBox,
+  offset,
+} from '../tex'
 import {
   black,
   white,
@@ -37,12 +45,12 @@ box = getNextBox(1, 1)
 ctx.save()
 ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
 ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
-addBox('texture_arrow_idle', box)
 ctx.fillStyle = grey_light
 ctx.beginPath()
 ctx.arc(50, 50, 28, 0, Math.PI * 2)
 ctx.fill()
 ctx.restore()
+export const texture_arrow_idle_box = boxToBox(box)
 
 // box = getNextBox(1, 1)
 // ctx.save()
@@ -59,64 +67,64 @@ box = getNextBox(1, 1)
 ctx.save()
 ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
 ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
-addBox('arrow', box)
 ctx.fillStyle = grey_light
 smoothArrow()
 ctx.restore()
+export const texture_arrow_box = boxToBox(box)
 
 box = getNextBox(1, 1)
 ctx.save()
 ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
 ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
-addBox('texture_arrow_input', box)
 ctx.fillStyle = grey_light
 rectArrow()
 ctx.restore()
+export const texture_arrow_input_box = boxToBox(box)
 
 box = getNextBox(1, 1)
 ctx.save()
 ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
 ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
-addBox('texture_arrow_ouput', box)
 ctx.fillStyle = grey_light
 rectArrow()
 ctx.restore()
+export const texture_arrow_ouput_box = boxToBox(box)
 
 box = getNextBox(1, 1)
 ctx.save()
 ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
 ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
-addBox('texture_arrow_client', box)
 ctx.fillStyle = gold
 rectArrow()
 ctx.restore()
+export const texture_arrow_client_box = boxToBox(box)
 
 box = getNextBox(0.3, 0.3)
 ctx.save()
 ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
 ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
 ctx.scale(0.3, 0.3)
-addBox('texture_black', box)
 ctx.fillStyle = black
 ctx.fillRect(0, 0, 100, 100)
 ctx.restore()
+export const texture_black_box = boxToBox(box)
 
 box = getNextBox(0.3, 0.3)
 ctx.save()
 ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
 ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
 ctx.scale(0.3, 0.3)
-addBox('texture_red', box)
 ctx.fillStyle = salmon_pink
 ctx.fillRect(0, 0, 100, 100)
 ctx.restore()
+export const texture_red_box = boxToBox(box)
 
 box = getNextBox(1.4, 1.4)
 ctx.save()
 ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
 ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
 ctx.scale(1.4, 1.4)
-addBox('texture_arrow_selected', box)
 ctx.fillStyle = salmon_pink
 smoothArrow()
 ctx.restore()
+export const texture_arrow_selected_box = boxToBox(box)

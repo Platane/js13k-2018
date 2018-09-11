@@ -15,12 +15,15 @@ if (process.env.NODE_ENV === 'mangle-properties') {
     //
     'navigation',
     'rotation',
+    'position',
     'command',
     'target',
     'update',
   ]
 
-  const blacklist = ['arrow']
+  const blacklist = [
+    //
+  ]
 
   const reservedNames = [...blacklist, ...domprops.props].filter(
     x => !whitelist.includes(x)

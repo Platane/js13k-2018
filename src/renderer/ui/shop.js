@@ -7,6 +7,7 @@ import { getPointer } from '~/util/pointer'
 import { boxes, texture, l as texl } from '~/renderer/texture'
 import { containerCss } from './botStatus'
 import { BOT_COST } from '~/config'
+import { texture_arrow_input_box } from '~/renderer/texture/svg/arrow'
 import type { Universe, Blueprint, Machine, UIstate } from '~/type'
 
 // const names = {
@@ -221,7 +222,7 @@ const createMachineDecription = (onrotate, ondragstart) => {
         rctx.save()
         rctx.rotate(Math.PI / 2)
         const s = 0.4
-        const b = boxes['texture_arrow_input']
+        const b = texture_arrow_input_box
         rctx.drawImage(
           texture,
           b[0] * texl,

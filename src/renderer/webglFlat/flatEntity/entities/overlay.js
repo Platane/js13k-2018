@@ -1,6 +1,10 @@
 import { getWidth, getHeight, isNavigable, around4 } from '~/service/map'
 import { normalize, length, lengthSq, cellCenter } from '~/service/point'
 import { boxes } from '~/renderer/texture'
+import {
+  texture_black_box,
+  texture_red_box,
+} from '~/renderer/texture/svg/arrow'
 import { addEntity, renderPath } from './util'
 import { renderBot, renderArrow } from './bots'
 import { findPath, smoothPath } from '~/service/aStar'
@@ -27,7 +31,7 @@ export const renderOverlay = (universe: Universe, uistate: UIstate) => (
   }
 
   // overlay
-  addEntity(100, 100, boxes.texture_black, alpha / 100)(
+  addEntity(100, 100, texture_black_box, alpha / 100)(
     vertices,
     uvs,
     opacity,
@@ -80,7 +84,7 @@ export const renderOverlay = (universe: Universe, uistate: UIstate) => (
         findPath(universe.map, A, B || A) || []
       ).map(cellCenter)
 
-      renderPath(path, boxes.texture_red, 1)(vertices, uvs, opacity, index)
+      renderPath(path, texture_red_box, 1)(vertices, uvs, opacity, index)
     }
 
     // bot

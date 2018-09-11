@@ -27,7 +27,7 @@ export const addEntity = (
 
   opacity.push(alpha, alpha, alpha, alpha)
 
-  uvs.push(...(box || boxes.defaultBox))
+  uvs.push(...box)
 
   // prettier-ignore
   index.push(

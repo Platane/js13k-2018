@@ -12,6 +12,11 @@ import {
 import { l, texture, boxes, offset, ctx, getNextBox, addBox } from './tex'
 import { blueprints } from '~/config/blueprints'
 import { proj } from '~/service/machine'
+import {
+  texture_arrow_ouput_box,
+  texture_arrow_input_box,
+} from '~/renderer/texture/svg/arrow'
+
 import type { Map } from '~/type'
 
 const buffer = document.createElement('canvas')
@@ -136,7 +141,7 @@ blueprints.forEach((blueprint, i) => {
         )
       }) || 0
 
-    const b = boxes['texture_arrow_ouput']
+    const b = texture_arrow_ouput_box
 
     ctx.save()
     ctx.translate(
@@ -170,7 +175,7 @@ blueprints.forEach((blueprint, i) => {
         )
       }) || 0
 
-    const b = boxes['texture_arrow_input']
+    const b = texture_arrow_input_box
 
     ctx.save()
     ctx.translate(

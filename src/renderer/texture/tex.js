@@ -53,9 +53,7 @@ type Boxes = {
     number,
   ],
 }
-export const boxes: Boxes = {
-  defaultBox: [0, 0, 1, 1],
-}
+export const boxes: Boxes = {}
 
 export const drawPaths = (
   paths: string[],

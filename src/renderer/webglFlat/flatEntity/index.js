@@ -33,8 +33,6 @@ export const create = (gl: WebGLRenderingContext) => {
   sampler_texture.update(texture)
 
   return (universe: Universe, uistate: UIstate, matrix: number[]) => {
-    if (gl.lastprogram !== program) gl.useProgram(program)
-
     const vertices = []
     const opacity = []
     const uvs = []
@@ -63,6 +61,8 @@ export const create = (gl: WebGLRenderingContext) => {
     attribute_position.update(vertices)
 
     uniform_worldMatrix.update(matrix)
+
+    if (gl.lastprogram !== program) gl.useProgram(program)
 
     elementIndex.bind()
     attribute_position.bind()

@@ -2,6 +2,11 @@ import { getWidth, getHeight, isNavigable, around4 } from '~/service/map'
 import { normalize, length, lengthSq, cellCenter } from '~/service/point'
 import { boxes } from '~/renderer/texture'
 import { addEntity } from './util'
+import {
+  texture_arrow_selected_box,
+  texture_arrow_idle_box,
+  texture_arrow_box,
+} from '~/renderer/texture/svg/arrow'
 import type { Universe, Point, Bot, UIstate } from '~/type'
 
 const EPSYLON = 0.014
@@ -70,10 +75,10 @@ export const renderArrow = (bot: Bot, selected: boolean = false) => (
   const size = selected ? 0.7 : 0.48
 
   const box = selected
-    ? boxes.texture_arrow_selected
+    ? texture_arrow_selected_box
     : l < EPSYLON
-      ? boxes.texture_arrow_idle
-      : boxes.arrow
+      ? texture_arrow_idle_box
+      : texture_arrow_box
 
   addEntity(size, size, box)(vertices, uvs, opacity, index)(position, direction)
 }
@@ -94,11 +99,13 @@ export const renderBots = (universe: Universe, uistate: UIstate) => (
 
   // draw bots
   people.forEach(bot =>
-    renderBot(bot, bot.client ? 'texture_client' + bot.client : 'texture_bot')(
-      vertices,
-      uvs,
-      opacity,
-      index
-    )
+    renderBot(
+      bot,
+      bot.client
+        ? bot.client === 'A'
+          ? 'texture_clientA'
+          : 'texture_clientB'
+        : 'texture_bot'
+    )(vertices, uvs, opacity, index)
   )
 }
