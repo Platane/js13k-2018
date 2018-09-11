@@ -290,7 +290,7 @@ export const create = (domParent: Element) => {
 
   const shopPanel = document.createElement('div')
   shopPanel.style.cssText =
-    'position:absolute;min-width:380px;width:140%;right:10px;height:250px;background-color:#ddd;bottom:70px;border-radius:4px;transition:transform 180ms;transform-origin:2% 110%;transform:scale(0,0);display:flex;flex-direction:row;'
+    'position:absolute;min-width:360px;width:140%;right:10px;height:250px;background-color:#ddd;bottom:105px;border-radius:4px;transition:transform 180ms;transform-origin:50% 110%;transform:scale(0,0);display:flex;flex-direction:row;'
   container.appendChild(shopPanel)
 
   const closeButton = document.createElement('button')
@@ -408,7 +408,7 @@ export const create = (domParent: Element) => {
       uistate.step >= 12 && !uistate.selectedBotId && !uistate.shopOpened
 
     if (show !== sshow) {
-      container.style.transform = show = sshow ? null : 'translate3d(0,60px,0)'
+      container.style.transform = show = sshow ? null : 'translate3d(0,100px,0)'
     }
   }
 

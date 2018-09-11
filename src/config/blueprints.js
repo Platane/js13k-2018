@@ -69,7 +69,7 @@ export const blueprints: Blueprint[] = [
     outputs: [{ cell: { x: 0, y: 1 }, token: 'raw-tuna' }],
   },
   {
-    id: 'tuna-skin-workshop',
+    id: 'sushi-roller',
 
     ground: [[0, 1, 1], [0, 1, 1], [0, 0, 0]],
 

@@ -8,17 +8,17 @@ import type { Universe, UIstate } from '~/type'
 import '~/renderer/texture'
 
 const uistate: UIstate = {
-  selectedBotId: null,
-  pickUpCell: null,
+  // selectedBotId: null,
+  // pickUpCell: null,
   selectedBlueprintRotation: 0,
   selectedBlueprintId: 'rice-cooker',
-  shopOpened: false,
+  // shopOpened: false,
   step: 30,
-  command: null,
-  dragBot: null,
-  dragBotDroppable: false,
-  dragMachine: null,
-  dragMachineDroppable: false,
+  // command: null,
+  // dragBot: null,
+  // dragBotDroppable: false,
+  // dragMachine: null,
+  // dragMachineDroppable: false,
 }
 
 const canvas = document.getElementsByTagName('canvas')[0]
