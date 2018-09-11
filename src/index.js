@@ -1,7 +1,8 @@
 import { createActionLayer } from '~/logic/actionLayer'
-import { createUI } from '~/renderer/ui'
+import { updateUi } from '~/renderer/ui'
 import { createWebGL } from '~/renderer/webglFlat'
 import { tic } from './logic'
+import { blueprints } from '~/config'
 import { universe } from '~/__fixtures__/game'
 import type { Universe, UIstate } from '~/type'
 
@@ -11,7 +12,7 @@ const uistate: UIstate = {
   // selectedBotId: null,
   // pickUpCell: null,
   selectedBlueprintRotation: 0,
-  selectedBlueprintId: 'rice-cooker',
+  selectedBlueprintId: blueprints[1].id,
   // shopOpened: false,
   step: 30,
   // command: null,
@@ -27,14 +28,12 @@ const webgl = createWebGL(canvas)
 
 createActionLayer(document.body, universe, uistate)
 
-const uiUpdate = createUI(document.body)
-
 const loop = () => {
   tic(universe)
 
   webgl(universe, uistate)
 
-  uiUpdate(universe, uistate)
+  updateUi(universe, uistate)
 
   // if (uistate.command || uistate.dragMachine || uistate.dragBot) {
   //   setTimeout(loop, 30)

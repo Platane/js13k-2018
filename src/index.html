@@ -4,9 +4,42 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
 *{box-sizing:border-box;}
-html,body{font-size:0;height:100%;margin:0;user-select:none;font-family:Helvetica,Arial;overscroll-behavior-y:contain;}
+html,body{font-size: 14px;height:100%;margin:0;user-select:none;font-family:Helvetica,Arial;overscroll-behavior-y:contain;}
+@media (min-width: 600px){body{font-size: 16px}}
 </style>
 </head>
-<canvas style="position:fixed;bottom:0;left:0;width:100%;height:100%;z-index:1;opacity:1"/>
+<body>
+<canvas style="position:fixed;bottom:0;left:0;width:100%;height:100%;z-index:1;opacity:1"></canvas>
+
+<div id="element-toolbar" style="position:fixed;padding:10px;background:#dddc;bottom:0;right:0;width:40%;z-index:2;border-radius:20px 0 0 0;display:flex;flex-direction:row;transition:transform 180ms">
+  <button id="element-shopButton">open shop</button>
+  <button id="element-cancel" style="padding:10px;margin-left:auto">× cancel</button>
+  <div id="element-bank" style="padding:10px;margin-left:auto;"></div>
+</div>
+
+<div id="element-shopPanel" style="position:fixed;max-width:40rem;width:calc(100% - 20px);right:10px;height:250px;bottom:10px;border-radius:4px;transition:transform 180ms;transform-origin:50% 110%;transform:scale(0,0);display:flex;flex-direction:row;z-index:2">
+  <div id="element-blueprintList" style="width:30%;min-width:160px;background:#dddc;flex-shrink:0"></div>
+
+  <div style="padding:10px;background:#fffc;flex-grow:1;display:flex;flex-direction:column" >
+    <div id="element-blueprintName" style="font-weight:bold;margin:10px"></div>
+
+    <div style="display:flex;flex-direction:row;position:relative;align-items:center">
+
+      <canvas id="element-blueprintImage" width="100px" height="100px" style="width:100px;height:100px;cursor:pointer"></canvas>
+
+      <div id="element-blueprintCost" style="margin-left:auto;margin-right:10px"></div>
+
+      <button id="element-blueprintRotate" style="position:absolute;bottom:-14px;left:-4px" >↻</button>
+
+    </div>
+
+
+    <canvas id="element-blueprintRecipe" width="220" height="50" style="width:220px;height:50px;margin:auto;margin-bottom:0"></canvas>
+  </div>
+
+  <button id="element-closeShopButton" style="font-size:30px;padding:4px 10px;position:absolute;top:2px;right:2px;z-index:3;background:#0000;border:none">×</button>
+</div>
+
 <script src="a.js"></script>
+</body>
 </html>

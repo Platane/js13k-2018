@@ -18,7 +18,7 @@ export const blueprints: Blueprint[] = [
   //   outputs: [],
   // },
   {
-    id: 'rice-grain-harvester',
+    id: 'Rice Grain Harvester',
 
     ground: [[1, 0], [1, 0], [1, 1]],
 
@@ -34,7 +34,7 @@ export const blueprints: Blueprint[] = [
     outputs: [{ cell: { x: 1, y: 0 }, token: 'rice-grain' }],
   },
   {
-    id: 'rice-cooker',
+    id: 'Rice Cooker',
 
     ground: [[0, 1, 0], [0, 1, 1], [0, 1, 0]],
 
@@ -53,7 +53,7 @@ export const blueprints: Blueprint[] = [
     outputs: [{ cell: { x: 0, y: 1 }, token: 'rice-ball' }],
   },
   {
-    id: 'tuna-fishing-spot',
+    id: 'Tuna Fishing Spot',
 
     ground: [[0, 1, 1, 1], [0, 1, 1, 1], [0, 1, 1, 1], [0, 0, 0, 0]],
 
@@ -69,7 +69,7 @@ export const blueprints: Blueprint[] = [
     outputs: [{ cell: { x: 0, y: 1 }, token: 'raw-tuna' }],
   },
   {
-    id: 'sushi-roller',
+    id: 'Sushi Roller',
 
     ground: [[0, 1, 1], [0, 1, 1], [0, 0, 0]],
 
@@ -77,7 +77,7 @@ export const blueprints: Blueprint[] = [
     activationThreshold: 20,
 
     recipe: {
-      inputs: [{ token: 'rice-ball', n: 2 },{ token: 'raw-tuna', n: 1 }],
+      inputs: [{ token: 'rice-ball', n: 2 }, { token: 'raw-tuna', n: 1 }],
       outputs: [{ token: 'sushi', n: 1 }],
     },
 
