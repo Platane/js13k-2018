@@ -41,13 +41,17 @@ sed -i "s|aVertexPosition|e|g" dist/bundle.js
 sed -i "s|aVertexUV|f|g" dist/bundle.js
 sed -i "s|aOpacity|g|g" dist/bundle.js
 
+# bundle.js -> bundle0.js
+node script/clearShader.js
+
 # minify
-NODE_ENV="mangle-properties" yarn babel dist/bundle.js -o dist/bundle0.js
-NODE_ENV="minify" yarn babel dist/bundle0.js -o dist/index.js
+NODE_ENV="mangle-properties" yarn babel dist/bundle0.js -o dist/bundle1.js
+NODE_ENV="minify" yarn babel dist/bundle1.js -o dist/index.js
 
 
 rm dist/bundle.js
 rm dist/bundle0.js
+rm dist/bundle1.js
 
 
 # copy index.html
