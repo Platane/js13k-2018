@@ -45,16 +45,16 @@ node script/clearShader.js
 
 # minify
 NODE_ENV="mangle-properties" yarn babel dist/bundle0.js -o dist/bundle1.js
-NODE_ENV="minify" yarn babel dist/bundle1.js -o dist/a.js
-
-
-rm dist/bundle.js
-rm dist/bundle0.js
-rm dist/bundle1.js
+NODE_ENV="minify" yarn babel dist/bundle1.js -o dist/bundle.js
 
 
 # copy index.html
-cp src/index.html dist/index.html
+node script/bundlehtml
+
+# clean up
+rm dist/bundle.js
+rm dist/bundle0.js
+rm dist/bundle1.js
 
 # zip
 ( cd dist && zip -r -9 bundle.zip . )
