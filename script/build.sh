@@ -25,8 +25,7 @@ sed -i "s|'tuna-fishing-spot'|5|g" dist/bundle.js
 sed -i "s|'rice-cooker'|6|g" dist/bundle.js
 sed -i "s|'rice-grain-harvester'|7|g" dist/bundle.js
 sed -i "s|'sushi-roller'|8|g" dist/bundle.js
-
-sed -i "s|'shop_bot'|9|g" dist/bundle.js
+sed -i "s|'shop-bot'|9|g" dist/bundle.js
 
 sed -i "s|'texture_bot'|100|g" dist/bundle.js
 sed -i "s|'texture_clientA'|200|g" dist/bundle.js
@@ -46,7 +45,7 @@ node script/clearShader.js
 
 # minify
 NODE_ENV="mangle-properties" yarn babel dist/bundle0.js -o dist/bundle1.js
-NODE_ENV="minify" yarn babel dist/bundle1.js -o dist/index.js
+NODE_ENV="minify" yarn babel dist/bundle1.js -o dist/a.js
 
 
 rm dist/bundle.js

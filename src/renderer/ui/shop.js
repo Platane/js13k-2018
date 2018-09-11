@@ -25,7 +25,7 @@ import type { Universe, Blueprint, Machine, UIstate } from '~/type'
 // }
 
 const names = {
-  shop_bot: 'Worker',
+  'shop-bot': 'Worker',
   'rice-grain-harvester': 'Rice Farm',
   'rice-cooker': 'Rice Cooker',
   'tuna-skin-workshop': 'Tuna Skin Workshop',
@@ -37,7 +37,7 @@ const createMachineList = (onselect, ondragstart) => {
   container.style.cssText = 'width:30%;min-width:160px;flex-shrink:0'
 
   //
-  ;[{ id: 'shop_bot' }, ...blueprints].forEach(blueprint => {
+  ;[{ id: 'shop-bot' }, ...blueprints].forEach(blueprint => {
     const item = document.createElement('div')
     item.style.cssText = 'padding:10px;cursor:pointer;'
 
@@ -245,7 +245,7 @@ const createMachineDecription = (onrotate, ondragstart) => {
       recipe.style.display = 'block'
       canvas.style.display = 'block'
       rotateButton.style.display = 'block'
-    } else if (blueprintId === 'shop_bot') {
+    } else if (blueprintId === 'shop-bot') {
       const b = boxes['texture_bot' + 0]
 
       cost.innerText = '$' + BOT_COST
@@ -341,14 +341,14 @@ export const create = (domParent: Element) => {
 
         if (
           (blueprint && blueprint.buildingCost > universe.bank) ||
-          (uistate.selectedBlueprintId === 'shop_bot' &&
+          (uistate.selectedBlueprintId === 'shop-bot' &&
             BOT_COST > universe.bank)
         )
           return
 
         uistate.dragMachine = machine
 
-        uistate.dragBot = uistate.selectedBlueprintId === 'shop_bot' && {
+        uistate.dragBot = uistate.selectedBlueprintId === 'shop-bot' && {
           id: Math.random().toString(),
           position: { x: -999, y: -999 },
           velocity: { x: 0, y: 0 },

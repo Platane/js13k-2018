@@ -3,7 +3,7 @@ const path = require('path')
 
 module.exports = {
   entry: {
-    index: [
+    a: [
       path.join(__dirname, '../src/__tests__/index.js'),
       path.join(__dirname, '../src/index.html'),
     ],
