@@ -1,5 +1,4 @@
 import { create as createFlatEntity } from './flatEntity'
-import { create as createGrid } from './grid'
 import { getWidth, getHeight } from '~/service/map'
 import type { Universe, Point, UIstate } from '~/type'
 
