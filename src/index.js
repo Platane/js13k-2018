@@ -13,7 +13,7 @@ const uistate: UIstate = {
   selectedBlueprintRotation: 0,
   selectedBlueprintId: 'rice-cooker',
   shopOpened: false,
-  step: 0,
+  step: 30,
   command: null,
   dragBot: null,
   dragBotDroppable: false,

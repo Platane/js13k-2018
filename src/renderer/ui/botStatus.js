@@ -1,19 +1,21 @@
 import type { Universe, UIstate } from '~/type'
 
+export const containerCss =
+  'position:fixed;padding:10px;background-color:#ddd;bottom:0;right:0;width:40%;font-size:16px;z-index:2;border-radius:20px 0 0 0;display:flex;flex-direction:row;transition:transform 180ms'
+
 export const create = (domParent: Element) => {
   const container = document.createElement('div')
-  container.style.cssText =
-    'height:60px;position:fixed;padding:10px;background-color:#ddd;bottom:0;left:0;width:45%;font-size:16px;z-index:2;display:flex;flex-direction:row;transition:transform 180ms;transform:translate3d(0,60px,0);border-radius:0 20px 0 0'
+  container.style.cssText = containerCss + ';width:20%'
   container.ontouchstart = container.onmousedown = e => e.stopPropagation()
   domParent.appendChild(container)
 
-  const name = document.createElement('div')
-  name.style.cssText = ''
-  container.appendChild(name)
+  // const name = document.createElement('div')
+  // name.style.cssText = ''
+  // container.appendChild(name)
 
   const button = document.createElement('button')
-  button.style.cssText =
-    'padding:10px;border-radius:50%;width:40px;height:40px;border:none;background-color:blue;margin-left:auto'
+  button.style.cssText = 'padding:10px;margin-left:auto'
+  button.innerText = '× cancel'
   container.appendChild(button)
 
   let selectedBotId = -1
@@ -31,10 +33,6 @@ export const create = (domParent: Element) => {
       selectedBotId = uistate.selectedBotId
 
       const bot = universe.bots.find(({ id }) => id === uistate.selectedBotId)
-
-      if (bot) {
-        name.innerHTML = bot.command.type
-      }
 
       container.style.transform = bot ? null : 'translate3d(0,60px,0)'
     }

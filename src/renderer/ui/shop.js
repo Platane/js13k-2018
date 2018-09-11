@@ -5,32 +5,42 @@ import { proj as projMachine } from '~/service/machine'
 import { distance } from '~/service/point'
 import { getPointer } from '~/util/pointer'
 import { boxes, texture, l as texl } from '~/renderer/texture'
+import { containerCss } from './botStatus'
+import { BOT_COST } from '~/config'
 import type { Universe, Blueprint, Machine, UIstate } from '~/type'
 
+// const names = {
+//   bot: [
+//     'Worker',
+//     'Workers are much needed to carry resources and activate the machines',
+//   ],
+//   'rice-grain-harvester': ['Rice Farm', 'Produces rice grain'],
+//   'rice-cooker': ['Rice Cooker', 'Cook raw rice grain'],
+//   'tuna-skin-workshop': ['Tuna Skin Workshop', 'Skin and cut tuna'],
+//   'tuna-fishing-spot': [
+//     'Tuna Fishing Spot',
+//     'A good spot to catch tuna, just lays you fishing rod and wait',
+//   ],
+// }
+
 const names = {
-  bot: [
-    'Worker',
-    'Workers are much needed to carry resources and activate the machines',
-  ],
-  'rice-grain-harvester': ['Rice Farm', 'Produces rice grain'],
-  'rice-cooker': ['Rice Cooker', 'Cook raw rice grain'],
-  'tuna-skin-workshop': ['Tuna Skin Workshop', 'Skin and cut tuna'],
-  'tuna-fishing-spot': [
-    'Tuna Fishing Spot',
-    'A good spot to catch tuna, just lays you fishing rod and wait',
-  ],
+  bot: 'Worker',
+  'rice-grain-harvester': 'Rice Farm',
+  'rice-cooker': 'Rice Cooker',
+  'tuna-skin-workshop': 'Tuna Skin Workshop',
+  'tuna-fishing-spot': 'Tuna Fishing Spot',
 }
 
 const createMachineList = (onselect, ondragstart) => {
   const container = document.createElement('div')
-  container.style.cssText = 'width:120px;flex-shrink:0'
+  container.style.cssText = 'width:30%;min-width:160px;flex-shrink:0'
 
   //
   ;[{ id: 'bot' }, ...blueprints].forEach(blueprint => {
     const item = document.createElement('div')
-    item.style.cssText = 'padding:10px;cursor:pointer;font-size:12px;'
+    item.style.cssText = 'padding:10px;cursor:pointer;'
 
-    item.innerText = (names[blueprint.id] || blueprint.id)[0]
+    item.innerText = names[blueprint.id]
 
     item.onclick = () => onselect(blueprint)
     startdrag(item, () => ondragstart(blueprint.id))
@@ -87,15 +97,17 @@ const startdrag = (element, callback) => {
 
 const createMachineDecription = (onrotate, ondragstart) => {
   const container = document.createElement('div')
-  container.style.cssText = 'padding:10px;background-color:#f3f3f3;flex-grow:1'
+  container.style.cssText =
+    'padding:10px;background-color:#f3f3f3;flex-grow:1;display:flex;flex-direction:column'
 
   const name = document.createElement('div')
   name.style.cssText = 'margin-bottom:20px'
   container.appendChild(name)
 
-  const description = document.createElement('div')
-  description.style.cssText = 'font-size:14px'
-  container.appendChild(description)
+  const row = document.createElement('div')
+  row.style.cssText =
+    'display:flex;flex-direction:row;position:relative;align-items:center'
+  container.appendChild(row)
 
   const canvas = document.createElement('canvas')
   canvas.width = canvas.height = 100
@@ -104,29 +116,30 @@ const createMachineDecription = (onrotate, ondragstart) => {
   ctx.scale(100, 100)
   ctx.translate(0.5, 0.5)
   startdrag(canvas, ondragstart)
-  container.appendChild(canvas)
+  row.appendChild(canvas)
+
+  const cost = document.createElement('div')
+  cost.style.cssText = 'margin-left:auto;margin-right:10px'
+  row.appendChild(cost)
 
   const rotateButton = document.createElement('button')
   rotateButton.style.cssText =
-    'font-size:14px;position:relative;top:-14px;left:-4px'
-  container.appendChild(rotateButton)
+    'font-size:14px;position:absolute;bottom:-14px;left:-4px'
+  row.appendChild(rotateButton)
   rotateButton.innerText = '↻'
   rotateButton.onclick = onrotate
 
   const recipe = document.createElement('canvas')
   recipe.width = 220
   recipe.height = 50
-  recipe.style.cssText = `width:220px;height:50px`
+  recipe.style.cssText = `width:220px;height:50px;margin-top:auto`
   const rctx = recipe.getContext('2d')
   rctx.scale(50, 50)
   rctx.translate(0, 0.5)
   container.appendChild(recipe)
 
-  container.update = (blueprintId, machineRotation) => {
-    const [n, d] = names[blueprintId] || blueprintId
-
-    name.innerText = n
-    description.innerText = d
+  container.update = (blueprintId, machineRotation, bank) => {
+    name.innerText = names[blueprintId]
 
     const blueprint = blueprints.find(b => b.id === blueprintId)
 
@@ -138,6 +151,11 @@ const createMachineDecription = (onrotate, ondragstart) => {
     rctx.clearRect(-1, -1, 10, 10)
 
     if (blueprint) {
+      cost.innerText = '$' + blueprint.buildingCost
+
+      const buildable = blueprint.buildingCost < bank
+      cost.style.opacity = buildable ? 1 : 0.3
+
       // ground
       const b = boxes[blueprint.id]
 
@@ -146,6 +164,7 @@ const createMachineDecription = (onrotate, ondragstart) => {
       const r = Math.min(w, h)
 
       ctx.save()
+      ctx.filter = buildable ? null : 'grayscale(100%)'
       ctx.rotate(((machineRotation % 4) * Math.PI) / 2)
       ctx.drawImage(
         texture,
@@ -193,6 +212,7 @@ const createMachineDecription = (onrotate, ondragstart) => {
           rctx.translate(0.45, 0)
         })
       rctx.save()
+      rctx.filter = buildable ? null : 'grayscale(100%)'
       rctx.globalCompositeOperation = 'destination-over'
       rctx.translate(0.05, 0)
       drawToken(blueprint.recipe.inputs)
@@ -227,6 +247,12 @@ const createMachineDecription = (onrotate, ondragstart) => {
     } else if (blueprintId === 'bot') {
       const b = boxes['texture_bot' + 0]
 
+      cost.innerText = '$' + BOT_COST
+
+      const buildable = BOT_COST < bank
+      cost.style.opacity = buildable ? 1 : 0.3
+
+      ctx.filter = buildable ? null : 'grayscale(100%)'
       ctx.drawImage(
         texture,
         b[0] * texl,
@@ -249,14 +275,13 @@ const createMachineDecription = (onrotate, ondragstart) => {
 
 export const create = (domParent: Element) => {
   const container = document.createElement('div')
-  container.style.cssText =
-    'position:fixed;padding:10px;background-color:#ddd;bottom:0;right:0;width:45%;font-size:16px;z-index:2;border-radius:20px 0 0 0;display:flex;flex-direction:row'
+  container.style.cssText = containerCss
   container.ontouchstart = container.onmousedown = e => e.stopPropagation()
   domParent.appendChild(container)
 
   const button = document.createElement('button')
-  button.style.cssText =
-    'padding:10px;border-radius:50%;width:40px;height:40px;border:none;background-color:blue'
+  button.style.cssText = 'padding:10px;'
+  button.innerText = 'open shop'
   container.appendChild(button)
 
   const bankAccount = document.createElement('div')
@@ -265,7 +290,7 @@ export const create = (domParent: Element) => {
 
   const shopPanel = document.createElement('div')
   shopPanel.style.cssText =
-    'position:absolute;min-width:380px;width:90%;right:10px;height:250px;background-color:#ddd;bottom:70px;border-radius:4px;transition:transform 180ms;transform-origin:2% 110%;transform:scale(0,0);display:flex;flex-direction:row;'
+    'position:absolute;min-width:380px;width:140%;right:10px;height:250px;background-color:#ddd;bottom:70px;border-radius:4px;transition:transform 180ms;transform-origin:2% 110%;transform:scale(0,0);display:flex;flex-direction:row;'
   container.appendChild(shopPanel)
 
   const closeButton = document.createElement('button')
@@ -283,7 +308,7 @@ export const create = (domParent: Element) => {
   let selectedBlueprintId = null
   let shopOpened = false
   let bank = -1
-  let step = -1
+  let show = true
 
   const update = (universe: Universe, uistate: UIstate) => {
     // bind action
@@ -312,6 +337,12 @@ export const create = (domParent: Element) => {
           blueprint,
           processing: null,
         }
+
+        if (
+          (blueprint && blueprint.buildingCost > universe.bank) ||
+          (uistate.selectedBlueprintId === 'bot' && BOT_COST > universe.bank)
+        )
+          return
 
         uistate.dragMachine = machine
 
@@ -356,12 +387,8 @@ export const create = (domParent: Element) => {
       shopPanel.style.transform = shopOpened ? null : 'scale(0,0)'
     }
 
-    if (bank !== universe.bank) {
-      bank = universe.bank
-      bankAccount.innerText = universe.bank
-    }
-
     if (
+      bank !== universe.bank ||
       selectedBlueprintRotation !== uistate.selectedBlueprintRotation ||
       selectedBlueprintId !== uistate.selectedBlueprintId
     ) {
@@ -370,13 +397,18 @@ export const create = (domParent: Element) => {
 
       machineDecription.update(
         uistate.selectedBlueprintId,
-        selectedBlueprintRotation
+        selectedBlueprintRotation,
+        (bank = universe.bank)
       )
+
+      bankAccount.innerText = '$' + bank
     }
 
-    if (uistate.step !== step) {
-      step = uistate.step
-      button.style.display = step < 12 ? 'none' : 'block'
+    const sshow =
+      uistate.step >= 12 && !uistate.selectedBotId && !uistate.shopOpened
+
+    if (show !== sshow) {
+      container.style.transform = show = sshow ? null : 'translate3d(0,60px,0)'
     }
   }
 

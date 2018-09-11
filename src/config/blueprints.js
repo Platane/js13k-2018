@@ -73,7 +73,7 @@ export const blueprints: Blueprint[] = [
 
     ground: [[0, 1, 1], [0, 1, 1], [0, 0, 0]],
 
-    buildingCost: 2000,
+    buildingCost: 20000000,
     activationThreshold: 20,
 
     recipe: {

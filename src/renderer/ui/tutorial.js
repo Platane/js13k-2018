@@ -38,7 +38,7 @@ const tutorials = [
   0,
 
   // 10
-  'Yeah money!',
+  'Well done!',
 
   // 11
   'Keep going<br>You can recruit crew and build new machines from the shop<br>&nbsp; Look up for new recipes',
