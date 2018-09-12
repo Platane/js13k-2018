@@ -44,15 +44,15 @@ export const create = (gl: WebGLRenderingContext) => {
     // render bots
     renderMachines(universe, uistate)(vertices, uvs, opacity, index)
 
-    // render bots
-    renderBots(universe, uistate)(vertices, uvs, opacity, index)
-
     //render dropped tokens
     universe.droppedTokens.forEach(({ token, position }) =>
       addEntity(0.25, 0.25, boxes[token])(vertices, uvs, opacity, index)(
         position
       )
     )
+
+    // render bots
+    renderBots(universe, uistate)(vertices, uvs, opacity, index)
 
     // overlay
     renderOverlay(universe, uistate)(vertices, uvs, opacity, index)
