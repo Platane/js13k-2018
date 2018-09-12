@@ -51,6 +51,8 @@ NODE_ENV="minify" yarn babel dist/bundle1.js -o dist/bundle.js
 # copy index.html
 node script/bundlehtml
 
+# cp dist/bundle.js dist/a.js
+
 # clean up
 rm dist/bundle.js
 rm dist/bundle0.js

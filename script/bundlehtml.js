@@ -7,9 +7,10 @@ const out = html
   .replace(/(\r|\n|\t)+/g, '')
   .replace(/ +/g, ' ')
   .trim()
-  .replace(
-    '<script src="a.js"></script>',
-    `<script>${js.replace('"use strict";', '')}</script>`
-  )
 
-fs.writeFileSync('dist/index.html', out)
+const [before, after] = out.split('<script src="a.js"></script>')
+
+const inde =
+  before + `<script>${js.replace('"use strict";', '')}</script>` + after
+
+fs.writeFileSync('dist/index.html', inde)
