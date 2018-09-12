@@ -308,6 +308,7 @@ export const updateUi = (universe: Universe, uistate: UIstate) => {
 
       const buildable = blueprint.buildingCost <= bank
       domBlueprintCost.style.opacity = buildable ? 1 : 0.3
+      domBlueprintCost.style.textDecoration = buildable ? null : 'line-through'
 
       // ground
       drawMachineInImage(
@@ -327,6 +328,7 @@ export const updateUi = (universe: Universe, uistate: UIstate) => {
 
       const buildable = BOT_COST <= bank
       domBlueprintCost.style.opacity = buildable ? 1 : 0.3
+      domBlueprintCost.style.textDecoration = buildable ? null : 'line-through'
 
       ctx.filter = buildable ? null : 'grayscale(100%)'
       ctx.drawImage(
