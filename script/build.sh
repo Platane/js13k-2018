@@ -15,7 +15,7 @@ sed -i "s|'idle'|4|g" dist/bundle.js
 sed -i "s|'carry'|2|g" dist/bundle.js
 sed -i "s|'activate'|3|g" dist/bundle.js
 
-sed -i "s|'sushi'|1|g" dist/bundle.js
+sed -i "s|'sushi-token'|1|g" dist/bundle.js
 sed -i "s|'rice-grain'|2|g" dist/bundle.js
 sed -i "s|'rice-ball'|3|g" dist/bundle.js
 sed -i "s|'raw-tuna'|4|g" dist/bundle.js
