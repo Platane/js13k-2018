@@ -42,6 +42,7 @@ map[5][4] = 1
 map[5][5] = 1
 map[5][6] = 1
 
+map[5][9] = 1
 map[9][9] = 1
 map[8][9] = 1
 map[7][9] = 1
@@ -60,7 +61,7 @@ map[5][w - 1] = 2
 map[6][w - 1] = 2
 
 export const universe: Universe = {
-  bank: 100000,
+  bank: 10000,
 
   map,
 
@@ -105,3 +106,23 @@ export const universe: Universe = {
 
   blueprints: [],
 }
+
+// universe.customers = [
+//   { cell: { x: w - 1, y: 4 } },
+//   { cell: { x: w - 1, y: 5 } },
+//   { cell: { x: w - 1, y: 6 } },
+// ]
+//
+// universe.clients = Array.from({ length: 3 }).map((_, i) => ({
+//   id: '' + i,
+//   l: 0,
+//   client: ['A', 'B'][Math.floor(2 * Math.random())],
+//   position: {
+//     x: universe.customers[0].cell.x + 0.2 + i * 0.05 - 2,
+//     y: universe.customers[0].cell.y + 0.1 + i * 0.5 + 4,
+//   },
+//   velocity: { x: 0, y: 0 },
+//   command: { type: 'wander', target: universe.customers[0].cell },
+//   activity: { cooldown: 0 },
+//   navigation: null,
+// }))

@@ -36,7 +36,7 @@ export const renderBot = (bot: Bot, boxLabel = 'texture_bot') => (
 
   const h = Math.sin(bot.l * 12) * 0.08
 
-  addEntity(0.4, 0.4, boxes[boxLabel + k])(vertices, uvs, opacity, index)({
+  addEntity(0.3, 0.3, boxes[boxLabel + k])(vertices, uvs, opacity, index)({
     x: position.x,
     y: position.y - 0.3 + h,
   })
@@ -47,11 +47,11 @@ export const renderBot = (bot: Bot, boxLabel = 'texture_bot') => (
     const v = normalize(velocity)
 
     const c = {
-      x: position.x - v.x * 0.3,
-      y: position.y - v.y * 0.3,
+      x: position.x - v.x * 0.24,
+      y: position.y - v.y * 0.24,
     }
 
-    addEntity(0.3, 0.3, boxes[token])(vertices, uvs, opacity, index)(c)
+    addEntity(0.25, 0.25, boxes[token])(vertices, uvs, opacity, index)(c)
   }
 }
 
@@ -72,7 +72,7 @@ export const renderArrow = (bot: Bot, selected: boolean = false) => (
     y: -v.y,
   }
 
-  const size = selected ? 0.7 : 0.48
+  const size = selected ? 0.6 : 0.38
 
   const box = selected
     ? texture_arrow_selected_box

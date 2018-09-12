@@ -19,6 +19,7 @@ if (process.env.NODE_ENV === 'mangle-properties') {
     'command',
     'target',
     'update',
+    'type',
   ]
 
   const blacklist = [

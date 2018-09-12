@@ -50,7 +50,7 @@ const drawMachineInImage = (blueprint, buildable, machineRotation) => {
 
   ctx.save()
   ctx.filter = buildable ? null : 'grayscale(100%)'
-  ctx.rotate(((machineRotation % 4) * Math.PI) / 2)
+  ctx.rotate((((machineRotation + 2) % 4) * Math.PI) / 2)
   ctx.drawImage(
     texture,
     b[0] * texl,
@@ -177,6 +177,7 @@ let botCommand
 let machineRotation
 let selectedBlueprintId
 let selectedBlueprintRotation
+let shopReady
 
 export const updateUi = (universe: Universe, uistate: UIstate) => {
   if (!init) {
@@ -261,17 +262,18 @@ export const updateUi = (universe: Universe, uistate: UIstate) => {
     !!uistate.shopOpened
 
   const bc = uistate.command
+  const sr = uistate.step >= 12
 
-  if (shopOpened !== so || botCommand != bc) {
+  if (shopOpened !== so || botCommand != bc || shopReady != sr) {
     shopOpened = so
     botCommand = bc
+    shopReady = sr
 
     domShopPanel.style.transform = shopOpened ? null : 'scale(0,0)'
     domToolbar.style.transform = shopOpened ? 'translate3d(0,100px,0)' : null
 
-    domBank.style.display = domShopButton.style.display = botCommand
-      ? 'none'
-      : 'block'
+    domBank.style.display = domShopButton.style.display =
+      botCommand || !sr ? 'none' : 'block'
     domCancel.style.display = botCommand ? 'block' : 'none'
   }
 

@@ -49,7 +49,9 @@ export const create = (gl: WebGLRenderingContext) => {
 
     //render dropped tokens
     universe.droppedTokens.forEach(({ token, position }) =>
-      addEntity(0.3, 0.3, boxes[token])(vertices, uvs, opacity, index)(position)
+      addEntity(0.25, 0.25, boxes[token])(vertices, uvs, opacity, index)(
+        position
+      )
     )
 
     // overlay

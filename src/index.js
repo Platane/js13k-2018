@@ -1,5 +1,6 @@
 import { createActionLayer } from '~/logic/actionLayer'
 import { updateUi } from '~/renderer/ui'
+import { updateTutorial } from '~/renderer/ui/tutorial'
 import { createWebGL } from '~/renderer/webglFlat'
 import { tic } from './logic'
 import { blueprints } from '~/config'
@@ -14,7 +15,7 @@ const uistate: UIstate = {
   selectedBlueprintRotation: 0,
   selectedBlueprintId: blueprints[1].id,
   // shopOpened: false,
-  step: 30,
+  step: 0,
   // command: null,
   // dragBot: null,
   // dragBotDroppable: false,
@@ -34,6 +35,7 @@ const loop = () => {
   webgl(universe, uistate)
 
   updateUi(universe, uistate)
+  updateTutorial(universe, uistate)
 
   // if (uistate.command || uistate.dragMachine || uistate.dragBot) {
   //   setTimeout(loop, 30)
