@@ -50,7 +50,7 @@ const drawMachineInImage = (blueprint, buildable, machineRotation) => {
 
   ctx.save()
   ctx.filter = buildable ? null : 'grayscale(100%)'
-  ctx.rotate((((machineRotation + 2) % 4) * Math.PI) / 2)
+  ctx.rotate((((4 - machineRotation) % 4) * Math.PI) / 2)
   ctx.drawImage(
     texture,
     b[0] * texl,
@@ -305,7 +305,7 @@ export const updateUi = (universe: Universe, uistate: UIstate) => {
     if (blueprint) {
       domBlueprintCost.innerText = '$' + blueprint.buildingCost
 
-      const buildable = blueprint.buildingCost < bank
+      const buildable = blueprint.buildingCost <= bank
       domBlueprintCost.style.opacity = buildable ? 1 : 0.3
 
       // ground
@@ -324,7 +324,7 @@ export const updateUi = (universe: Universe, uistate: UIstate) => {
 
       domBlueprintCost.innerText = '$' + BOT_COST
 
-      const buildable = BOT_COST < bank
+      const buildable = BOT_COST <= bank
       domBlueprintCost.style.opacity = buildable ? 1 : 0.3
 
       ctx.filter = buildable ? null : 'grayscale(100%)'

@@ -15,14 +15,14 @@ const paths = [
 const dbox = getNextBox(1, 1)
 drawPaths(
   paths,
-  [salmon_orange, salmon_pink, plank_light],
+  [plank_light],
   box,
   [dbox[0], dbox[1] + dbox[2] * 0, dbox[2], dbox[3] * 0.7],
   16
 )
 drawPaths(
   paths,
-  [plank_light],
+  [plank_mid],
   box,
   [dbox[0], dbox[1] + dbox[2] * 0.2, dbox[2], dbox[3] * 0.7],
   16
