@@ -51,6 +51,24 @@ NODE_ENV="minify" yarn babel dist/bundle1.js -o dist/bundle.js
 # copy index.html
 node script/bundlehtml
 
+
+sed -i "s|element-toolbar|a|g" dist/index.html
+sed -i "s|element-shopButton|b|g" dist/index.html
+sed -i "s|element-cancel|c|g" dist/index.html
+sed -i "s|element-bank|d|g" dist/index.html
+sed -i "s|element-shopPanel|e|g" dist/index.html
+sed -i "s|element-blueprintList|f|g" dist/index.html
+sed -i "s|element-closeShopButton|g|g" dist/index.html
+sed -i "s|element-blueprintName|h|g" dist/index.html
+sed -i "s|element-blueprintCost|i|g" dist/index.html
+sed -i "s|element-blueprintImage|j|g" dist/index.html
+sed -i "s|element-blueprintRecipe|k|g" dist/index.html
+sed -i "s|element-blueprintRotate|l|g" dist/index.html
+sed -i "s|element-overlay|m|g" dist/index.html
+sed -i "s|element-overlayTutorial|n|g" dist/index.html
+sed -i "s|element-hint|o|g" dist/index.html
+sed -i "s|element-scene|u|g" dist/index.html
+
 # cp dist/bundle.js dist/a.js
 
 # clean up

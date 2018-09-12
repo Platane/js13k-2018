@@ -23,7 +23,7 @@ const uistate: UIstate = {
   // dragMachineDroppable: false,
 }
 
-const canvas = document.getElementsByTagName('canvas')[0]
+const canvas = document.getElementById('element-scene')
 
 const webgl = createWebGL(canvas)
 
