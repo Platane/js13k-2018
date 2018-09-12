@@ -61,7 +61,7 @@ map[5][w - 1] = 2
 map[6][w - 1] = 2
 
 export const universe: Universe = {
-  bank: 10000,
+  bank: 860,
 
   map,
 

@@ -82,12 +82,12 @@ ctx.restore()
 export const texture_arrow_input_box = boxToBox(box)
 export const texture_arrow_ouput_box = boxToBox(box)
 
-
 box = getNextBox(1, 1)
 ctx.save()
 ctx.scale(l / (100 * offset.s), l / (100 * offset.s))
 ctx.translate(box[0] * 100 * offset.s, box[1] * 100 * offset.s)
-ctx.fillStyle = gold
+// ctx.fillStyle = gold
+ctx.fillStyle = grey_light
 rectArrow()
 ctx.restore()
 export const texture_arrow_client_box = boxToBox(box)
