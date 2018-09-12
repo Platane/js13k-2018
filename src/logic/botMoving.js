@@ -96,6 +96,8 @@ export const botMoving = ({ map, bots, clients }: Universe) => {
       }
     }
 
+    const ap = { x: 0, y: 0 }
+
     // pushed from the others
     people.forEach(b => {
       if (position !== b.position) {
@@ -106,10 +108,15 @@ export const botMoving = ({ map, bots, clients }: Universe) => {
 
         const l = Math.max(length(d), NEIGHBOR_THRESOLD)
 
-        a.x -= (d.x / l / l / l) * NEIGHBOR_POWER
-        a.y -= (d.y / l / l / l) * NEIGHBOR_POWER
+        ap.x -= (d.x / l / l / l) * NEIGHBOR_POWER
+        ap.y -= (d.y / l / l / l) * NEIGHBOR_POWER
       }
     })
+
+    const lap = length(ap)
+    const mlap = Math.min(lap, 0.0025)
+    a.x += (ap.x / lap) * mlap
+    a.y += (ap.y / lap) * mlap
 
     // pushed by walls
     if (isNavigable(map, cell))
