@@ -40,7 +40,7 @@ export const getClosestPointToMachine = (
 
             const N = { x: -v.y, y: v.x }
 
-            const c = closestPointOnSegment(A, N, point)
+            const c = closestPointOnSegment(A, N, point, 0.12)
 
             c.x += v.x * l
             c.y += v.y * l

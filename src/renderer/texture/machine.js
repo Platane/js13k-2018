@@ -1,6 +1,7 @@
 import { plank_light, plank_mid } from '~/config/palette'
 import { cellCenter } from '~/service/point'
 import {
+  getCell,
   around4,
   around8,
   isInside,
@@ -39,9 +40,7 @@ const drawMachineHull = (ground: Map) => {
 
   for (let x = w; x--; )
     for (let y = h; y--; ) {
-      ctxbuffer.fillStyle = !isNavigable(ground, { x, y })
-        ? '#000'
-        : '#0000'
+      ctxbuffer.fillStyle = !isNavigable(ground, { x, y }) ? '#000' : '#0000'
 
       const m = 0.12
 
@@ -201,30 +200,34 @@ blueprints.forEach((blueprint, i) => {
 
   // draw token
 
-  const c = { x: w / 2, y: h / 2 }
-
   const b = boxes[blueprint.recipe.outputs[0].token]
 
-  const tl = 0.6
+  for (let x = w; x--; )
+    for (let y = h; y--; )
+      if (getCell(blueprint.ground, { x, y }) == 3) {
+        const c = cellCenter({ x, y })
 
-  ctx.beginPath()
-  ctx.fillStyle = '#fff6'
-  ctx.arc(c.y, c.x, 0.4, 0, Math.PI * 2)
-  ctx.fill()
-  ctx.filter = 'grayscale(90%)'
-  ctx.drawImage(
-    texture,
+        const tl = 0.4
 
-    b[0] * l,
-    b[1] * l,
-    (b[2] - b[0]) * l,
-    (b[5] - b[1]) * l,
+        ctx.beginPath()
+        ctx.fillStyle = '#fff6'
+        ctx.arc(c.y, c.x, 0.36, 0, Math.PI * 2)
+        ctx.fill()
+        ctx.filter = 'grayscale(90%)'
+        ctx.drawImage(
+          texture,
 
-    c.x - tl / 2,
-    c.x - tl / 2,
-    tl,
-    tl
-  )
+          b[0] * l,
+          b[1] * l,
+          (b[2] - b[0]) * l,
+          (b[5] - b[1]) * l,
+
+          c.y - tl / 2,
+          c.x - tl / 2,
+          tl,
+          tl
+        )
+      }
 
   //
   ctx.restore()

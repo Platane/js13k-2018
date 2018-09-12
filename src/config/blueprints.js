@@ -20,7 +20,7 @@ export const blueprints: Blueprint[] = [
   {
     id: 'Rice Grain Harvester',
 
-    ground: [[1, 0], [1, 0], [1, 1]],
+    ground: [[1, 0], [3, 0], [1, 1]],
 
     buildingCost: 900,
     activationThreshold: 20,
@@ -36,7 +36,7 @@ export const blueprints: Blueprint[] = [
   {
     id: 'Rice Cooker',
 
-    ground: [[0, 1, 0], [0, 1, 1], [0, 1, 0]],
+    ground: [[0, 1, 0], [0, 3, 1], [0, 1, 0]],
 
     buildingCost: 300,
     activationThreshold: 20,
@@ -55,7 +55,7 @@ export const blueprints: Blueprint[] = [
   {
     id: 'Tuna Fishing Spot',
 
-    ground: [[0, 1, 1, 1], [0, 1, 1, 1], [0, 1, 1, 1], [0, 0, 0, 0]],
+    ground: [[0, 1, 1, 1], [0, 1, 3, 1], [0, 1, 1, 1], [0, 0, 0, 0]],
 
     buildingCost: 1500,
     activationThreshold: 50,
@@ -71,7 +71,7 @@ export const blueprints: Blueprint[] = [
   {
     id: 'Sushi Roller',
 
-    ground: [[0, 1, 1], [0, 1, 1], [0, 0, 0]],
+    ground: [[0, 1, 1], [0, 3, 1], [0, 0, 0]],
 
     buildingCost: 2000,
     activationThreshold: 20,
