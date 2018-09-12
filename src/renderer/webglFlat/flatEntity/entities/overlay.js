@@ -8,6 +8,7 @@ import {
 import { addEntity, renderPath } from './util'
 import { renderBot, renderArrow } from './bots'
 import { findPath, smoothPath } from '~/service/aStar'
+import { proj as projMachine } from '~/service/machine'
 import { renderMachine } from './machines'
 
 import type { Universe, Point, UIstate } from '~/type'
@@ -61,34 +62,59 @@ export const renderOverlay = (universe: Universe, uistate: UIstate) => (
     universe.bots.find(x => x.id === uistate.selectedBotId)
 
   if (selectedBot) {
-    // arrow
-    renderArrow(selectedBot, true)(vertices, uvs, opacity, index)
+    // machines
+    universe.machines.forEach(m => {
+      const w = getWidth(m.blueprint.ground)
+      const h = getHeight(m.blueprint.ground)
 
-    // path
+      const alpha = selectedBot.command.targetId === m.id ? 0.8 : 0.3
 
-    let A, B
+      for (let x = w; x--; )
+        for (let y = h; y--; )
+          if (!isNavigable(m.blueprint.ground, { x, y }))
+            addEntity(0.5, 0.5, texture_red_box, alpha)(
+              vertices,
+              uvs,
+              opacity,
+              index
+            )(
+              cellCenter(
+                projMachine(m)({
+                  x,
+                  y,
+                })
+              )
+            )
 
-    if (selectedBot.command.type === 'carry') {
-      A = selectedBot.command.pickUpCell
-      B = selectedBot.command.dropCell
-    }
+      // arrow
+      renderArrow(selectedBot, true)(vertices, uvs, opacity, index)
 
-    if (uistate.command && uistate.command.dropCell) {
-      A = uistate.command.pickUpCell
-      B = uistate.command.dropCell
-    }
+      // path
 
-    if (A) {
-      const path = smoothPath(
-        universe.map,
-        findPath(universe.map, A, B || A) || []
-      ).map(cellCenter)
+      let A, B
 
-      renderPath(path, texture_red_box, 1)(vertices, uvs, opacity, index)
-    }
+      if (selectedBot.command.type === 'carry') {
+        A = selectedBot.command.pickUpCell
+        B = selectedBot.command.dropCell
+      }
 
-    // bot
-    renderBot(selectedBot)(vertices, uvs, opacity, index)
+      if (uistate.command && uistate.command.dropCell) {
+        A = uistate.command.pickUpCell
+        B = uistate.command.dropCell
+      }
+
+      if (A) {
+        const path = smoothPath(
+          universe.map,
+          findPath(universe.map, A, B || A) || []
+        ).map(cellCenter)
+
+        renderPath(path, texture_red_box, 1)(vertices, uvs, opacity, index)
+      }
+
+      // bot
+      renderBot(selectedBot)(vertices, uvs, opacity, index)
+    })
   }
 
   // drag machine
