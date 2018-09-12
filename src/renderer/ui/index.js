@@ -301,6 +301,7 @@ export const updateUi = (universe: Universe, uistate: UIstate) => {
 
     ctx.clearRect(-1, -1, 2, 2)
     rctx.clearRect(-1, -1, 10, 10)
+    ctx.save()
 
     if (blueprint) {
       domBlueprintCost.innerText = '$' + blueprint.buildingCost
@@ -343,5 +344,6 @@ export const updateUi = (universe: Universe, uistate: UIstate) => {
 
       domBlueprintImage.style.display = 'block'
     }
+    ctx.restore()
   }
 }
