@@ -34,11 +34,11 @@ export const renderBot = (bot: Bot, boxLabel = 'texture_bot') => (
     }
   })
 
-  const h = Math.sin(bot.l * 12) * 0.08
+  const h = (Math.sin(bot.l * 12) * 0.08 * Math.min(l, 0.01)) / 0.01
 
   addEntity(0.3, 0.3, boxes[boxLabel + k])(vertices, uvs, opacity, index)({
     x: position.x,
-    y: position.y - 0.3 + h,
+    y: position.y - 0.26 + h,
   })
 
   if (bot.activity && bot.activity.carrying) {
