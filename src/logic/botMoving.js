@@ -108,6 +108,8 @@ export const botMoving = ({ map, bots, clients }: Universe) => {
 
         const l = Math.max(length(d), NEIGHBOR_THRESOLD)
 
+        if (l > 1) return
+
         ap.x -= (d.x / l / l / l) * NEIGHBOR_POWER
         ap.y -= (d.y / l / l / l) * NEIGHBOR_POWER
       }
@@ -115,8 +117,10 @@ export const botMoving = ({ map, bots, clients }: Universe) => {
 
     const lap = length(ap)
     const mlap = Math.min(lap, 0.0025)
-    a.x += (ap.x / lap) * mlap
-    a.y += (ap.y / lap) * mlap
+    if (lap > 0.0001) {
+      a.x += (ap.x / lap) * mlap
+      a.y += (ap.y / lap) * mlap
+    }
 
     // pushed by walls
     if (isNavigable(map, cell))
