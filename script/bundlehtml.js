@@ -5,6 +5,7 @@ const html = fs.readFileSync('src/index.html').toString()
 
 const out = html
   .replace(/(\r|\n|\t)+/g, '')
+  .replace(/="[^"]+" +/g, a => a.trim())
   .replace(/ +/g, ' ')
   .trim()
 
