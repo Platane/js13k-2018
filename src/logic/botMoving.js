@@ -6,6 +6,7 @@ import {
   WALKING_POWER,
   NEIGHBOR_POWER,
   WALL_PUSH_POWER,
+  NEIGHBOR_THRESOLD,
 } from '~/config/physic'
 import type { Map, Bot, Universe, Navigation, Point } from '~/type'
 
@@ -103,7 +104,7 @@ export const botMoving = ({ map, bots, clients }: Universe) => {
           y: b.position.y - position.y,
         }
 
-        const l = Math.max(length(d), 0.16)
+        const l = Math.max(length(d), NEIGHBOR_THRESOLD)
 
         a.x -= (d.x / l / l / l) * NEIGHBOR_POWER
         a.y -= (d.y / l / l / l) * NEIGHBOR_POWER
@@ -144,7 +145,7 @@ export const botMoving = ({ map, bots, clients }: Universe) => {
 
         l = Math.max(l, 0.1)
 
-        if (l > 0.5) l = 10
+        if (l > 0.4) l = 10
 
         a.x -= v.x * v.x * (d.x / l / l / l) * WALL_PUSH_POWER
         a.y -= v.y * v.y * (d.y / l / l / l) * WALL_PUSH_POWER

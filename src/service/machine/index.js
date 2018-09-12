@@ -14,7 +14,8 @@ export const proj = ({ positionOrigin, rotation }: Machine) => (cell: Cell) => {
 export const getClosestPointToMachine = (
   map: Map,
   machine: Machine,
-  point: Point
+  point: Point,
+  l: number = 0
 ): Point | null => {
   let min_d = Infinity
   let closestPoint = null
@@ -41,8 +42,8 @@ export const getClosestPointToMachine = (
 
             const c = closestPointOnSegment(A, N, point)
 
-            c.x += v.x * 0.22
-            c.y += v.y * 0.22
+            c.x += v.x * l
+            c.y += v.y * l
 
             const d = distanceSq(c, point)
 
