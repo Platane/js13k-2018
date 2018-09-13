@@ -88,7 +88,7 @@ export const updateTutorial = (universe: Universe, uistate: UIstate) => {
     universe.clients = Array.from({ length: 8 }).map((_, i) => ({
       id: '' + i,
       l: 0,
-      client: ['A', 'B'][Math.floor(2 * Math.random())],
+      client: 1,
       position: {
         x: universe.customers[0].cell.x + 0.2 + i * 0.05 - 2,
         y: universe.customers[0].cell.y + 0.1 + i * 0.05 + 4,
