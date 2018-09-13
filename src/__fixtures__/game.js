@@ -55,7 +55,7 @@ map[5][10] = 1
 map[7][10] = 1
 
 export const universe: Universe = {
-  bank: 860,
+  bank: 960,
 
   map,
 
