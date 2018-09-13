@@ -52,7 +52,7 @@ export const renderMachine = (m: Machine, alpha: number = 1) => (
 
   for (let x = w; x--; )
     for (let y = h; y--; )
-      if (getCell(m.blueprint.ground, { x, y }) == 3) {
+      if (getCell(ground, { x, y }) == 3) {
         const a = m.processing
           ? Math.max(0, m.processing.activationCoolDown) /
             MACHINE_ACTIVATION_COOLDOWN
@@ -72,14 +72,14 @@ export const renderMachine = (m: Machine, alpha: number = 1) => (
           index
         )(cellCenter(proj(m)({ x, y })))
 
-        addEntity(tl, tl, boxes[m.blueprint.outputs[0].token + 10], 1)(
+        addEntity(tl, tl, boxes[outputs[0].token + 10], 1)(
           vertices,
           uvs,
           opacity,
           index
         )(cellCenter(proj(m)({ x, y })))
 
-        addEntity(tl, tl, boxes[m.blueprint.outputs[0].token], k)(
+        addEntity(tl, tl, boxes[outputs[0].token], k)(
           vertices,
           uvs,
           opacity,

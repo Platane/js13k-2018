@@ -24,7 +24,7 @@ const initGL = (canvas: HTMLCanvasElement) => {
   gl.clearColor(0.5, 0.6, 0.8, 1)
   gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight)
 
-  gl.cullFace(gl.FRONT_AND_BACK)
+  // gl.cullFace(gl.FRONT_AND_BACK)
 
   gl.enable(gl.BLEND)
   gl.blendEquationSeparate(gl.FUNC_ADD, gl.FUNC_ADD)

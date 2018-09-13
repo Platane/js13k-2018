@@ -99,13 +99,11 @@ export const renderBots = (universe: Universe, uistate: UIstate) => (
 
   // draw bots
   people.forEach(bot =>
-    renderBot(
-      bot,
-      bot.client
-        ? bot.client === 'A'
-          ? 'texture_clientA'
-          : 'texture_clientB'
-        : 'texture_bot'
-    )(vertices, uvs, opacity, index)
+    renderBot(bot, bot.client ? 'texture_clientB' : 'texture_bot')(
+      vertices,
+      uvs,
+      opacity,
+      index
+    )
   )
 }

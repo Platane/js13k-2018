@@ -77,26 +77,6 @@ let dbox
     paths[k],
     [
       // body
-      grey_true,
-      // shirt
-      grey_true,
-      // face
-      blue_light,
-      // hat
-      grey_true,
-    ],
-    box,
-    dbox,
-    10
-  )
-  addBox('texture_clientA' + k, dbox)
-
-  // client
-  dbox = getNextBox(1, 1)
-  drawPaths(
-    paths[k],
-    [
-      // body
       grey_light,
       // shirt
       grey_light,

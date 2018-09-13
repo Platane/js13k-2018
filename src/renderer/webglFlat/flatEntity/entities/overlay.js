@@ -106,7 +106,7 @@ export const renderOverlay = (universe: Universe, uistate: UIstate) => (
       if (A) {
         const path = smoothPath(
           universe.map,
-          findPath(universe.map, A, B || A) || []
+          findPath(universe.map, A, B) || []
         ).map(cellCenter)
 
         renderPath(path, texture_red_box, 1)(vertices, uvs, opacity, index)

@@ -18,6 +18,14 @@ map[1][10] = 3
 map[2][10] = 3
 map[2][8] = 2
 
+map[4][w - 2] = 2
+map[5][w - 2] = 2
+map[6][w - 2] = 2
+
+map[4][w - 1] = 2
+map[5][w - 1] = 2
+map[6][w - 1] = 2
+
 map[0][0] = 1
 map[0][1] = 1
 map[0][4] = 1
@@ -51,14 +59,6 @@ map[6][10] = 1
 map[4][10] = 1
 map[5][10] = 1
 map[7][10] = 1
-
-map[4][w - 2] = 2
-map[5][w - 2] = 2
-map[6][w - 2] = 2
-
-map[4][w - 1] = 2
-map[5][w - 1] = 2
-map[6][w - 1] = 2
 
 export const universe: Universe = {
   bank: 860,
