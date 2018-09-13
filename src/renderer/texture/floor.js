@@ -64,7 +64,7 @@ while (y < fh / s) {
     const pl = Math.ceil(3 + Math.random() * 6)
 
     const k = Math.floor(Math.random() * 4) / 4
-    ctx.strokeStyle = ctx.fillStyle = `hsl(40,22%,${52 + k * 8}%)`
+    ctx.strokeStyle = ctx.fillStyle = `hsl(40,30%,${53 + k * 8}%)`
     ctx.lineWidth = 0.1
     ctx.beginPath()
     ctx.fillRect(x, y, pl, 1)
