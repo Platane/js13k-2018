@@ -14,6 +14,7 @@ yarn rollup --config ./script/rollup.config.js
 sed -i "s|'idle'|4|g" dist/bundle.js
 sed -i "s|'carry'|2|g" dist/bundle.js
 sed -i "s|'activate'|3|g" dist/bundle.js
+sed -i "s|'wander'|3|g" dist/bundle.js
 
 sed -i "s|'sushi-token'|1|g" dist/bundle.js
 sed -i "s|'rice-grain'|2|g" dist/bundle.js
@@ -64,8 +65,8 @@ sed -i "s|element-blueprintCost|i|g" dist/index.html
 sed -i "s|element-blueprintImage|j|g" dist/index.html
 sed -i "s|element-blueprintRecipe|k|g" dist/index.html
 sed -i "s|element-blueprintRotate|l|g" dist/index.html
-sed -i "s|element-overlay|m|g" dist/index.html
 sed -i "s|element-overlayTutorial|n|g" dist/index.html
+sed -i "s|element-overlay|m|g" dist/index.html
 sed -i "s|element-hint|o|g" dist/index.html
 sed -i "s|element-scene|u|g" dist/index.html
 

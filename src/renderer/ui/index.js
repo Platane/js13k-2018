@@ -5,7 +5,7 @@ import { distance } from '~/service/point'
 import { getPointer } from '~/util/pointer'
 import { boxes, texture, l as texl } from '~/renderer/texture'
 import { BOT_COST } from '~/config'
-import { texture_arrow_input_box } from '~/renderer/texture/svg/arrow'
+import { texture_arrow_output_box } from '~/renderer/texture/svg/arrow'
 import type { Universe, Blueprint, Machine, UIstate } from '~/type'
 
 /**
@@ -106,7 +106,7 @@ const drawMachineInImage = (blueprint, buildable, machineRotation) => {
     rctx.save()
     rctx.rotate(Math.PI / 2)
     const s = 0.4
-    const b = texture_arrow_input_box
+    const b = texture_arrow_output_box
     rctx.drawImage(
       texture,
       b[0] * texl,

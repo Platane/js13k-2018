@@ -11,7 +11,7 @@ import { normalize, length, lengthSq, cellCenter } from '~/service/point'
 import { boxes } from '~/renderer/texture'
 import { addEntity } from './util'
 import {
-  texture_arrow_client_box,
+  texture_arrow_output_box,
   texture_circle_box,
 } from '~/renderer/texture/svg/arrow'
 import { MACHINE_ACTIVATION_COOLDOWN } from '~/config'
@@ -151,7 +151,7 @@ export const renderMachines = (universe: Universe, uistate: UIstate) => (
   // customer zone
   const s = 0.3
   universe.customers.forEach(({ cell }) =>
-    addEntity(s, s, texture_arrow_client_box)(vertices, uvs, opacity, index)(
+    addEntity(s, s, texture_arrow_output_box)(vertices, uvs, opacity, index)(
       cellCenter(cell),
       { x: -1, y: 0 }
     )

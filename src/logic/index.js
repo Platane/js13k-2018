@@ -3,11 +3,12 @@ import { botMoving } from './botMoving'
 import { machineProcessing } from './machineProcessing'
 import { customerProcessing } from './customerProcessing'
 import { botDecisionMaking } from './botDecisionMaking'
-import { droppedTokensCoolDown } from './droppedTokensCoolDown'
 
 export const tic = (universe: Universe) => {
   // dropped tokens
-  droppedTokensCoolDown(universe)
+  universe.droppedTokens.forEach(dt => {
+    if (dt.availableCoolDown > 0) dt.availableCoolDown--
+  })
 
   // bot logic
   botDecisionMaking(universe)
