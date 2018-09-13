@@ -6,9 +6,12 @@
 
 _My entry for the 13k js 2018_
 
-Command a fleet of cook to craft sushi!
 
-Buy new machines, hired more crew, expand your kitchen.
+
+
+> Command a fleet of cook to craft sushi!
+> 
+> Buy new machines, hired more crew, expand your kitchen.
 
 
 [__play__](https://platane.github.io/js13k-2018)
