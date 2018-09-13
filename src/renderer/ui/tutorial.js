@@ -9,7 +9,7 @@ import type { Universe, Blueprint, Machine, UIstate } from '~/type'
 
 const tutorials = [
   //0
-  "Oh no, your sushi factory went offline!<br>&nbsp; Let's restart over shall we?",
+  "Oh no, your Sushi Kitchen went offline!<br>&nbsp; Let's restart over shall we?",
 
   //1
   'See this guy over here?<br>&nbsp;Put him to work!',
