@@ -2,17 +2,18 @@
 
 [![play](https://platane.github.io/js13k-2018/loop.gif)](https://platane.github.io/js13k-2018)
 
-🍣🍣🍣
+🍣 🍣 🍣
 
-> My entry for the 13k js 2017
+_My entry for the 13k js 2018_
 
 Command a fleet of cook to craft sushi!
 
 Buy new machines, hired more crew, expand your kitchen.
 
-[js13k page](https://js13kgames.com/entries/sushi-kitchen)
 
-[play](https://platane.github.io/js13k-2018)
+[__play__](https://platane.github.io/js13k-2018)
+
+or go to [js13k entry page](https://js13kgames.com/entries/sushi-kitchen)
 
 ## How to play
 
