@@ -82,7 +82,7 @@ export const createWebGL = (canvas: HTMLCanvasElement) => {
   return (universe: Universe, uistate: UIstate) => {
     worldMatrix = worldMatrix || computeWorldMatrix(universe.map)
 
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    gl.clear(gl.COLOR_BUFFER_BIT)
 
     flatEntityDrawCall(universe, uistate, worldMatrix)
     // gridDrawCall(universe, uistate, worldMatrix)

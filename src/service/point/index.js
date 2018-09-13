@@ -10,7 +10,7 @@ export const cellCenter = ({ x, y }: Point): Point => ({
   y: Math.floor(y) + 0.5,
 })
 
-export const pointEqual = (A: Point, B: Point) => A.x === B.x && A.y === B.y
+export const pointEqual = (A: Point, B: Point) => A.x == B.x && A.y == B.y
 
 export const lengthSq = (A: Point) => A.x * A.x + A.y * A.y
 

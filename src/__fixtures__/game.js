@@ -5,11 +5,8 @@ import type { Universe, UIstate } from '~/type'
 const w = 14
 const h = 12
 
-const map = Array.from({ length: h }).map((_, y) =>
-  Array.from({ length: w }).map(
-    (_, x) => 0
-    // (_, x) => (!(x * y) || x == w - 1 || y == h - 1 ? 1 : 0)
-  )
+const map = Array.from({ length: h + 1 }).map((_, y) =>
+  Array.from({ length: w }).map(() => (y >= h ? 1 : 0))
 )
 
 map[1][8] = 3
