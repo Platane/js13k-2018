@@ -14,6 +14,10 @@ const paths = [
   'M34 2l-4 6-5 8c-5 4-9 9-12 15-2 2-3 5-2 8v12l4 1-1-4c-1-9 1-16 6-20s9-10 12-16l5-7 1-1-4-2m65 42l-1-1-1-3-6 6c-4 5-8 9-13 12l-3 3-3 11 4 3v-3l1-5c2-4 5-8 8-10 3-1 6-4 8-7l6-6M89 29l-2-1-2-2-5 5-5 4-5 3-6 4-5 4-2 2-1 3v10l3 1v-1-7l1-3 4-4 6-3 6-4 5-4 5-5 3-2m-24-9l-2 1-14 10-4 4c-3 3-5 6-4 11v9l4 1-1-6 1-5c3-7 7-12 12-14 5-3 9-6 13-11l1-1-4-2-2 3M53 10l-5-2-2 2-5 5-5 5-2 3-4 7-2 3c-1 0-2 1-2 3l-1 3v10l1 3h3v-1l-1-10v-2l2-2 4-6 3-5 5-6 5-5 5-4zm0 0',
 ]
 
-const dbox = getNextBox(1, 1)
+let dbox = getNextBox(1, 1)
 drawPaths(paths, [salmon_orange, salmon_pink, plank_mid], box, dbox, 16)
 addBox('sushi-token', dbox)
+
+dbox = getNextBox(1, 1)
+drawPaths(paths, [salmon_orange, salmon_pink, plank_mid], box, dbox, 16, true)
+addBox('sushi-token' + 10, dbox)

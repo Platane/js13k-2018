@@ -63,9 +63,12 @@ export const drawPaths = (
   // considering the canvas is 1x1
   boxDestination: [number, number, number, number],
   // outline
-  outline: number = 16
+  outline: number = 16,
+  grey: boolean = false
 ) => {
   ctx.save()
+
+  ctx.filter = grey && 'grayscale(100%)'
 
   ctx.translate(boxDestination[0] * l, boxDestination[1] * l)
 

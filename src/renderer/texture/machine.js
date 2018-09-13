@@ -211,7 +211,7 @@ blueprints.forEach((blueprint, i) => {
 
         ctx.beginPath()
         ctx.fillStyle = '#fff6'
-        ctx.arc(c.y, c.x, 0.36, 0, Math.PI * 2)
+        ctx.arc(c.y, c.x, 0.32, 0, Math.PI * 2)
         ctx.fill()
         ctx.filter = 'grayscale(90%)'
         ctx.drawImage(

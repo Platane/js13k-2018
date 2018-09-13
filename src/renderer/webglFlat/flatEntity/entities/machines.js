@@ -4,12 +4,17 @@ import {
   isNavigable,
   isInside,
   around4,
+  getCell,
 } from '~/service/map'
 import { proj } from '~/service/machine'
 import { normalize, length, lengthSq, cellCenter } from '~/service/point'
 import { boxes } from '~/renderer/texture'
 import { addEntity } from './util'
-import { texture_arrow_client_box } from '~/renderer/texture/svg/arrow'
+import {
+  texture_arrow_client_box,
+  texture_circle_box,
+} from '~/renderer/texture/svg/arrow'
+import { MACHINE_ACTIVATION_COOLDOWN } from '~/config'
 
 import type { Universe, Point, Machine, UIstate } from '~/type'
 
@@ -44,6 +49,43 @@ export const renderMachine = (m: Machine, alpha: number = 1) => (
     position,
     v
   )
+
+  for (let x = w; x--; )
+    for (let y = h; y--; )
+      if (getCell(m.blueprint.ground, { x, y }) == 3) {
+        const a = m.processing
+          ? Math.max(0, m.processing.activationCoolDown) /
+            MACHINE_ACTIVATION_COOLDOWN
+          : 0
+        const k =
+          (m.processing ? m.processing.k : 0) / m.blueprint.activationThreshold
+
+        const u = 1 + a * 0.5
+
+        const tl = 0.2 * (1 + a * 0.8)
+        const tc = 0.55 * (1 + a * 0.2)
+
+        addEntity(tc, tc, texture_circle_box, 0.4)(
+          vertices,
+          uvs,
+          opacity,
+          index
+        )(cellCenter(proj(m)({ x, y })))
+
+        addEntity(tl, tl, boxes[m.blueprint.outputs[0].token + 10], 1)(
+          vertices,
+          uvs,
+          opacity,
+          index
+        )(cellCenter(proj(m)({ x, y })))
+
+        addEntity(tl, tl, boxes[m.blueprint.outputs[0].token], k)(
+          vertices,
+          uvs,
+          opacity,
+          index
+        )(cellCenter(proj(m)({ x, y })))
+      }
 
   //
 
