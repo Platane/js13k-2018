@@ -123,7 +123,7 @@ export type Machine = {
   rotation: Rotation,
   positionOrigin: Cell,
 
-  processing: { k: number, activated: boolean } | null,
+  processing: { k: number, activationCoolDown: number } | null,
 }
 
 export type Universe = {

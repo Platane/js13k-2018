@@ -5,6 +5,7 @@ import {
   BOT_ACTIVATION_DELAY,
   BOT_ACTIVATION_TOUCH,
   ACTIVATION_DISTANCE,
+  MACHINE_ACTIVATION_COOLDOWN,
 } from '~/config'
 import type { Universe, BotActivate } from '~/type'
 
@@ -52,7 +53,7 @@ export const botActivatorDecision = (
   if (
     bot.activity.activationCooldown <= 0 &&
     machine.processing &&
-    !machine.processing.activated
+    machine.processing.activationCoolDown <= 0
   ) {
     const activationPoint = getClosestPointToMachine(
       map,
@@ -70,7 +71,8 @@ export const botActivatorDecision = (
 
     if (d < ACTIVATION_DISTANCE) {
       bot.navigation = null
-      machine.processing.activated = true
+      machine.processing.k++
+      machine.processing.activationCoolDown = MACHINE_ACTIVATION_COOLDOWN
       bot.activity.activationCooldown = BOT_ACTIVATION_DELAY
     }
   }

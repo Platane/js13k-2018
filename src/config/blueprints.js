@@ -22,8 +22,8 @@ export const blueprints: Blueprint[] = [
 
     ground: [[1, 0], [3, 0], [1, 1]],
 
-    buildingCost: 900,
-    activationThreshold: 20,
+    buildingCost: 300,
+    activationThreshold: 14,
 
     recipe: {
       inputs: [],
@@ -38,7 +38,7 @@ export const blueprints: Blueprint[] = [
 
     ground: [[0, 1, 0], [0, 3, 1], [0, 1, 0]],
 
-    buildingCost: 300,
+    buildingCost: 400,
     activationThreshold: 20,
 
     recipe: {
@@ -58,11 +58,11 @@ export const blueprints: Blueprint[] = [
     ground: [[0, 1, 1, 1], [0, 1, 3, 1], [0, 1, 1, 1], [0, 0, 0, 0]],
 
     buildingCost: 1500,
-    activationThreshold: 50,
+    activationThreshold: 16,
 
     recipe: {
       inputs: [],
-      outputs: [{ token: 'raw-tuna', n: 2 }],
+      outputs: [{ token: 'raw-tuna', n: 1 }],
     },
 
     inputs: [],
@@ -73,7 +73,7 @@ export const blueprints: Blueprint[] = [
 
     ground: [[0, 1, 1], [0, 3, 1], [0, 0, 0]],
 
-    buildingCost: 2000,
+    buildingCost: 5000,
     activationThreshold: 20,
 
     recipe: {

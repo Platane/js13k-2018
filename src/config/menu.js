@@ -1,8 +1,8 @@
 import type { Menu } from '~/type'
 
 export const menu: Menu = {
-  'rice-grain': 1,
-  'rice-ball': 40,
-  'raw-tuna': 50,
+  'rice-grain': 15,
+  'rice-ball': 50,
+  'raw-tuna': 30,
   'sushi-token': 200,
 }

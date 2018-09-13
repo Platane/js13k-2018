@@ -40,17 +40,15 @@ const startProcess = (machine, droppedTokens) => {
       availableTokens[token].slice(0, n).forEach(removeInPlace(droppedTokens))
     )
 
-    machine.processing = { k: 0, activated: false }
+    machine.processing = { k: 0, activationCoolDown: 0 }
   }
 }
 
 const execProcess = (machine, droppedTokens) => {
   const { recipe, outputs, activationThreshold } = machine.blueprint
 
-  // if the machine is activated at this frame, incr k
-  machine.processing.k += machine.processing.activated
-
-  machine.processing.activated = false
+  if (machine.processing.activationCoolDown > 0)
+    machine.processing.activationCoolDown--
 
   // if the processing if done
   if (machine.processing.k > activationThreshold) {

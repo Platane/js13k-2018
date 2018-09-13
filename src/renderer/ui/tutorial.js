@@ -55,8 +55,8 @@ let step
 let shopOpened
 
 export const updateTutorial = (universe: Universe, uistate: UIstate) => {
-  container.onclick =
-    container.onclick ||
+  container.ontouchstart = container.onmousedown =
+    container.onmousedown ||
     (e => {
       uistate.step++
       e.stopPropagation()
@@ -87,13 +87,13 @@ export const updateTutorial = (universe: Universe, uistate: UIstate) => {
       { cell: { x: w - 1, y: 6 } },
     ]
 
-    universe.clients = Array.from({ length: 3 }).map((_, i) => ({
+    universe.clients = Array.from({ length: 8 }).map((_, i) => ({
       id: '' + i,
       l: 0,
       client: ['A', 'B'][Math.floor(2 * Math.random())],
       position: {
         x: universe.customers[0].cell.x + 0.2 + i * 0.05 - 2,
-        y: universe.customers[0].cell.y + 0.1 + i * 0.5 + 4,
+        y: universe.customers[0].cell.y + 0.1 + i * 0.05 + 4,
       },
       velocity: { x: 0, y: 0 },
       command: { type: 'wander', target: universe.customers[0].cell },
