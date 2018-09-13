@@ -19,11 +19,7 @@ const initGL = (canvas: HTMLCanvasElement) => {
 
   const gl: ?WebGLRenderingContext =
     canvas.getContext('webgl2', WEBGL_OPTIONS) ||
-    canvas.getContext('webgl-experimental2', WEBGL_OPTIONS) ||
-    canvas.getContext('webgl', WEBGL_OPTIONS) ||
-    canvas.getContext('webgl-experimental', WEBGL_OPTIONS)
-
-  if (!gl) throw 'WebGl not supported'
+    canvas.getContext('webgl', WEBGL_OPTIONS)
 
   gl.clearColor(0.5, 0.6, 0.8, 1)
   gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight)

@@ -30,7 +30,10 @@ export const create = (gl: WebGLRenderingContext) => {
   const sampler_texture = bindUniformTexture(gl, program, 'uSampler')
   const elementIndex = bindElementIndex(gl, program)
 
+  gl.useProgram(program)
+
   sampler_texture.update(texture)
+  sampler_texture.bind()
 
   return (universe: Universe, uistate: UIstate, matrix: number[]) => {
     const vertices = []
@@ -57,23 +60,14 @@ export const create = (gl: WebGLRenderingContext) => {
     // overlay
     renderOverlay(universe, uistate)(vertices, uvs, opacity, index)
 
+    uniform_worldMatrix.update(matrix)
     attribute_uv.update(uvs)
     elementIndex.update(index)
     attribute_opacity.update(opacity)
     attribute_position.update(vertices)
 
-    uniform_worldMatrix.update(matrix)
-
-    if (gl.lastprogram !== program) gl.useProgram(program)
-
-    elementIndex.bind()
-    attribute_position.bind()
-    attribute_uv.bind()
     uniform_worldMatrix.bind()
-    if (gl.lastprogram !== program) sampler_texture.bind()
 
     gl.drawElements(gl.TRIANGLES, index.length, gl.UNSIGNED_SHORT, 0)
-
-    gl.lastprogram = program
   }
 }
