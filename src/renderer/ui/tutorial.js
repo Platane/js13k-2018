@@ -56,11 +56,9 @@ let shopOpened
 
 export const updateTutorial = (universe: Universe, uistate: UIstate) => {
   container.ontouchstart = container.onmousedown =
-    container.onmousedown ||
-    (e => {
-      uistate.step++
-      e.stopPropagation()
-    })
+    container.onmousedown || (e => e.stopPropagation())
+
+  container.onclick = container.onclick || (() => uistate.step++)
 
   if ((step == 2 || step == 7) && uistate.command) uistate.step++
 
