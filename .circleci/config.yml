@@ -38,6 +38,8 @@ jobs:
 
       - run: mv .circleci dist/.circleci
 
+      - run: cp doc/screenshot/* dist/
+
       - persist_to_workspace:
           root: *workspace_root
           paths:
