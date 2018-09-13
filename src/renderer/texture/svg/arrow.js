@@ -77,12 +77,12 @@ ctx.fillRect(0, 0, 30, 30)
 ctx.restore()
 
 export const texture_red_box = prep(0.3)
-ctx.fillStyle = salmon_pink
+ctx.fillStyle = blue_true
 ctx.fillRect(0, 0, 30, 30)
 ctx.restore()
 
 export const texture_arrow_selected_box = prep(1.4)
 ctx.scale(1.4, 1.4)
-ctx.fillStyle = salmon_pink
+ctx.fillStyle = blue_true
 smoothArrow()
 ctx.restore()

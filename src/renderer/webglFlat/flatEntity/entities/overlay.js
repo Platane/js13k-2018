@@ -67,7 +67,7 @@ export const renderOverlay = (universe: Universe, uistate: UIstate) => (
       const w = getWidth(m.blueprint.ground)
       const h = getHeight(m.blueprint.ground)
 
-      const alpha = selectedBot.command.targetId === m.id ? 0.8 : 0.3
+      const alpha = selectedBot.command.targetId === m.id ? 0.82 : 0.5
 
       for (let x = w; x--; )
         for (let y = h; y--; )

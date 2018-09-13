@@ -5,9 +5,10 @@ export const grey_true = '#888'
 export const grey_light = '#aaa'
 
 export const dirty_shirt = '#d2af80'
+export const dirty_hat = '#c3a172'
 
 export const plank_light = '#b97f36'
-export const plank_mid = '#f1ad48'
+export const plank_mid = '#d0963f'
 export const plank_dark = '#b76124'
 
 export const gold = '#dda821'

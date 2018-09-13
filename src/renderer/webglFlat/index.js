@@ -5,10 +5,10 @@ import type { Universe, Point, UIstate } from '~/type'
 const WEBGL_OPTIONS = {
   alpha: true,
   antialias: true,
-  depth: true,
+  // depth: true,
   premultipliedAlpha: false,
-  preserveDrawingBuffer: false,
-  stencil: true,
+  // preserveDrawingBuffer: false,
+  // stencil: true,
 }
 
 const pixelRatio = window.devicePixelRatio || 1
@@ -21,7 +21,8 @@ const initGL = (canvas: HTMLCanvasElement) => {
     canvas.getContext('webgl2', WEBGL_OPTIONS) ||
     canvas.getContext('webgl', WEBGL_OPTIONS)
 
-  gl.clearColor(0.5, 0.6, 0.8, 1)
+  // gl.clearColor(0, 0, 0, 0)
+  gl.clearColor(150 / 255, 105 / 255, 79 / 255, 1)
   gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight)
 
   // gl.cullFace(gl.FRONT_AND_BACK)

@@ -12,6 +12,7 @@ import {
   blue_light,
   blue_true,
   blue_dark,
+  dirty_hat,
 } from '~/config/palette'
 
 const box = [0, 0, 100, 100]
@@ -63,7 +64,7 @@ let dbox
       // face
       blue_light,
       // hat
-      dirty_shirt,
+      dirty_hat,
     ],
     box,
     dbox,
@@ -77,13 +78,13 @@ let dbox
     paths[k],
     [
       // body
-      grey_light,
+      grey_true,
       // shirt
-      grey_light,
+      grey_true,
       // face
       blue_light,
       // hat
-      grey_light,
+      grey_true,
     ],
     box,
     dbox,

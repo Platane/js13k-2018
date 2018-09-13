@@ -65,21 +65,21 @@ export const renderMachine = (m: Machine, alpha: number = 1) => (
         const tl = 0.2 * (1 + a * 0.8)
         const tc = 0.55 * (1 + a * 0.2)
 
-        addEntity(tc, tc, texture_circle_box, 0.4)(
+        addEntity(tc, tc, texture_circle_box, 0.4 * alpha)(
           vertices,
           uvs,
           opacity,
           index
         )(cellCenter(proj(m)({ x, y })))
 
-        addEntity(tl, tl, boxes[outputs[0].token + 10], 1)(
+        addEntity(tl, tl, boxes[outputs[0].token + 10], alpha)(
           vertices,
           uvs,
           opacity,
           index
         )(cellCenter(proj(m)({ x, y })))
 
-        addEntity(tl, tl, boxes[outputs[0].token], k)(
+        addEntity(tl, tl, boxes[outputs[0].token], k * alpha)(
           vertices,
           uvs,
           opacity,

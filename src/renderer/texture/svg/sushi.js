@@ -15,9 +15,9 @@ const paths = [
 ]
 
 let dbox = getNextBox(1, 1)
-drawPaths(paths, [salmon_orange, salmon_pink, plank_mid], box, dbox, 16)
+drawPaths(paths, [salmon_orange, salmon_pink, plank_light], box, dbox, 16)
 addBox('sushi-token', dbox)
 
 dbox = getNextBox(1, 1)
-drawPaths(paths, [salmon_orange, salmon_pink, plank_mid], box, dbox, 16, true)
+drawPaths(paths, [salmon_orange, salmon_pink, plank_light], box, dbox, 16, true)
 addBox('sushi-token' + 10, dbox)
